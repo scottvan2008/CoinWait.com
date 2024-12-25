@@ -1,101 +1,116 @@
-import Image from "next/image";
+'use client'
+
+import { useState } from 'react'
+import NumberSelector from './components/NumberSelector'
+import Results from './components/Results'
+import { drawNumbers, checkWin } from './utils/lotteryUtils'
+import Chart from './components/Chart' // 引入 Chart 组件
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [funds, setFunds] = useState(100) // 初始资金为100
+  const [selectedRed, setSelectedRed] = useState([]) // 选中的红球
+  const [selectedBlue, setSelectedBlue] = useState(null) // 选中的蓝球
+  const [drawnNumbers, setDrawnNumbers] = useState(null) // 抽取的号码
+  const [result, setResult] = useState(null) // 中奖结果
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const handlePlay = () => {
+    // 检查用户是否有足够的资金
+    if (funds <= 0) {
+      alert('您的余额不足，无法继续游戏。请充值。')
+      return
+    }
+
+    // 检查是否选择了6个红球和1个蓝球
+    if (selectedRed.length !== 6 || !selectedBlue) {
+      alert('请选中6个红球和1个蓝球')
+      return
+    }
+
+    // 抽取随机号码
+    const drawn = drawNumbers()
+    setDrawnNumbers(drawn)
+
+    // 检查是否中奖
+    const winResult = checkWin(selectedRed, selectedBlue, drawn.red, drawn.blue)
+    setResult(winResult)
+
+    // 根据中奖结果更新资金
+    if (winResult.prize > 0) {
+      setFunds(funds + winResult.prize)
+    } else {
+      setFunds(funds - 2) // 每次游戏扣除2元
+    }
+  }
+
+  const resetSelection = () => {
+    // 重置选择状态
+    setSelectedRed([])
+    setSelectedBlue(null)
+    setDrawnNumbers(null)
+    setResult(null)
+  }
+
+  const resetFunds = () => {
+    // 重置资金为初始值
+    setFunds(100)
+  }
+
+  return (
+    <main className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold text-center mb-8">乐乐的双色球小游戏</h1>
+
+      {/* 游戏区域 */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <p className="text-xl font-semibold mb-4">余额: ¥{funds}</p>
+        {/* 数字选择器组件 */}
+        <NumberSelector
+          selectedRed={selectedRed}
+          setSelectedRed={setSelectedRed}
+          selectedBlue={selectedBlue}
+          setSelectedBlue={setSelectedBlue}
+        />
+        
+        {/* 按钮区域 */}
+        <div className="mt-6 flex justify-center space-x-4">
+          <button
+            onClick={handlePlay}
+            className={`${
+              funds <= 1 ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
+            } text-white font-bold py-2 px-4 rounded`}
+            disabled={funds <= 1} // 如果余额小于等于1，禁用按钮
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            开奖
+          </button>
+          <button
+            onClick={resetSelection}
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
           >
-            Read our docs
-          </a>
+            清空号码
+          </button>
+          {/* 重置资金按钮 */}
+          <button
+            onClick={resetFunds}
+            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+          >
+            重置资金
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+      </div>
+
+      {/* 结果显示 */}
+      {drawnNumbers && (
+        <Results 
+          drawnNumbers={drawnNumbers} 
+          result={result} 
+          selectedRed={selectedRed} 
+          selectedBlue={selectedBlue} 
+        />
+      )}
+
+      {/* 图表显示 */}
+      <div className="mt-8">
+        <Chart /> {/* 渲染 Chart 组件 */}
+      </div>
+    </main>
+  )
 }
