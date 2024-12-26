@@ -16,7 +16,7 @@ export default function Home() {
   const handlePlay = () => {
     // 检查用户是否有足够的资金
     if (funds <= 0) {
-      alert('您的余额不足，无法继续游戏。请充值。')
+      alert('您的余额不足，无法继续游戏。')
       return
     }
 
@@ -57,7 +57,7 @@ export default function Home() {
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-center mb-8">乐乐的双色球小游戏</h1>
+      <h1 className="text-4xl font-bold text-center mb-8">双色球小游戏</h1>
 
       {/* 游戏区域 */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
