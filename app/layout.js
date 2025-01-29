@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Double Color Ball Lottery',
-  description: 'A Next.js lottery system',
+  title: 'Coinwait',
+  description: 'A Next.js system',
 }
 
 export default function RootLayout({ children }) {
