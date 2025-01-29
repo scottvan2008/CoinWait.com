@@ -10,7 +10,7 @@ export default function Page() {
           Bitcoin Block Reward Halving Countdown
         </h1>
 
-        <CountdownTimer targetDate="2024-04-14T16:58:02Z" />
+        <CountdownTimer targetDate="2028-04-14T16:58:02Z" />
 
         <div className="mt-12 space-y-8">
           <InfoSection
