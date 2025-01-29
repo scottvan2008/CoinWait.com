@@ -1,116 +1,40 @@
-'use client'
+import { CountdownTimer } from "./components/countdown-timer"
+import { InfoSection } from "./components/info-section"
+import { InflationGraph } from "./components/inflation-graph"
 
-import { useState } from 'react'
-import NumberSelector from './components/NumberSelector'
-import Results from './components/Results'
-import { drawNumbers, checkWin } from './utils/lotteryUtils'
-import Chart from './components/Chart' // 引入 Chart 组件
-
-export default function Home() {
-  const [funds, setFunds] = useState(100) // 初始资金为100
-  const [selectedRed, setSelectedRed] = useState([]) // 选中的红球
-  const [selectedBlue, setSelectedBlue] = useState(null) // 选中的蓝球
-  const [drawnNumbers, setDrawnNumbers] = useState(null) // 抽取的号码
-  const [result, setResult] = useState(null) // 中奖结果
-
-  const handlePlay = () => {
-    // 检查用户是否有足够的资金
-    if (funds <= 0) {
-      alert('您的余额不足，无法继续游戏。')
-      return
-    }
-
-    // 检查是否选择了6个红球和1个蓝球
-    if (selectedRed.length !== 6 || !selectedBlue) {
-      alert('请选中6个红球和1个蓝球')
-      return
-    }
-
-    // 抽取随机号码
-    const drawn = drawNumbers()
-    setDrawnNumbers(drawn)
-
-    // 检查是否中奖
-    const winResult = checkWin(selectedRed, selectedBlue, drawn.red, drawn.blue)
-    setResult(winResult)
-
-    // 根据中奖结果更新资金
-    if (winResult.prize > 0) {
-      setFunds(funds + winResult.prize)
-    } else {
-      setFunds(funds - 2) // 每次游戏扣除2元
-    }
-  }
-
-  const resetSelection = () => {
-    // 重置选择状态
-    setSelectedRed([])
-    setSelectedBlue(null)
-    setDrawnNumbers(null)
-    setResult(null)
-  }
-
-  const resetFunds = () => {
-    // 重置资金为初始值
-    setFunds(100)
-  }
-
+export default function Page() {
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-center mb-8">双色球小游戏</h1>
+    <main className="min-h-screen bg-white px-4 py-8">
+      <div className="mx-auto max-w-4xl">
+        <h1 className="mb-8 text-center text-3xl font-bold text-gray-800 md:text-4xl">
+          Bitcoin Block Reward Halving Countdown
+        </h1>
 
-      {/* 游戏区域 */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <p className="text-xl font-semibold mb-4">余额: ¥{funds}</p>
-        {/* 数字选择器组件 */}
-        <NumberSelector
-          selectedRed={selectedRed}
-          setSelectedRed={setSelectedRed}
-          selectedBlue={selectedBlue}
-          setSelectedBlue={setSelectedBlue}
-        />
-        
-        {/* 按钮区域 */}
-        <div className="mt-6 flex justify-center space-x-4">
-          <button
-            onClick={handlePlay}
-            className={`${
-              funds <= 1 ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
-            } text-white font-bold py-2 px-4 rounded`}
-            disabled={funds <= 1} // 如果余额小于等于1，禁用按钮
-          >
-            开奖
-          </button>
-          <button
-            onClick={resetSelection}
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-          >
-            清空号码
-          </button>
-          {/* 重置资金按钮 */}
-          <button
-            onClick={resetFunds}
-            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-          >
-            重置资金
-          </button>
+        <CountdownTimer targetDate="2024-04-14T16:58:02Z" />
+
+        <div className="mt-12 space-y-8">
+          <InfoSection
+            title="What is a block halving event?"
+            content="As part of Bitcoin's coin issuance, miners are rewarded a certain amount of bitcoins whenever a block is produced (approximately every 10 minutes). When Bitcoin first started, 50 Bitcoins per block were given as a reward to miners. After every 210,000 blocks are mined (approximately every 4 years), the block reward halves and will keep on halving until the block reward per block becomes 0 (approximately by year 2140). As of now, the block reward is 3.125 coins per block and will decrease to 1.5625 coins per block post halving."
+          />
+
+          <InfoSection
+            title="Why was this done?"
+            content="Bitcoin was designed as a deflationary currency. Like gold, the premise is that over time, the issuance of bitcoins will decrease and thus become scarcer over time. As bitcoins become scarcer and if demand for them increases over time, Bitcoin can be used as a hedge against inflation as the price, guided by price equilibrium is bound to increase. On the flip side, fiat currencies (like the US dollar), inflate over time as its monetary supply increases, leading to a decrease in purchasing power. This is known as monetary debasement by inflation. A simple example would be to compare housing prices decades ago to now and you'll notice that they've increased over time!"
+          />
+
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-gray-800">Predictable monetary supply</h2>
+            <p className="text-gray-600">
+              Since we know Bitcoin's issuance over time, people can rely on programmed/controlled supply. This is
+              helpful to understand what the current inflation rate of Bitcoin is, what the future inflation rate will
+              be at a specific point in time, how many Bitcoins are in circulation and how many remain left to be mined.
+            </p>
+            <InflationGraph />
+          </div>
         </div>
-      </div>
-
-      {/* 结果显示 */}
-      {drawnNumbers && (
-        <Results 
-          drawnNumbers={drawnNumbers} 
-          result={result} 
-          selectedRed={selectedRed} 
-          selectedBlue={selectedBlue} 
-        />
-      )}
-
-      {/* 图表显示 */}
-      <div className="mt-8">
-        <Chart /> {/* 渲染 Chart 组件 */}
       </div>
     </main>
   )
 }
+
