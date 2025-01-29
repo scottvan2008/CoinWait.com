@@ -1,11 +1,13 @@
 import { CountdownTimer } from "./components/countdown-timer"
 import { InfoSection } from "./components/info-section"
 import { InflationGraph } from "./components/inflation-graph"
+import { BitcoinStats } from "./components/bitcoin-stats"
+
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-white px-4 py-8">
-      <div className="mx-auto max-w-4xl">
+    <main className="min-h-screen bg-gray-100 px-4 py-8">
+      <div className="mx-auto max-w-6xl">
         <h1 className="mb-8 text-center text-3xl font-bold text-gray-800 md:text-4xl">
           Bitcoin Block Reward Halving Countdown
         </h1>
@@ -13,6 +15,7 @@ export default function Page() {
         <CountdownTimer targetDate="2028-04-14T16:58:02Z" />
 
         <div className="mt-12 space-y-8">
+        <BitcoinStats />
           <InfoSection
             title="What is a block halving event?"
             content="As part of Bitcoin's coin issuance, miners are rewarded a certain amount of bitcoins whenever a block is produced (approximately every 10 minutes). When Bitcoin first started, 50 Bitcoins per block were given as a reward to miners. After every 210,000 blocks are mined (approximately every 4 years), the block reward halves and will keep on halving until the block reward per block becomes 0 (approximately by year 2140). As of now, the block reward is 3.125 coins per block and will decrease to 1.5625 coins per block post halving."
