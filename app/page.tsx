@@ -102,7 +102,7 @@ export default function Home() {
 
         <div className="my-8">
           <Image
-            src="/static/picture/bitcoin-inflation-chart.png"
+            src="/bitcoin-inflation-chart.png"
             alt="Bitcoin inflation chart"
             width={800}
             height={400}
@@ -152,7 +152,7 @@ export default function Home() {
 
         <div className="my-8">
           <Image
-            src="/static/picture/tz7lSIL0.png"
+            src="/tz7lSIL0.png"
             alt="Bitcoin halving chart"
             width={1000}
             height={500}
@@ -169,7 +169,7 @@ export default function Home() {
       </section>
 
       <footer className="text-center py-8">
-        <Image src="/static/picture/bitcoin.png" alt="Bitcoin logo" width={100} height={100} className="mx-auto mb-4" />
+        <Image src="/bitcoin.png" alt="Bitcoin logo" width={100} height={100} className="mx-auto mb-4" />
         <h2>
           <Link href="https://www.litecoinblockhalf.com" className="text-2xl text-blue-600 hover:text-blue-800">
             Litecoin Block Halving Countdown
