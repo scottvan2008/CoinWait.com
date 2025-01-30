@@ -1,13 +1,31 @@
+"use client"; // Mark this component as a Client Component
+
 /* eslint-disable react/no-unescaped-entities */
 
 // pages/index.tsx
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react"; // Import useState for modal functionality
 import { CountdownFlipper } from "@/components/countdown-flipper";
 import StatsSection from "@/components/StatsSection";
 import HalvingEvents from "@/components/HalvingEvents"; // Import the new HalvingEvents component
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImageSrc, setModalImageSrc] = useState("");
+
+  // Function to open the modal with the clicked image
+  const openModal = (src: string) => {
+    setModalImageSrc(src);
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalImageSrc("");
+  };
+
   return (
     <main className="container mx-auto px-4 py-8 max-w-6xl">
       {/* Hero Section */}
@@ -79,13 +97,18 @@ export default function Home() {
 
         {/* Bitcoin Inflation Chart */}
         <div className="my-8">
-          <Image
-            src="/bitcoin-inflation-chart.png"
-            alt="Bitcoin inflation chart"
-            width={800}
-            height={400}
-            className="mx-auto rounded-lg shadow-lg"
-          />
+          <div
+            onClick={() => openModal("/bitcoin-inflation-chart.png")}
+            className="cursor-pointer"
+          >
+            <Image
+              src="/bitcoin-inflation-chart.png"
+              alt="Bitcoin inflation chart"
+              width={800}
+              height={400}
+              className="mx-auto rounded-lg shadow-lg"
+            />
+          </div>
         </div>
 
         {/* Who Controls the Issuance of Bitcoin? */}
@@ -137,13 +160,18 @@ export default function Home() {
 
         {/* Bitcoin Halving Chart */}
         <div className="my-8">
-          <Image
-            src="/tz7lSIL0.png"
-            alt="Bitcoin halving chart"
-            width={1000}
-            height={500}
-            className="mx-auto rounded-lg shadow-lg"
-          />
+          <div
+            onClick={() => openModal("/tz7lSIL0.png")}
+            className="cursor-pointer"
+          >
+            <Image
+              src="/tz7lSIL0.png"
+              alt="Bitcoin halving chart"
+              width={1000}
+              height={500}
+              className="mx-auto rounded-lg shadow-lg"
+            />
+          </div>
         </div>
       </section>
 
@@ -152,13 +180,18 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="text-center py-8 border-t border-gray-200">
-        <Image
-          src="/bitcoin.png"
-          alt="Bitcoin logo"
-          width={100}
-          height={100}
-          className="mx-auto mb-4"
-        />
+        <div
+          // onClick={() => openModal("/bitcoin.png")}
+          // className="cursor-pointer"
+        >
+          <Image
+            src="/bitcoin.png"
+            alt="Bitcoin logo"
+            width={100}
+            height={100}
+            className="mx-auto mb-4"
+          />
+        </div>
         <h2>
           <Link
             href="https://www.litecoinblockhalf.com"
@@ -168,6 +201,32 @@ export default function Home() {
           </Link>
         </h2>
       </footer>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+          onClick={closeModal} // Close modal when clicking outside the image
+        >
+          <div className="relative max-w-[90vw] max-h-[90vh] overflow-auto">
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition-colors"
+            >
+              X
+            </button>
+            <div className="w-full h-full flex items-center justify-center">
+              {/* Use a regular <img> tag for full-size display */}
+              <img
+                src={modalImageSrc}
+                alt="Modal Image"
+                className="max-w-full max-h-full"
+                style={{ objectFit: "contain" }} // Ensure the image fits within the viewport
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
