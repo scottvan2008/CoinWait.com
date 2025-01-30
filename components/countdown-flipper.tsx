@@ -43,7 +43,7 @@ export function CountdownFlipper({ targetDate, labels }: CountdownProps) {
       {Object.entries(timeLeft).map(([key, value], index) => (
         <Card
           key={key}
-          className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 text-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
+          className="p-6 bg-blue-50 text-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
         >
           <div className="text-4xl font-bold mb-2 text-gray-900">
             {formatNumber(value)}
