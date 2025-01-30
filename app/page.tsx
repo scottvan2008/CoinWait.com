@@ -1,39 +1,13 @@
-/* eslint-disable react/no-unescaped-entities */
-
-import Image from "next/image"
-import { CountdownFlipper } from "@/components/countdown-flipper"
-import Link from "next/link"
-import StatsSection from "@/components/StatsSection"; // Import the new StatsSection component
-
-
-
-const halvingEvents = [
-  {
-    date: "28th of November, 2012 (UTC)",
-    height: "210,000",
-    link: "https://www.blockchain.com/explorer/blocks/btc/000000000000048b95347e83192f69cf0366076336c639f9b7228e9ba171342e",
-  },
-  {
-    date: "9th of July, 2016 (UTC)",
-    height: "420,000",
-    link: "https://www.blockchain.com/explorer/blocks/btc/000000000000000002cce816c0ab2c5c269cb081896b7dcb34b8422d6b74ffa1",
-  },
-  {
-    date: "11th of May, 2020 (UTC)",
-    height: "630,000",
-    link: "https://www.blockchain.com/explorer/blocks/btc/000000000000000000024bead8df69990852c202db0e0097c1a12ea637d7e96d",
-  },
-  {
-    date: "20th of April, 2024 (UTC)",
-    height: "840,000",
-    link: "https://www.blockchain.com/explorer/blocks/btc/0000000000000000000320283a032748cef8227873ff4872689bf23f1cda83a5",
-  },
-]
+// pages/index.tsx
+import Image from "next/image";
+import { CountdownFlipper } from "@/components/countdown-flipper";
+import Link from "next/link";
+import StatsSection from "@/components/StatsSection";
+import HalvingEvents from "@/components/HalvingEvents"; // Import the new HalvingEvents component
 
 export default function Home() {
   return (
     <main className="container mx-auto px-4 py-8 max-w-6xl">
-
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold mb-4">Bitcoin Block Reward Halving Countdown</h1>
 
@@ -102,17 +76,7 @@ export default function Home() {
         </p>
 
         <h2>Past halving event dates</h2>
-        <ul>
-          {halvingEvents.map((event, index) => (
-            <li key={index}>
-              The {index === 0 ? "first" : index === 1 ? "second" : index === 2 ? "third" : "fourth"} halving event
-              occurred on the {event.date} at block height{" "}
-              <Link href={event.link} className="text-blue-600 hover:text-blue-800">
-                {event.height}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <HalvingEvents /> {/* Use the HalvingEvents component here */}
 
         <h2>Past halving price performance</h2>
         <p>
@@ -136,7 +100,6 @@ export default function Home() {
 
       <StatsSection />
 
-
       <footer className="text-center py-8">
         <Image src="/bitcoin.png" alt="Bitcoin logo" width={100} height={100} className="mx-auto mb-4" />
         <h2>
@@ -146,6 +109,5 @@ export default function Home() {
         </h2>
       </footer>
     </main>
-  )
+  );
 }
-
