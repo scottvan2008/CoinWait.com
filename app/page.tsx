@@ -181,6 +181,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="text-center py-8 border-t border-gray-200">
         <div
+          // Useless comments below
           // onClick={() => openModal("/bitcoin.png")}
           // className="cursor-pointer"
         >

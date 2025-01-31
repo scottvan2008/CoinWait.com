@@ -39,17 +39,19 @@ export function CountdownFlipper({ targetDate, labels }: CountdownProps) {
   const formatNumber = (num: number) => String(num).padStart(2, "0");
 
   return (
-    <div className="grid grid-cols-4 gap-4 text-center max-w-4xl mx-auto my-8">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto p-4">
       {Object.entries(timeLeft).map(([key, value], index) => (
         <Card
           key={key}
-          className="p-6 bg-blue-50 text-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
+          className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 text-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-200 transform hover:scale-105"
         >
-          <div className="text-4xl font-bold mb-2 text-gray-900">
-            {formatNumber(value)}
-          </div>
-          <div className="text-sm font-medium text-gray-600">
-            {labels[index]}
+          <div className="flex flex-col items-center justify-center space-y-2">
+            <div className="text-3xl md:text-5xl font-bold text-blue-900">
+              {formatNumber(value)}
+            </div>
+            <div className="text-sm md:text-base font-semibold text-blue-600 uppercase tracking-wider">
+              {labels[index]}
+            </div>
           </div>
         </Card>
       ))}
