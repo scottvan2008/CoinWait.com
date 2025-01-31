@@ -155,7 +155,7 @@ export default function Home() {
           halving of supply should cause an increase in price if demand for
           Bitcoins is equal or greater than what it was before the halving
           event. Below is a chart showing past price performance of the last
-          three halving events:
+          four halving events:
         </p>
 
         {/* Bitcoin Halving Chart */}
