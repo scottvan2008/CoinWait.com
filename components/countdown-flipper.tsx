@@ -16,7 +16,11 @@ export function CountdownFlipper({ targetDate, labels }: CountdownProps) {
     seconds: 0,
   });
 
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
+    setIsMounted(true); // Mark the component as mounted
+
     const calculateTimeLeft = () => {
       const difference = +new Date(targetDate) - +new Date();
 
@@ -37,6 +41,11 @@ export function CountdownFlipper({ targetDate, labels }: CountdownProps) {
   }, [targetDate]);
 
   const formatNumber = (num: number) => String(num).padStart(2, "0");
+
+  // Don't render anything until the component mounts on the client
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto p-4">
