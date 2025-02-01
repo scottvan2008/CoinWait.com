@@ -46,7 +46,13 @@ function TranslatedContent() {
       <div className="flex justify-between items-start mb-8">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <Image src="/logo.png" alt="Logo" width={150} height={75} className="mr-4" />
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={190} // Fixed width
+            height={38} // Fixed height (adjust based on your logo's aspect ratio)
+            className="mr-4"
+          />
         </div>
         {/* Language Switcher */}
         <LanguageSwitcher currentLanguage={currentLanguage} onChangeLanguage={changeLanguage} />
