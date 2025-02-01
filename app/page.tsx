@@ -24,7 +24,7 @@ function TranslatedContent() {
 
   useEffect(() => {
     setKey((prevKey) => prevKey + 1)
-  }, []) // Removed unnecessary dependency: currentLanguage
+  }, [])
 
   const openModal = useCallback((src: string) => {
     setModalImageSrc(src)
@@ -42,13 +42,19 @@ function TranslatedContent() {
 
   return (
     <main key={key} className="container mx-auto px-4 py-8 max-w-6xl">
-      <div className="flex justify-end mb-4">
+      {/* Header Section */}
+      <div className="flex justify-between items-start mb-8">
+        {/* Logo */}
+        <div className="flex-shrink-0">
+          <Image src="/logo.png" alt="Logo" width={150} height={75} className="mr-4" />
+        </div>
+        {/* Language Switcher */}
         <LanguageSwitcher currentLanguage={currentLanguage} onChangeLanguage={changeLanguage} />
       </div>
 
+      {/* Main Content */}
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-6 text-gray-900">{t("welcome")}</h1>
-
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">{t("welcome")}</h1>
         <CountdownFlipper
           targetDate="2028-04-14 15:19:14"
           labels={[t("days"), t("hours"), t("minutes"), t("seconds")]}
@@ -156,4 +162,3 @@ export default function Home() {
     </Suspense>
   )
 }
-
