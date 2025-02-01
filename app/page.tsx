@@ -1,12 +1,10 @@
 "use client"; // Mark this component as a Client Component
-/* eslint-disable react/no-unescaped-entities */
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react"; // Import useState for modal functionality
 import { CountdownFlipper } from "@/components/countdown-flipper";
 import StatsSection from "@/components/StatsSection";
 import HalvingEvents from "@/components/HalvingEvents"; // Import the new HalvingEvents component
-import React, { Suspense } from 'react';
 import i18n from 'i18next';
 import HttpBackend from 'i18next-http-backend';
 import { initReactI18next, useTranslation } from 'react-i18next';
@@ -47,7 +45,6 @@ i18n
   };
   
   return (
-    <Suspense fallback="loading">
           
 
 <main className="container mx-auto px-4 py-8 max-w-6xl">
@@ -157,7 +154,6 @@ i18n
 
 
     
-    </Suspense>
   );
 };
 
