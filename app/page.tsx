@@ -68,9 +68,9 @@ function TranslatedContent() {
           labels={[t("days"), t("hours"), t("minutes"), t("seconds")]}
         />
 
-        <div className="text-lg mt-6 text-gray-700">
+        {/* <div className="text-lg mt-6 text-gray-700">
           {t("rewardDropETA")}: <strong className="font-semibold">14 Apr 2028 15:19:14 UTC</strong>
-        </div>
+        </div> */}
       </div>
 
       <section className="prose max-w-none mb-12">

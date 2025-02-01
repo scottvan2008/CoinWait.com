@@ -48,22 +48,31 @@ export function CountdownFlipper({ targetDate, labels }: CountdownProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto p-4">
-      {Object.entries(timeLeft).map(([key, value], index) => (
-        <Card
-          key={key}
-          className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 text-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-200 transform hover:scale-105"
-        >
-          <div className="flex flex-col items-center justify-center space-y-2">
-            <div className="text-3xl md:text-5xl font-bold text-blue-900">
-              {formatNumber(value)}
+    <div className="space-y-6">
+      {/* Countdown Timer */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto p-4">
+        {Object.entries(timeLeft).map(([key, value], index) => (
+          <Card
+            key={key}
+            className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 text-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-200 transform hover:scale-105"
+          >
+            <div className="flex flex-col items-center justify-center space-y-2">
+              <div className="text-3xl md:text-5xl font-bold text-blue-900">
+                {formatNumber(value)}
+              </div>
+              <div className="text-sm md:text-base font-semibold text-blue-600 uppercase tracking-wider">
+                {labels[index]}
+              </div>
             </div>
-            <div className="text-sm md:text-base font-semibold text-blue-600 uppercase tracking-wider">
-              {labels[index]}
-            </div>
-          </div>
-        </Card>
-      ))}
+          </Card>
+        ))}
+      </div>
+
+      {/* Static Date Display Below Countdown Timer */}
+      <div className="text-lg mt-6 text-gray-700">
+        {`Reward-Drop ETA date: `}
+        <strong className="font-semibold">14 Apr 2028 15:19:14 UTC</strong>
+      </div>
     </div>
   );
 }
