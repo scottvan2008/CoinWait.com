@@ -7,6 +7,7 @@ import { CountdownFlipper } from "@/components/countdown-flipper";
 import StatsSection from "@/components/StatsSection";
 import HalvingEvents from "@/components/HalvingEvents"; // Import the new HalvingEvents component
 import i18n from './i18n'; // Import from the separate file
+import LanguageSwitcher from "@/components/LanguageSwitcher"
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,11 +36,8 @@ export default function Home() {
 
   return (
     <main className="container mx-auto px-4 py-8 max-w-6xl">
-      <div>
-        <select name='language' onChange={onChange}>
-          <option value="en">English</option>
-          <option value="zh">中文</option>
-        </select>
+      <div className="flex justify-end mb-4">
+        <LanguageSwitcher />
       </div>
 
       <div className="text-center mb-12">
