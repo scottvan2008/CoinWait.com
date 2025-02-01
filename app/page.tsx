@@ -1,52 +1,61 @@
-"use client"; // Mark this component as a Client Component
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import Image from "next/image";
-import Link from "next/link";
-import { CountdownFlipper } from "@/components/countdown-flipper";
-import StatsSection from "@/components/StatsSection";
-import HalvingEvents from "@/components/HalvingEvents"; // Import the new HalvingEvents component
-import i18n from './i18n'; // Import from the separate file
+"use client"
+
+import { Suspense, useState, useCallback, useEffect } from "react"
+import { useTranslation } from "react-i18next"
+import Image from "next/image"
+import Link from "next/link"
+import { CountdownFlipper } from "@/components/countdown-flipper"
+import StatsSection from "@/components/StatsSection"
+import HalvingEvents from "@/components/HalvingEvents"
+import i18n from "./i18n"
 import LanguageSwitcher from "@/components/LanguageSwitcher"
+import { useTranslationLoader } from "@/hooks/useTranslationLoader"
 
-export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalImageSrc, setModalImageSrc] = useState("");
+function TranslatedContent() {
+  const { isLoaded, currentLanguage } = useTranslationLoader()
+  const { t } = useTranslation()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalImageSrc, setModalImageSrc] = useState("")
+  const [key, setKey] = useState(0)
 
-  // Function to open the modal with the clicked image
-  const openModal = (src: string) => {
-    setModalImageSrc(src);
-    setIsModalOpen(true);
-  };
+  const changeLanguage = useCallback((lang: string) => {
+    i18n.changeLanguage(lang)
+  }, [])
 
-  // Function to close the modal
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setModalImageSrc("");
-  };
+  useEffect(() => {
+    setKey((prevKey) => prevKey + 1)
+  }, []) // Removed unnecessary dependency: currentLanguage
 
-  const { t } = useTranslation();
+  const openModal = useCallback((src: string) => {
+    setModalImageSrc(src)
+    setIsModalOpen(true)
+  }, [])
 
-  const [language, setLanguage] = useState("English");
-  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    i18n.changeLanguage(e.target.value);
-    setLanguage(e.target.value === "en" ? "English" : "中文");
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false)
+    setModalImageSrc("")
+  }, [])
 
-  };
+  if (!isLoaded) {
+    return <div>Loading...</div>
+  }
 
   return (
-    <main className="container mx-auto px-4 py-8 max-w-6xl">
+    <main key={key} className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex justify-end mb-4">
-        <LanguageSwitcher />
+        <LanguageSwitcher currentLanguage={currentLanguage} onChangeLanguage={changeLanguage} />
       </div>
 
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-6 text-gray-900">{t("welcome")}</h1>
 
-        <CountdownFlipper targetDate="2028-04-14 15:19:14" labels={["Days", "Hours", "Minutes", "Seconds"]} />
+        <CountdownFlipper
+          targetDate="2028-04-14 15:19:14"
+          labels={[t("days"), t("hours"), t("minutes"), t("seconds")]}
+        />
 
         <div className="text-lg mt-6 text-gray-700">
-          Reward-Drop ETA date: <strong className="font-semibold">14 Apr 2028 15:19:14 UTC</strong>
+          {t("rewardDropETA")}: <strong className="font-semibold">14 Apr 2028 15:19:14 UTC</strong>
         </div>
       </div>
 
@@ -64,7 +73,7 @@ export default function Home() {
           <div onClick={() => openModal("/bitcoin-inflation-chart.png")} className="cursor-pointer">
             <Image
               src="/bitcoin-inflation-chart.png"
-              alt="Bitcoin inflation chart"
+              alt={t("bitcoinInflationChartAlt")}
               width={800}
               height={400}
               className="mx-auto rounded-lg shadow-lg"
@@ -85,7 +94,7 @@ export default function Home() {
           <div onClick={() => openModal("/tz7lSIL0.png")} className="cursor-pointer">
             <Image
               src="/tz7lSIL0.png"
-              alt="Bitcoin halving chart"
+              alt={t("bitcoinHalvingChartAlt")}
               width={1000}
               height={500}
               className="mx-auto rounded-lg shadow-lg"
@@ -98,7 +107,7 @@ export default function Home() {
 
       <footer className="text-center py-8 border-t border-gray-200">
         <div>
-          <Image src="/bitcoin.png" alt="Bitcoin logo" width={100} height={100} className="mx-auto mb-4" />
+          <Image src="/bitcoin.png" alt={t("bitcoinLogoAlt")} width={100} height={100} className="mx-auto mb-4" />
         </div>
         <h2>
           <Link
@@ -119,24 +128,32 @@ export default function Home() {
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition-colors"
-              aria-label="Close modal"
+              aria-label={t("closeModal")}
             >
               X
             </button>
             <div className="w-full h-full flex items-center justify-center">
               <Image
                 src={modalImageSrc || "/placeholder.svg"}
-                alt="Modal Image"
-                width={800}  // Set a reasonable default width
-                height={600} // Set a reasonable default height
+                alt={t("modalImageAlt")}
+                width={800}
+                height={600}
                 className="max-w-full max-h-full"
                 style={{ objectFit: "contain" }}
               />
-              
             </div>
           </div>
         </div>
       )}
     </main>
-  );
+  )
 }
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TranslatedContent />
+    </Suspense>
+  )
+}
+
