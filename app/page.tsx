@@ -6,18 +6,8 @@ import { CountdownFlipper } from "@/components/countdown-flipper";
 import StatsSection from "@/components/StatsSection";
 import HalvingEvents from "@/components/HalvingEvents"; // Import the new HalvingEvents component
 import i18n from 'i18next';
-import HttpBackend from 'i18next-http-backend';
-import { initReactI18next, useTranslation } from 'react-i18next';
-
-i18n
-  .use(HttpBackend)
-  .use(initReactI18next)
-  .init({
-    fallbackLng: 'en',
-    backend: {
-      loadPath: '/locales/{{lng}}/main.json',
-    },
-  });
+import { useTranslation } from 'react-i18next';
+import "@/i18n"; // Ensure this runs before using useTranslation
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,7 +30,8 @@ export default function Home() {
   const [language, setLanguage] = useState("English");
   const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(e.target.value);
-    setLanguage((language) => language === "English" ? "中文" : "English");
+    setLanguage(e.target.value === "en" ? "English" : "中文");
+
   };
 
   return (
@@ -144,6 +135,7 @@ export default function Home() {
                 className="max-w-full max-h-full"
                 style={{ objectFit: "contain" }}
               />
+              
             </div>
           </div>
         </div>
