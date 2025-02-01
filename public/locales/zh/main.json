@@ -47,5 +47,6 @@
   "secondHalvingDate": "2016年7月9日（UTC）",
   "thirdHalvingDate": "2020年5月11日（UTC）",
   "fourthHalvingDate": "2024年4月20日（UTC）",
-  "halvingEventDescription": "第{{number}}次减半事件发生在{{date}}，区块高度为"
+  "halvingEventDescription": "第{{number}}次减半事件发生在{{date}}，区块高度为",
+  "rewardDropETA": "预计减半日期"
 }
