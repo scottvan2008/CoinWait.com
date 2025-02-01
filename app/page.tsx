@@ -1,30 +1,30 @@
-// "use client"; // Mark this component as a Client Component
+"use client"; // Mark this component as a Client Component
 
-// /* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/no-unescaped-entities */
 
-// // pages/index.tsx
-// import Image from "next/image";
-// import Link from "next/link";
-// import { useState } from "react"; // Import useState for modal functionality
-// import { CountdownFlipper } from "@/components/countdown-flipper";
-// import StatsSection from "@/components/StatsSection";
-// import HalvingEvents from "@/components/HalvingEvents"; // Import the new HalvingEvents component
+// pages/index.tsx
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react"; // Import useState for modal functionality
+import { CountdownFlipper } from "@/components/countdown-flipper";
+import StatsSection from "@/components/StatsSection";
+import HalvingEvents from "@/components/HalvingEvents"; // Import the new HalvingEvents component
 
 // export default function Home() {
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [modalImageSrc, setModalImageSrc] = useState("");
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [modalImageSrc, setModalImageSrc] = useState("");
 
-//   // Function to open the modal with the clicked image
-//   const openModal = (src: string) => {
-//     setModalImageSrc(src);
-//     setIsModalOpen(true);
-//   };
+  // // Function to open the modal with the clicked image
+  // const openModal = (src: string) => {
+  //   setModalImageSrc(src);
+  //   setIsModalOpen(true);
+  // };
 
-//   // Function to close the modal
-//   const closeModal = () => {
-//     setIsModalOpen(false);
-//     setModalImageSrc("");
-//   };
+  // // Function to close the modal
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  //   setModalImageSrc("");
+  // };
 
 //   return (
 //     <main className="container mx-auto px-4 py-8 max-w-6xl">
@@ -232,80 +232,163 @@
 //   );
 // }
 
-import Image from "next/image"
 
-export default function Home() {
+import type { NextPage } from 'next';
+import React, { Suspense } from 'react';
+import i18n from 'i18next';
+import HttpBackend from 'i18next-http-backend';
+import { initReactI18next, useTranslation } from 'react-i18next';
+
+
+
+i18n
+  .use(HttpBackend)
+  .use(initReactI18next)
+  .init({
+    fallbackLng: 'en',
+    backend: {
+      loadPath: '/locales/{{lng}}/main.json',
+    },
+  });
+
+const Home: NextPage = () => {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImageSrc, setModalImageSrc] = useState("");
+
+  // Function to open the modal with the clicked image
+  const openModal = (src: string) => {
+    setModalImageSrc(src);
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalImageSrc("");
+  };
+
+  const { t } = useTranslation();
+
+  const [language, setLanguage] = useState("English");
+  const onChange = (e: any) => {
+    i18n.changeLanguage(e.target.value);
+    setLanguage((language) => language === "English" ? "中文" : "English");
+  };
+  
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="bg-amber-600 text-white p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">美味佳肴</h1>
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <a href="#" className="hover:underline">
-                  首页
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:underline">
-                  菜单
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:underline">
-                  关于我们
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:underline">
-                  联系我们
-                </a>
-              </li>
-            </ul>
-          </nav>
+    <Suspense fallback="loading">
+          
+
+<main className="container mx-auto px-4 py-8 max-w-6xl">
+
+<div>
+  <select name='language' onChange={onChange}>
+    <option value="en">English</option>
+    <option value="zh">中文</option>
+  </select>
+</div>
+
+
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold mb-6 text-gray-900">{t("welcome")}</h1>
+
+        <CountdownFlipper targetDate="2028-04-14 15:19:14" labels={["Days", "Hours", "Minutes", "Seconds"]} />
+
+        <div className="text-lg mt-6 text-gray-700">
+          Reward-Drop ETA date: <strong className="font-semibold">14 Apr 2028 15:19:14 UTC</strong>
         </div>
-      </header>
+      </div>
 
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4">欢迎来到美味佳肴</h2>
-          <p className="text-lg mb-4">
-            体验城中最好的美食，用爱和最新鲜的食材精心制作。
-          </p>
-          <Image
-            src="/placeholder.jpg?height=400&width=600"
-            alt="美味佳肴"
-            width={600}
-            height={400}
-            className="rounded-lg shadow-md"
-          />
-        </section>
+      <section className="prose max-w-none mb-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">{t("whatIsHalving")}</h2>
+        <p className="text-gray-700">{t("halvingExplanation")}</p>
 
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4">我们的特色</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xl font-semibold mb-2">完美意面</h3>
-              <p>手工制作的意面，搭配浓郁美味的酱汁。</p>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xl font-semibold mb-2">烧烤美食</h3>
-              <p>多汁的肉类和蔬菜，烤制得恰到好处。</p>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="text-xl font-semibold mb-2">奢华甜点</h3>
-              <p>满足任何渴望的甜蜜享受。</p>
+        <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t("whyHalving")}</h2>
+        <p className="text-gray-700">{t("whyHalvingExplanation")}</p>
+
+        <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t("predictableSupply")}</h2>
+        <p className="text-gray-700">{t("predictableSupplyExplanation")}</p>
+
+        <div className="my-8">
+          <div onClick={() => openModal("/bitcoin-inflation-chart.png")} className="cursor-pointer">
+            <Image
+              src="/bitcoin-inflation-chart.png"
+              alt="Bitcoin inflation chart"
+              width={800}
+              height={400}
+              className="mx-auto rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+
+        <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t("whoControls")}</h2>
+        <p className="text-gray-700">{t("whoControlsExplanation")}</p>
+
+        <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t("pastHalvingEvents")}</h2>
+        <HalvingEvents />
+
+        <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t("pastHalvingPerformance")}</h2>
+        <p className="text-gray-700">{t("pastHalvingExplanation")}</p>
+
+        <div className="my-8">
+          <div onClick={() => openModal("/tz7lSIL0.png")} className="cursor-pointer">
+            <Image
+              src="/tz7lSIL0.png"
+              alt="Bitcoin halving chart"
+              width={1000}
+              height={500}
+              className="mx-auto rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      </section>
+
+      <StatsSection />
+
+      <footer className="text-center py-8 border-t border-gray-200">
+        <div>
+          <Image src="/bitcoin.png" alt="Bitcoin logo" width={100} height={100} className="mx-auto mb-4" />
+        </div>
+        <h2>
+          <Link
+            href="https://www.litecoinblockhalf.com"
+            className="text-2xl text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            {t("litecoinHalving")}
+          </Link>
+        </h2>
+      </footer>
+
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+          onClick={closeModal}
+        >
+          <div className="relative max-w-[90vw] max-h-[90vh] overflow-auto">
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition-colors"
+            >
+              X
+            </button>
+            <div className="w-full h-full flex items-center justify-center">
+              <img
+                src={modalImageSrc || "/placeholder.svg"}
+                alt="Modal Image"
+                className="max-w-full max-h-full"
+                style={{ objectFit: "contain" }}
+              />
             </div>
           </div>
-        </section>
-      </main>
-
-      <footer className="bg-gray-800 text-white p-4">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2025 美味佳肴餐厅。保留所有权利。</p>
         </div>
-      </footer>
-    </div>
-  )
-}
+      )}
+    </main>
+
+
+    
+    </Suspense>
+  );
+};
+
+export default Home;
