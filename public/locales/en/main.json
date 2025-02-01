@@ -47,5 +47,6 @@
   "secondHalvingDate": "9th of July, 2016 (UTC)",
   "thirdHalvingDate": "11th of May, 2020 (UTC)",
   "fourthHalvingDate": "20th of April, 2024 (UTC)",
-  "halvingEventDescription": "The {{number}}{{number === 1 ? 'st' : number === 2 ? 'nd' : number === 3 ? 'rd' : 'th'}} halving event occurred on the {{date}} at block height"
+  "halvingEventDescription": "The {{number}}{{number === 1 ? 'st' : number === 2 ? 'nd' : number === 3 ? 'rd' : 'th'}} halving event occurred on the {{date}} at block height",
+  "rewardDropETA": "Reward-Drop ETA date"
 }
