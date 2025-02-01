@@ -62,16 +62,11 @@ function TranslatedContent() {
 
       {/* Main Content */}
       <div className="text-center mb-12">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">{t("welcome")}</h1>
-        <CountdownFlipper
-          targetDate="2028-04-14 15:19:14"
-          labels={[t("days"), t("hours"), t("minutes"), t("seconds")]}
-        />
-
-        {/* <div className="text-lg mt-6 text-gray-700">
-          {t("rewardDropETA")}: <strong className="font-semibold">14 Apr 2028 15:19:14 UTC</strong>
-        </div> */}
-      </div>
+  <h1 className="text-3xl font-bold text-gray-900 mb-4">{t("welcome")}</h1>
+  <CountdownFlipper
+    labels={[t("days"), t("hours"), t("minutes"), t("seconds")]}
+  />
+</div>
 
       <section className="prose max-w-none mb-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">{t("whatIsHalving")}</h2>
