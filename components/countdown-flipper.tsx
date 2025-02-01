@@ -3,12 +3,39 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 
+// Function to fetch the current Bitcoin block height
+const fetchCurrentBlockHeight = async () => {
+  try {
+    const response = await fetch('https://blockchain.info/q/getblockcount');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const blockHeight = await response.text();
+    return parseInt(blockHeight, 10);
+  } catch (error) {
+    console.error('Error fetching block height:', error);
+    return null;
+  }
+};
+
+// Function to calculate the estimated time until the next halving
+const calculateHalvingETA = (currentBlockHeight) => {
+  const blocksPerHalving = 210000;
+  const nextHalvingBlock = Math.ceil((currentBlockHeight + 1) / blocksPerHalving) * blocksPerHalving;
+  const remainingBlocks = nextHalvingBlock - currentBlockHeight;
+  // Assume an average block time of 10 minutes
+  const averageBlockTimeInMinutes = 10;
+  const remainingMinutes = remainingBlocks * averageBlockTimeInMinutes;
+  const currentDate = new Date();
+  const etaDate = new Date(currentDate.getTime() + remainingMinutes * 60 * 1000);
+  return etaDate;
+};
+
 interface CountdownProps {
-  targetDate: string;
   labels: string[];
 }
 
-export function CountdownFlipper({ targetDate, labels }: CountdownProps) {
+export function CountdownFlipper({ labels }: CountdownProps) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -17,27 +44,42 @@ export function CountdownFlipper({ targetDate, labels }: CountdownProps) {
   });
 
   const [isMounted, setIsMounted] = useState(false);
+  const [targetDate, setTargetDate] = useState<Date | null>(null);
 
   useEffect(() => {
     setIsMounted(true); // Mark the component as mounted
 
-    const calculateTimeLeft = () => {
-      const difference = +new Date(targetDate) - +new Date();
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        });
+    const fetchAndCalculate = async () => {
+      const currentBlockHeight = await fetchCurrentBlockHeight();
+      if (currentBlockHeight!== null) {
+        const etaDate = calculateHalvingETA(currentBlockHeight);
+        setTargetDate(etaDate);
       }
     };
 
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
+    fetchAndCalculate();
+  }, []);
 
-    return () => clearInterval(timer);
+  useEffect(() => {
+    if (targetDate) {
+      const calculateTimeLeft = () => {
+        const difference = +targetDate - +new Date();
+
+        if (difference > 0) {
+          setTimeLeft({
+            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((difference / 1000 / 60) % 60),
+            seconds: Math.floor((difference / 1000) % 60),
+          });
+        }
+      };
+
+      calculateTimeLeft();
+      const timer = setInterval(calculateTimeLeft, 1000);
+
+      return () => clearInterval(timer);
+    }
   }, [targetDate]);
 
   const formatNumber = (num: number) => String(num).padStart(2, "0");
@@ -71,7 +113,9 @@ export function CountdownFlipper({ targetDate, labels }: CountdownProps) {
       {/* Static Date Display Below Countdown Timer */}
       <div className="text-lg mt-6 text-gray-700">
         {`Reward-Drop ETA date: `}
-        <strong className="font-semibold">14 Apr 2028 15:19:14 UTC</strong>
+        <strong className="font-semibold">
+          {targetDate? targetDate.toUTCString() : 'Calculating...'}
+        </strong>
       </div>
     </div>
   );
