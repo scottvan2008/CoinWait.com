@@ -9,7 +9,6 @@ import i18n from 'i18next';
 import HttpBackend from 'i18next-http-backend';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
-
 i18n
   .use(HttpBackend)
   .use(initReactI18next)
@@ -20,8 +19,7 @@ i18n
     },
   });
 
-  export default function Home() {
-
+export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageSrc, setModalImageSrc] = useState("");
 
@@ -40,23 +38,19 @@ i18n
   const { t } = useTranslation();
 
   const [language, setLanguage] = useState("English");
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(e.target.value);
     setLanguage((language) => language === "English" ? "中文" : "English");
   };
-  
+
   return (
-          
-
-<main className="container mx-auto px-4 py-8 max-w-6xl">
-
-<div>
-  <select name='language' onChange={onChange}>
-    <option value="en">English</option>
-    <option value="zh">中文</option>
-  </select>
-</div>
-
+    <main className="container mx-auto px-4 py-8 max-w-6xl">
+      <div>
+        <select name='language' onChange={onChange}>
+          <option value="en">English</option>
+          <option value="zh">中文</option>
+        </select>
+      </div>
 
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-6 text-gray-900">{t("welcome")}</h1>
@@ -137,26 +131,23 @@ i18n
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition-colors"
+              aria-label="Close modal"
             >
               X
             </button>
             <div className="w-full h-full flex items-center justify-center">
-            <Image
-              src={modalImageSrc || "/placeholder.svg"}
-              alt="Modal Image"
-              width={800}  // Set a reasonable default width
-              height={600} // Set a reasonable default height
-              className="max-w-full max-h-full"
-              style={{ objectFit: "contain" }}
-            />
+              <Image
+                src={modalImageSrc || "/placeholder.svg"}
+                alt="Modal Image"
+                width={800}  // Set a reasonable default width
+                height={600} // Set a reasonable default height
+                className="max-w-full max-h-full"
+                style={{ objectFit: "contain" }}
+              />
             </div>
           </div>
         </div>
       )}
     </main>
-
-
-    
   );
-};
-
+}
