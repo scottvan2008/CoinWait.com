@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.20",
+    "axios": "^1.7.9",
     "chart.js": "^4.4.7",
     "clsx": "^2.1.1",
     "i18next": "^24.2.2",
