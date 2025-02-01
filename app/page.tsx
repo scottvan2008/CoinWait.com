@@ -119,19 +119,7 @@ function TranslatedContent() {
 
       <StatsSection />
 
-      {/* <footer className="text-center py-8 border-t border-gray-200">
-        <div>
-          <Image src="/bitcoin.png" alt={t("bitcoinLogoAlt")} width={100} height={100} className="mx-auto mb-4" />
-        </div>
-        <h2>
-          <Link
-            href="https://www.litecoinblockhalf.com"
-            className="text-2xl text-blue-600 hover:text-blue-800 transition-colors"
-          >
-            {t("litecoinHalving")}
-          </Link>
-        </h2>
-      </footer> */}
+
 
       <Footer />
 
