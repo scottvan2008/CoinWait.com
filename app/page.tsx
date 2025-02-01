@@ -1,13 +1,12 @@
 "use client"; // Mark this component as a Client Component
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react"; // Import useState for modal functionality
 import { CountdownFlipper } from "@/components/countdown-flipper";
 import StatsSection from "@/components/StatsSection";
 import HalvingEvents from "@/components/HalvingEvents"; // Import the new HalvingEvents component
-import i18n from 'i18next';
-import { useTranslation } from 'react-i18next';
-import "@/i18n"; // Ensure this runs before using useTranslation
+import i18n from './i18n'; // Import from the separate file
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
