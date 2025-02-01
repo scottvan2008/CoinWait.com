@@ -12,6 +12,7 @@ interface Language {
 const languages: Language[] = [
   { code: "en", name: "English", flag: "🇬🇧" },
   { code: "zh", name: "中文", flag: "🇨🇳" },
+  { code: "pt", name: "Português", flag: "🇵🇹" }, // 新增葡萄牙语选项
 ]
 
 interface LanguageSwitcherProps {
@@ -73,4 +74,3 @@ export default function LanguageSwitcher({ currentLanguage, onChangeLanguage }: 
     </div>
   )
 }
-
