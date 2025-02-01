@@ -9,6 +9,7 @@ import i18n from 'i18next';
 import HttpBackend from 'i18next-http-backend';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
+
 i18n
   .use(HttpBackend)
   .use(initReactI18next)
@@ -140,12 +141,14 @@ i18n
               X
             </button>
             <div className="w-full h-full flex items-center justify-center">
-              <img
-                src={modalImageSrc || "/placeholder.svg"}
-                alt="Modal Image"
-                className="max-w-full max-h-full"
-                style={{ objectFit: "contain" }}
-              />
+            <Image
+              src={modalImageSrc || "/placeholder.svg"}
+              alt="Modal Image"
+              width={800}  // Set a reasonable default width
+              height={600} // Set a reasonable default height
+              className="max-w-full max-h-full"
+              style={{ objectFit: "contain" }}
+            />
             </div>
           </div>
         </div>
