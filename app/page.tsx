@@ -10,6 +10,8 @@ import HalvingEvents from "@/components/HalvingEvents"
 import i18n from "./i18n"
 import LanguageSwitcher from "@/components/LanguageSwitcher"
 import { useTranslationLoader } from "@/hooks/useTranslationLoader"
+import Footer from "@/components/Footer";
+
 
 function TranslatedContent() {
   const { isLoaded, currentLanguage } = useTranslationLoader()
@@ -49,8 +51,8 @@ function TranslatedContent() {
           <Image
             src="/logo.png"
             alt="Logo"
-            width={190} // Fixed width
-            height={38} // Fixed height (adjust based on your logo's aspect ratio)
+            width={50} // Fixed width
+            height={50} // Fixed height (adjust based on your logo's aspect ratio)
             className="mr-4"
           />
         </div>
@@ -117,7 +119,7 @@ function TranslatedContent() {
 
       <StatsSection />
 
-      <footer className="text-center py-8 border-t border-gray-200">
+      {/* <footer className="text-center py-8 border-t border-gray-200">
         <div>
           <Image src="/bitcoin.png" alt={t("bitcoinLogoAlt")} width={100} height={100} className="mx-auto mb-4" />
         </div>
@@ -129,7 +131,9 @@ function TranslatedContent() {
             {t("litecoinHalving")}
           </Link>
         </h2>
-      </footer>
+      </footer> */}
+
+      <Footer />
 
       {isModalOpen && (
         <div
