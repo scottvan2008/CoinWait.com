@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { useTranslation } from "react-i18next"
 import { ChevronDown } from "lucide-react"
 
 interface Language {
@@ -15,12 +14,16 @@ const languages: Language[] = [
   { code: "zh", name: "中文", flag: "🇨🇳" },
 ]
 
-export default function LanguageSwitcher() {
-  const { i18n } = useTranslation()
+interface LanguageSwitcherProps {
+  currentLanguage: string
+  onChangeLanguage: (lang: string) => void
+}
+
+export default function LanguageSwitcher({ currentLanguage, onChangeLanguage }: LanguageSwitcherProps) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  const currentLanguage = languages.find((lang) => lang.code === i18n.language) || languages[0]
+  const currentLang = languages.find((lang) => lang.code === currentLanguage) || languages[0]
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -36,7 +39,7 @@ export default function LanguageSwitcher() {
   const toggleDropdown = () => setIsOpen(!isOpen)
 
   const changeLanguage = (langCode: string) => {
-    i18n.changeLanguage(langCode)
+    onChangeLanguage(langCode)
     setIsOpen(false)
   }
 
@@ -46,8 +49,8 @@ export default function LanguageSwitcher() {
         onClick={toggleDropdown}
         className="flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
-        <span>{currentLanguage.flag}</span>
-        <span>{currentLanguage.name}</span>
+        <span>{currentLang.flag}</span>
+        <span>{currentLang.name}</span>
         <ChevronDown className="h-4 w-4" />
       </button>
       {isOpen && (
