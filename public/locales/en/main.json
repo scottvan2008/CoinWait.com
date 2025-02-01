@@ -10,7 +10,7 @@
   "predictableSupply": "Predictable monetary supply",
   "predictableSupplyExplanation": "Since we know Bitcoin's issuance over time, people can rely on programmed/controlled supply. This is helpful to understand what the current inflation rate of Bitcoin is, what the future inflation rate will be at a specific point in time, how many Bitcoins are in circulation and how many remain left to be mined.",
   "whoControls": "Who controls the issuance of Bitcoin?",
-  "whoControlsExplanation": "The network itself controls the issuance of Bitcoins, derived by consensus through all Bitcoin participants. Ever since Bitcoin was first designed, the following consensus rules exist to this day:",
+  "whoControlsExplanation": "The network itself controls the issuance of Bitcoins, derived by consensus through all Bitcoin participants. Ever since Bitcoin was first designed, the following consensus rules have existed: a maximum of 21,000,000 Bitcoins will ever be produced, a target of 10-minute block intervals, a halving event occurring every 210,000 blocks (approximately every four years), and a block reward starting at 50 and halving continually at each halving event until it reaches 0 (approximately by the year 2140). Any change to these parameters requires all Bitcoin participants to agree by consensus to approve the change.",
   "pastHalvingEvents": "Past halving event dates",
   "pastHalvingPerformance": "Past halving price performance",
   "pastHalvingExplanation": "It is always a debate on what Bitcoin will do in terms of pricing for a halving event. Some people believe that the halving is already priced in by the market and thus there's no expectation for the price to do anything. Others believe that due to price equilibrium, a halving of supply should cause an increase in price if demand for Bitcoins is equal or greater than what it was before the halving event. Below is a chart showing past price performance of the last three halving events:",
@@ -48,5 +48,20 @@
   "thirdHalvingDate": "11th of May, 2020 (UTC)",
   "fourthHalvingDate": "20th of April, 2024 (UTC)",
   "halvingEventDescription": "The {{number}}{{number === 1 ? 'st' : number === 2 ? 'nd' : number === 3 ? 'rd' : 'th'}} halving event occurred on the {{date}} at block height",
-  "rewardDropETA": "Reward-Drop ETA date"
-}
+  "rewardDropETA": "Reward-Drop ETA date",
+  "halvingEvents": {
+    "title": "Bitcoin Halving Events",
+    "eventDescription": "The {{ordinal}} halving event occurred on the {{date}}",
+    "blockHeight": "Block Height",
+    "ordinal": {
+      "0": "first",
+      "1": "second",
+      "2": "third",
+      "3": "fourth"
+    },
+    "date1": "28th of November, 2012 (UTC)",
+    "date2": "9th of July, 2016 (UTC)",
+    "date3": "11th of May, 2020 (UTC)",
+    "date4": "20th of April, 2024 (UTC)"
+  }
+  }
