@@ -57,19 +57,23 @@
     },
     "calculating": "Calculando...",
     "halvingEvents": {
-      "title": "Eventos de Redução pela Metade do Bitcoin",
-      "eventDescription": "O {{ordinal}} evento de redução pela metade ocorreu em {{date}}",
-      "blockHeight": "Altura do Bloco",
-      "ordinal": {
-        "0": "primeiro",
-        "1": "segundo",
-        "2": "terceiro",
-        "3": "quarto"
+      "first": {
+        "date": "28 de novembro de 2012 (UTC)",
+        "description": "O primeiro evento de halving ocorreu em {{date}}"
       },
-      "date1": "28 de novembro de 2012 (UTC)",
-      "date2": "9 de julho de 2016 (UTC)",
-      "date3": "11 de maio de 2020 (UTC)",
-      "date4": "20 de abril de 2024 (UTC)"
-    }
+      "second": {
+        "date": "9 de julho de 2016 (UTC)",
+        "description": "O segundo evento de halving ocorreu em {{date}}"
+      },
+      "third": {
+        "date": "11 de maio de 2020 (UTC)",
+        "description": "O terceiro evento de halving ocorreu em {{date}}"
+      },
+      "fourth": {
+        "date": "20 de abril de 2024 (UTC)",
+        "description": "O quarto evento de halving ocorreu em {{date}}"
+      }
+    },
+    "blockHeight": "Altura do Bloco"
   }
   

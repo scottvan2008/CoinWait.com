@@ -57,19 +57,24 @@
   },
 
   "calculating": "Calculating...",
+
   "halvingEvents": {
-    "title": "Bitcoin Halving Events",
-    "eventDescription": "The {{ordinal}} halving event occurred on the {{date}}",
-    "blockHeight": "Block Height",
-    "ordinal": {
-      "0": "first",
-      "1": "second",
-      "2": "third",
-      "3": "fourth"
+    "first": {
+      "date": "28th of November, 2012 (UTC)",
+      "description": "The first halving event occurred on the {{date}}"
     },
-    "date1": "28th of November, 2012 (UTC)",
-    "date2": "9th of July, 2016 (UTC)",
-    "date3": "11th of May, 2020 (UTC)",
-    "date4": "20th of April, 2024 (UTC)"
-  }
+    "second": {
+      "date": "9th of July, 2016 (UTC)",
+      "description": "The second halving event occurred on the {{date}}"
+    },
+    "third": {
+      "date": "11th of May, 2020 (UTC)",
+      "description": "The third halving event occurred on the {{date}}"
+    },
+    "fourth": {
+      "date": "20th of April, 2024 (UTC)",
+      "description": "The fourth halving event occurred on the {{date}}"
+    }
+  },
+  "blockHeight": "Block Height"
   }
