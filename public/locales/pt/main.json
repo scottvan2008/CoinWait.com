@@ -13,7 +13,7 @@
     "whoControlsExplanation": "A própria rede controla a emissão de bitcoins, determinada por consenso entre todos os participantes do Bitcoin. Desde que o Bitcoin foi projetado, as seguintes regras de consenso existem: um máximo de 21.000.000 bitcoins será produzido, um intervalo-alvo de 10 minutos para cada bloco, um evento de redução pela metade a cada 210.000 blocos (aproximadamente a cada quatro anos) e uma recompensa inicial de 50 bitcoins por bloco, reduzindo-se pela metade em cada evento até atingir 0 (aproximadamente no ano 2140). Qualquer alteração nesses parâmetros exige consenso entre todos os participantes do Bitcoin para ser aprovada.",
     "pastHalvingEvents": "Datas dos eventos de redução pela metade anteriores",
     "pastHalvingPerformance": "Desempenho de preço após eventos de redução pela metade",
-    "pastHalvingExplanation": "Sempre há debate sobre o impacto da redução pela metade no preço do Bitcoin. Algumas pessoas acreditam que o evento já está precificado pelo mercado e que, portanto, não haverá mudanças significativas. Outras acreditam que, devido ao equilíbrio de oferta e demanda, a redução pela metade da oferta pode causar um aumento no preço, se a demanda por bitcoins for igual ou maior do que antes do evento. Abaixo está um gráfico mostrando o desempenho do preço nas últimas três reduções pela metade:",
+    "pastHalvingExplanation": "Sempre há um debate sobre o que o Bitcoin fará em termos de preço durante um evento de halving. Algumas pessoas acreditam que o halving já está precificado pelo mercado e, portanto, não há expectativa de que o preço mude. Outros acreditam que, devido ao equilíbrio de preços, a redução pela metade da oferta deve causar um aumento no preço, caso a demanda por Bitcoins seja igual ou maior do que antes do evento de halving. Abaixo está um gráfico mostrando o desempenho dos preços nos últimos quatro eventos de halving:",
     "bitcoinStats": "Estatísticas do Bitcoin",
     "litecoinHalving": "Contagem Regressiva para a Redução pela Metade do Litecoin",
     "totalBitcoinsCirculation": "Total de bitcoins em circulação",
@@ -49,20 +49,31 @@
     "fourthHalvingDate": "20 de abril de 2024 (UTC)",
     "halvingEventDescription": "O {{number}}{{number === 1 ? 'º' : number === 2 ? 'º' : number === 3 ? 'º' : 'º'}} evento de redução pela metade ocorreu em {{date}}, na altura do bloco",
     "rewardDropETA": "Data estimada para a próxima redução de recompensa",
+    "countdown": {
+      "days": "Dias",
+      "hours": "Horas",
+      "minutes": "Minutos",
+      "seconds": "Segundos"
+    },
+    "calculating": "Calculando...",
     "halvingEvents": {
-      "title": "Eventos de Redução pela Metade do Bitcoin",
-      "eventDescription": "O {{ordinal}} evento de redução pela metade ocorreu em {{date}}",
-      "blockHeight": "Altura do Bloco",
-      "ordinal": {
-        "0": "primeiro",
-        "1": "segundo",
-        "2": "terceiro",
-        "3": "quarto"
+      "first": {
+        "date": "28 de novembro de 2012 (UTC)",
+        "description": "O primeiro evento de halving ocorreu em {{date}}"
       },
-      "date1": "28 de novembro de 2012 (UTC)",
-      "date2": "9 de julho de 2016 (UTC)",
-      "date3": "11 de maio de 2020 (UTC)",
-      "date4": "20 de abril de 2024 (UTC)"
-    }
+      "second": {
+        "date": "9 de julho de 2016 (UTC)",
+        "description": "O segundo evento de halving ocorreu em {{date}}"
+      },
+      "third": {
+        "date": "11 de maio de 2020 (UTC)",
+        "description": "O terceiro evento de halving ocorreu em {{date}}"
+      },
+      "fourth": {
+        "date": "20 de abril de 2024 (UTC)",
+        "description": "O quarto evento de halving ocorreu em {{date}}"
+      }
+    },
+    "blockHeight": "Altura do Bloco"
   }
   

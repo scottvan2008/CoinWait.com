@@ -13,7 +13,7 @@
   "whoControlsExplanation": "比特币的发行由整个比特币网络通过共识机制控制。自比特币设计以来，以下共识规则一直存在：比特币的总量不会超过 21,000,000 枚，目标出块时间为 10 分钟，每 210,000 个区块发生一次减半（约每四年），初始区块奖励为 50 枚，并在每次减半事件中持续减半，直到奖励降为 0（预计到 2140 年）。任何对这些参数的更改都需要所有比特币参与者通过共识同意。",
   "pastHalvingEvents": "历史减半事件日期",
   "pastHalvingPerformance": "历史减半价格表现",
-  "pastHalvingExplanation": "关于比特币在减半事件期间的价格表现，一直存在争议。有些人认为市场已经提前消化了减半的影响，因此价格不会有明显波动。而另一些人认为，由于供需平衡，供应量减半会导致价格上涨，前提是比特币的需求等于或大于减半前的需求。下方是过去三次减半事件的价格表现图表：",
+  "pastHalvingExplanation": "关于比特币在减半事件期间的价格表现，一直存在争议。有些人认为市场已经提前消化了减半的影响，因此价格不会有明显波动。而另一些人认为，由于供需平衡，供应量减半会导致价格上涨，前提是比特币的需求等于或大于减半前的需求。下方是过去四次减半事件的价格表现图表：",
   "bitcoinStats": "比特币统计数据",
   "litecoinHalving": "莱特币区块奖励减半倒计时",
   "totalBitcoinsCirculation": "当前流通中的比特币总量",
@@ -48,20 +48,31 @@
   "thirdHalvingDate": "2020年5月11日（UTC）",
   "fourthHalvingDate": "2024年4月20日（UTC）",
   "halvingEventDescription": "第 {{number}}{{number === 1 ? '次' : number === 2 ? '次' : number === 3 ? '次' : '次'}} 减半事件发生在 {{date}}，区块高度为",
-  "rewardDropETA": "预计奖励下降日期",
+  "countdown": {
+    "days": "天",
+    "hours": "小时",
+    "minutes": "分钟",
+    "seconds": "秒"
+  },
+  "rewardDropETA": "奖励减半预计日期",
+  "calculating": "计算中...",
   "halvingEvents": {
-    "title": "比特币减半事件",
-    "eventDescription": "第 {{ordinal}} 次减半事件发生在 {{date}}",
-    "blockHeight": "区块高度",
-    "ordinal": {
-      "0": "第一次",
-      "1": "第二次",
-      "2": "第三次",
-      "3": "第四次"
+    "first": {
+      "date": "2012年11月28日（协调世界时）",
+      "description": "第一次减半事件发生于{{date}}"
     },
-    "date1": "2012年11月28日（UTC）",
-    "date2": "2016年7月9日（UTC）",
-    "date3": "2020年5月11日（UTC）",
-    "date4": "2024年4月20日（UTC）"
-  }
+    "second": {
+      "date": "2016年7月9日（协调世界时）",
+      "description": "第二次减半事件发生于{{date}}"
+    },
+    "third": {
+      "date": "2020年5月11日（协调世界时）",
+      "description": "第三次减半事件发生于{{date}}"
+    },
+    "fourth": {
+      "date": "2024年4月20日（协调世界时）",
+      "description": "第四次减半事件发生于{{date}}"
+    }
+  },
+  "blockHeight": "区块高度"
 }
