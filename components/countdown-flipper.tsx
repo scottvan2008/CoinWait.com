@@ -81,20 +81,16 @@ export function CountdownFlipper() {
 
   const formatNumber = (num: number) => String(num).padStart(2, "0")
 
-  const formatDate = (date: Date) => {
-    return (
-      date.toLocaleString("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        timeZone: "UTC",
-        hour12: false,
-      }) + " UTC"
-    )
-  }
+  // Function to format date as YYYY-MM-DD HH:mm:ss UTC
+const formatDate = (date: Date) => {
+    const year = date.getUTCFullYear();
+    const month = formatNumber(date.getUTCMonth() + 1);
+    const day = formatNumber(date.getUTCDate());
+    const hours = formatNumber(date.getUTCHours());
+    const minutes = formatNumber(date.getUTCMinutes());
+    const seconds = formatNumber(date.getUTCSeconds());
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} UTC`;
+};
 
   if (!isMounted) {
     return null
