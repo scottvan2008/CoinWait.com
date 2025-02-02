@@ -78,14 +78,24 @@ export default function StatsSection() {
     return blocksUntilNextHalving.toLocaleString() // Return as a formatted string
   }
 
-  //Helper function to calculate next retarget ETA
-  function calculateNextRetargetETA(currentBlockHeight: number, minutesBetweenBlocks: number) {
-    const blocksUntilRetarget = 2016 - (currentBlockHeight % 2016)
-    const minutesUntilRetarget = blocksUntilRetarget * minutesBetweenBlocks
-    const retargetDate = new Date(Date.now() + minutesUntilRetarget * 60000)
-    return retargetDate.toUTCString()
-  }
 
+// Helper function to calculate next retarget ETA
+function calculateNextRetargetETA(currentBlockHeight: number, minutesBetweenBlocks: number) {
+  const blocksUntilRetarget = 2016 - (currentBlockHeight % 2016);
+  const minutesUntilRetarget = blocksUntilRetarget * minutesBetweenBlocks;
+  const retargetDate = new Date(Date.now() + minutesUntilRetarget * 60000);
+
+  // 提取年、月、日、时、分、秒
+  const year = retargetDate.getUTCFullYear();
+  const month = String(retargetDate.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(retargetDate.getUTCDate()).padStart(2, '0');
+  const hour = String(retargetDate.getUTCHours()).padStart(2, '0');
+  const minute = String(retargetDate.getUTCMinutes()).padStart(2, '0');
+  const second = String(retargetDate.getUTCSeconds()).padStart(2, '0');
+
+  // 按照 YYYY-MM-DD HH:mm:ss UTC 格式进行拼接
+  return `${year}-${month}-${day} ${hour}:${minute}:${second} UTC`;
+}
   const getFallbackData = () => {
     // Return some static fallback data
     return {
