@@ -63,9 +63,7 @@ function TranslatedContent() {
       {/* Main Content */}
       <div className="text-center mb-12">
   <h1 className="text-3xl font-bold text-gray-900 mb-4">{t("welcome")}</h1>
-  <CountdownFlipper
-    labels={[t("days"), t("hours"), t("minutes"), t("seconds")]}
-  />
+  <CountdownFlipper  />
 </div>
 
       <section className="prose max-w-none mb-12">
