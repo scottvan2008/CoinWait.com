@@ -85,6 +85,17 @@ export function CountdownFlipper({ labels }: CountdownProps) {
 
     const formatNumber = (num: number) => String(num).padStart(2, "0");
 
+    // Function to format date as YYYY-MM-DD HH:mm:ss UTC
+    const formatDate = (date: Date) => {
+        const year = date.getUTCFullYear();
+        const month = formatNumber(date.getUTCMonth() + 1);
+        const day = formatNumber(date.getUTCDate());
+        const hours = formatNumber(date.getUTCHours());
+        const minutes = formatNumber(date.getUTCMinutes());
+        const seconds = formatNumber(date.getUTCSeconds());
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} UTC`;
+    };
+
     // Don't render anything until the component mounts on the client
     if (!isMounted) {
         return null;
@@ -115,7 +126,7 @@ export function CountdownFlipper({ labels }: CountdownProps) {
             <div className="text-lg mt-6 text-gray-700">
                 {`Reward-Drop ETA date: `}
                 <strong className="font-semibold">
-                    {targetDate? targetDate.toUTCString() : 'Calculating...'}
+                    {targetDate? formatDate(targetDate) : 'Calculating...'}
                 </strong>
             </div>
         </div>
