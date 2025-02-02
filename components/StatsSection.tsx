@@ -190,7 +190,7 @@ function calculateNextRetargetETA(currentBlockHeight: number, minutesBetweenBloc
           totalBlocks: marketData.n_blocks_total.toLocaleString(),
           blocksUntilHalving: blocksUntilHalving.toLocaleString(),
           totalHalvings: "4",
-          blockGenerationTime: `${marketData.minutes_between_blocks.toFixed(2)} minutes`,
+          blockGenerationTime: "10 minutes",
           blocksPerDay: "144",
           difficulty: marketData.difficulty.toLocaleString(),
           hashRate: `${(marketData.hash_rate / 1e9).toFixed(2)} EH/s`,
