@@ -49,6 +49,14 @@
   "fourthHalvingDate": "20th of April, 2024 (UTC)",
   "halvingEventDescription": "The {{number}}{{number === 1 ? 'st' : number === 2 ? 'nd' : number === 3 ? 'rd' : 'th'}} halving event occurred on the {{date}} at block height",
   "rewardDropETA": "Reward-Drop ETA date",
+  "countdown": {
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds"
+  },
+
+  "calculating": "Calculating...",
   "halvingEvents": {
     "title": "Bitcoin Halving Events",
     "eventDescription": "The {{ordinal}} halving event occurred on the {{date}}",

@@ -48,7 +48,14 @@
   "thirdHalvingDate": "2020年5月11日（UTC）",
   "fourthHalvingDate": "2024年4月20日（UTC）",
   "halvingEventDescription": "第 {{number}}{{number === 1 ? '次' : number === 2 ? '次' : number === 3 ? '次' : '次'}} 减半事件发生在 {{date}}，区块高度为",
-  "rewardDropETA": "预计奖励下降日期",
+  "countdown": {
+    "days": "天",
+    "hours": "小时",
+    "minutes": "分钟",
+    "seconds": "秒"
+  },
+  "rewardDropETA": "奖励减半预计日期",
+  "calculating": "计算中...",
   "halvingEvents": {
     "title": "比特币减半事件",
     "eventDescription": "第 {{ordinal}} 次减半事件发生在 {{date}}",

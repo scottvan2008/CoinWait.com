@@ -49,6 +49,13 @@
     "fourthHalvingDate": "20 de abril de 2024 (UTC)",
     "halvingEventDescription": "O {{number}}{{number === 1 ? 'º' : number === 2 ? 'º' : number === 3 ? 'º' : 'º'}} evento de redução pela metade ocorreu em {{date}}, na altura do bloco",
     "rewardDropETA": "Data estimada para a próxima redução de recompensa",
+    "countdown": {
+      "days": "Dias",
+      "hours": "Horas",
+      "minutes": "Minutos",
+      "seconds": "Segundos"
+    },
+    "calculating": "Calculando...",
     "halvingEvents": {
       "title": "Eventos de Redução pela Metade do Bitcoin",
       "eventDescription": "O {{ordinal}} evento de redução pela metade ocorreu em {{date}}",
