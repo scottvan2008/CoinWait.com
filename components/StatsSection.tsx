@@ -32,51 +32,59 @@ interface BitcoinStats {
 }
 
 export default function StatsSection() {
-  const { t } = useTranslation();
-  const [statsData, setStatsData] = useState<BitcoinStats | null>(null);
-  const [dataState, setDataState] = useState<"loading" | "error" | "success">("loading");
+  const { t } = useTranslation()
+  const [statsData, setStatsData] = useState<BitcoinStats | null>(null)
+  const [dataState, setDataState] = useState<"loading" | "error" | "success">("loading")
+
+  // Function to calculate the block reward based on block height
+  const calculateBlockReward = (currentBlockHeight: number): number => {
+    const halvingInterval = 210000;
+    const initialReward = 50;
+    const halvings = Math.floor(currentBlockHeight / halvingInterval);
+    return initialReward / Math.pow(2, halvings);
+  };
 
   // Function to calculate the total bitcoins mined based on halvings
   const calculateBitcoinsCirculation = (totalBlocks: number): string => {
-    const halvingIntervals = [210000, 420000, 630000, 840000, 1050000, 1260000]; // Define block intervals for each halving
-    const rewards = [50, 25, 12.5, 6.25, 3.125, 1.5625]; // Define the block rewards for each halving period
+    const halvingIntervals = [210000, 420000, 630000, 840000, 1050000, 1260000] // Define block intervals for each halving
+    const rewards = [50, 25, 12.5, 6.25, 3.125, 1.5625] // Define the block rewards for each halving period
 
-    let bitcoinsMined = 0;
-    let previousHalvingBlock = 0;
+    let bitcoinsMined = 0
+    let previousHalvingBlock = 0
 
     for (let i = 0; i < halvingIntervals.length; i++) {
       if (totalBlocks > halvingIntervals[i]) {
-        const blocksMinedInCurrentPeriod = halvingIntervals[i] - previousHalvingBlock;
-        bitcoinsMined += blocksMinedInCurrentPeriod * rewards[i];
-        previousHalvingBlock = halvingIntervals[i];
+        const blocksMinedInCurrentPeriod = halvingIntervals[i] - previousHalvingBlock
+        bitcoinsMined += blocksMinedInCurrentPeriod * rewards[i]
+        previousHalvingBlock = halvingIntervals[i]
       } else {
-        bitcoinsMined += (totalBlocks - previousHalvingBlock) * rewards[i];
-        break;
+        bitcoinsMined += (totalBlocks - previousHalvingBlock) * rewards[i]
+        break
       }
     }
 
     if (totalBlocks > halvingIntervals[halvingIntervals.length - 1]) {
-      bitcoinsMined += (totalBlocks - halvingIntervals[halvingIntervals.length - 1]) * rewards[rewards.length - 1];
+      bitcoinsMined += (totalBlocks - halvingIntervals[halvingIntervals.length - 1]) * rewards[rewards.length - 1]
     }
 
-    return bitcoinsMined.toLocaleString();
-  };
+    return bitcoinsMined.toLocaleString()
+  }
 
   // Function to calculate the number of blocks until the next halving
   const calculateBitcoinsUntilNextHalving = (currentBlockHeight: number): string => {
-    const halvingInterval = 210000; // Blocks per halving
-    const nextHalvingBlock = Math.ceil(currentBlockHeight / halvingInterval) * halvingInterval; // The next halving block number
-    const blocksUntilNextHalving = nextHalvingBlock - currentBlockHeight; // The number of blocks left until the next halving
-    return blocksUntilNextHalving.toLocaleString(); // Return as a formatted string
-  };
+    const halvingInterval = 210000 // Blocks per halving
+    const nextHalvingBlock = Math.ceil(currentBlockHeight / halvingInterval) * halvingInterval // The next halving block number
+    const blocksUntilNextHalving = nextHalvingBlock - currentBlockHeight // The number of blocks left until the next halving
+    return blocksUntilNextHalving.toLocaleString() // Return as a formatted string
+  }
 
-  // Helper function to calculate next retarget ETA
-  const calculateNextRetargetETA = (currentBlockHeight: number, minutesBetweenBlocks: number) => {
-    const blocksUntilRetarget = 2016 - (currentBlockHeight % 2016);
-    const minutesUntilRetarget = blocksUntilRetarget * minutesBetweenBlocks;
-    const retargetDate = new Date(Date.now() + minutesUntilRetarget * 60000);
-    return retargetDate.toUTCString();
-  };
+  //Helper function to calculate next retarget ETA
+  function calculateNextRetargetETA(currentBlockHeight: number, minutesBetweenBlocks: number) {
+    const blocksUntilRetarget = 2016 - (currentBlockHeight % 2016)
+    const minutesUntilRetarget = blocksUntilRetarget * minutesBetweenBlocks
+    const retargetDate = new Date(Date.now() + minutesUntilRetarget * 60000)
+    return retargetDate.toUTCString()
+  }
 
   const getFallbackData = () => {
     // Return some static fallback data
@@ -99,7 +107,7 @@ export default function StatsSection() {
       totalBlocks: "780000",
       blocksUntilHalving: "130000",
       totalHalvings: "4",
-      blockGenerationTime: "10 minutes",
+      blockGenerationTime: "9.75 minutes",
       blocksPerDay: "144",
       difficulty: "30000000000000",
       hashRate: "200.00 EH/s",
@@ -108,50 +116,50 @@ export default function StatsSection() {
       nextRetargetHeight: "883008",
       blocksUntilRetarget: "1000",
       nextRetargetETA: "Mon, 27 Nov 2023 16:15:00 GMT",
-    };
-  };
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async (retryCount = 0) => {
-      setDataState("loading");
+    async function fetchData(retryCount = 0) {
+      setDataState("loading")
       try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
 
         const [priceResponse, statsResponse] = await Promise.all([
           fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd", {
             signal: controller.signal,
           }),
           fetch("https://api.blockchain.info/stats", { signal: controller.signal }),
-        ]);
+        ])
 
-        clearTimeout(timeoutId);
+        clearTimeout(timeoutId)
 
         if (!priceResponse.ok) {
-          throw new Error(`Price API error: ${priceResponse.status} ${priceResponse.statusText}`);
+          throw new Error(`Price API error: ${priceResponse.status} ${priceResponse.statusText}`)
         }
         if (!statsResponse.ok) {
-          throw new Error(`Stats API error: ${statsResponse.status} ${statsResponse.statusText}`);
+          throw new Error(`Stats API error: ${statsResponse.status} ${statsResponse.statusText}`)
         }
 
-        const bitcoinData = await priceResponse.json();
-        const marketData = await statsResponse.json();
+        const bitcoinData = await priceResponse.json()
+        const marketData = await statsResponse.json()
 
-        const currentPrice = bitcoinData.bitcoin.usd;
-        const currentBlockHeight = marketData.n_blocks_total;
-        const blocksUntilHalving = 210000 - (currentBlockHeight % 210000);
-        const currentBlockReward = 6.25; // Current block reward in BTC
-        const nextBlockReward = currentBlockReward / 2;
+        const currentPrice = bitcoinData.bitcoin.usd
+        const currentBlockHeight = marketData.n_blocks_total
+        const blocksUntilHalving = 210000 - (currentBlockHeight % 210000)
 
-        const totalBitcoinsCirculation = calculateBitcoinsCirculation(currentBlockHeight);
-        const bitcoinsUntilNextHalving = blocksUntilHalving * currentBlockReward;
-        const marketCap = currentPrice * Number(totalBitcoinsCirculation.replace(/,/g, ""));
-        const inflationPerDay = currentBlockReward * 144 * currentPrice; // 144 blocks per day on average
-        const inflationPerDayAfterHalving = nextBlockReward * 144 * currentPrice;
-        const inflationUntilNextHalving = bitcoinsUntilNextHalving * currentPrice;
-        const blockReward = currentBlockReward * currentPrice;
+        // Calculate the current block reward based on the block height
+        const currentBlockReward = calculateBlockReward(currentBlockHeight);
+        const nextBlockReward = currentBlockReward / 2
 
-        const minutesBetweenBlocks = marketData.minutes_between_blocks;
+        const totalBitcoinsCirculation = calculateBitcoinsCirculation(currentBlockHeight)
+        const bitcoinsUntilNextHalving = blocksUntilHalving * currentBlockReward
+        const marketCap = currentPrice * Number(totalBitcoinsCirculation.replace(/,/g, ""))
+        const inflationPerDay = currentBlockReward * 144 * currentPrice // 144 blocks per day on average
+        const inflationPerDayAfterHalving = nextBlockReward * 144 * currentPrice
+        const inflationUntilNextHalving = bitcoinsUntilNextHalving * currentPrice
+        const blockReward = currentBlockReward * currentPrice
 
         setStatsData({
           bitcoinPrice: `$${bitcoinData.bitcoin.usd.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
@@ -172,7 +180,7 @@ export default function StatsSection() {
           totalBlocks: marketData.n_blocks_total.toLocaleString(),
           blocksUntilHalving: blocksUntilHalving.toLocaleString(),
           totalHalvings: "4",
-          blockGenerationTime: "10 minutes",
+          blockGenerationTime: `${marketData.minutes_between_blocks.toFixed(2)} minutes`,
           blocksPerDay: "144",
           difficulty: marketData.difficulty.toLocaleString(),
           hashRate: `${(marketData.hash_rate / 1e9).toFixed(2)} EH/s`,
@@ -180,16 +188,19 @@ export default function StatsSection() {
           pendingSoftForks: "",
           nextRetargetHeight: "883008",
           blocksUntilRetarget: (2016 - (currentBlockHeight % 2016)).toLocaleString(),
-          nextRetargetETA: calculateNextRetargetETA(currentBlockHeight, minutesBetweenBlocks),
-        });
-        setDataState("success");
+          nextRetargetETA: calculateNextRetargetETA(currentBlockHeight, marketData.minutes_between_blocks),
+        })
+        setDataState("success")
       } catch (error) {
         console.error("Error fetching Bitcoin data:", error);
-
-        if (error instanceof Error && error.name === "AbortError") {
+        
+        // 使用 instanceof 检查是否为 DOMException
+        if (error instanceof DOMException && error.name === "AbortError") {
+          console.error("Request timed out");
+        } else if (error instanceof Error && error.name === "AbortError") {
           console.error("Request aborted");
         }
-
+      
         if (retryCount < 3) {
           console.log(`Retrying... Attempt ${retryCount + 1}`);
           setTimeout(() => fetchData(retryCount + 1), 2000);
@@ -198,14 +209,14 @@ export default function StatsSection() {
           setDataState("error");
         }
       }
-    };
+    }
 
-    fetchData();
+    fetchData()
 
     // Refresh data every 5 minutes
-    const interval = setInterval(fetchData, 300000);
-    return () => clearInterval(interval);
-  }, []);
+    const interval = setInterval(fetchData, 300000)
+    return () => clearInterval(interval)
+  }, [])
 
   const stats = [
     { label: t("totalBitcoinsCirculation"), value: statsData?.totalBitcoinsCirculation || "Loading..." },
@@ -235,7 +246,7 @@ export default function StatsSection() {
     { label: t("nextRetargetHeight"), value: statsData?.nextRetargetHeight || "Loading..." },
     { label: t("blocksUntilRetarget"), value: statsData?.blocksUntilRetarget || "Loading..." },
     { label: t("nextRetargetETA"), value: statsData?.nextRetargetETA || "Loading..." },
-  ];
+  ]
 
   return (
     <section className="mb-8">
@@ -274,5 +285,6 @@ export default function StatsSection() {
           ))}
         </div>
       )}
-    </section> // 这里 <section> 标签是正确关闭的
-  )}
+    </section>
+  )
+}
