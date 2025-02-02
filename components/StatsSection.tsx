@@ -36,6 +36,14 @@ export default function StatsSection() {
   const [statsData, setStatsData] = useState<BitcoinStats | null>(null)
   const [dataState, setDataState] = useState<"loading" | "error" | "success">("loading")
 
+  // Function to calculate the block reward based on block height
+  const calculateBlockReward = (currentBlockHeight: number): number => {
+    const halvingInterval = 210000;
+    const initialReward = 50;
+    const halvings = Math.floor(currentBlockHeight / halvingInterval);
+    return initialReward / Math.pow(2, halvings);
+  };
+
   // Function to calculate the total bitcoins mined based on halvings
   const calculateBitcoinsCirculation = (totalBlocks: number): string => {
     const halvingIntervals = [210000, 420000, 630000, 840000, 1050000, 1260000] // Define block intervals for each halving
@@ -140,7 +148,9 @@ export default function StatsSection() {
         const currentPrice = bitcoinData.bitcoin.usd
         const currentBlockHeight = marketData.n_blocks_total
         const blocksUntilHalving = 210000 - (currentBlockHeight % 210000)
-        const currentBlockReward = 6.25 // Current block reward in BTC
+
+        // Calculate the current block reward based on the block height
+        const currentBlockReward = calculateBlockReward(currentBlockHeight);
         const nextBlockReward = currentBlockReward / 2
 
         const totalBitcoinsCirculation = calculateBitcoinsCirculation(currentBlockHeight)
