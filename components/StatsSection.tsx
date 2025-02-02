@@ -34,95 +34,177 @@ interface BitcoinStats {
 export default function StatsSection() {
   const { t } = useTranslation()
   const [statsData, setStatsData] = useState<BitcoinStats | null>(null)
+  const [dataState, setDataState] = useState<"loading" | "error" | "success">("loading")
 
   // Function to calculate the total bitcoins mined based on halvings
   const calculateBitcoinsCirculation = (totalBlocks: number): string => {
-    const halvingIntervals = [210000, 420000, 630000, 840000, 1050000, 1260000]; // Define block intervals for each halving
-    const rewards = [50, 25, 12.5, 6.25, 3.125, 1.5625]; // Define the block rewards for each halving period
+    const halvingIntervals = [210000, 420000, 630000, 840000, 1050000, 1260000] // Define block intervals for each halving
+    const rewards = [50, 25, 12.5, 6.25, 3.125, 1.5625] // Define the block rewards for each halving period
 
-    let bitcoinsMined = 0;
-    let previousHalvingBlock = 0;
+    let bitcoinsMined = 0
+    let previousHalvingBlock = 0
 
     for (let i = 0; i < halvingIntervals.length; i++) {
       if (totalBlocks > halvingIntervals[i]) {
-        const blocksMinedInCurrentPeriod = halvingIntervals[i] - previousHalvingBlock;
-        bitcoinsMined += blocksMinedInCurrentPeriod * rewards[i];
-        previousHalvingBlock = halvingIntervals[i];
+        const blocksMinedInCurrentPeriod = halvingIntervals[i] - previousHalvingBlock
+        bitcoinsMined += blocksMinedInCurrentPeriod * rewards[i]
+        previousHalvingBlock = halvingIntervals[i]
       } else {
-        bitcoinsMined += (totalBlocks - previousHalvingBlock) * rewards[i];
-        break;
+        bitcoinsMined += (totalBlocks - previousHalvingBlock) * rewards[i]
+        break
       }
     }
 
     if (totalBlocks > halvingIntervals[halvingIntervals.length - 1]) {
-      bitcoinsMined += (totalBlocks - halvingIntervals[halvingIntervals.length - 1]) * rewards[rewards.length - 1];
+      bitcoinsMined += (totalBlocks - halvingIntervals[halvingIntervals.length - 1]) * rewards[rewards.length - 1]
     }
 
-    return bitcoinsMined.toLocaleString();
+    return bitcoinsMined.toLocaleString()
   }
 
   // Function to calculate the number of blocks until the next halving
   const calculateBitcoinsUntilNextHalving = (currentBlockHeight: number): string => {
-    const halvingInterval = 210000;  // Blocks per halving
-    const nextHalvingBlock = Math.ceil(currentBlockHeight / halvingInterval) * halvingInterval;  // The next halving block number
-    const blocksUntilNextHalving = nextHalvingBlock - currentBlockHeight;  // The number of blocks left until the next halving
-    return blocksUntilNextHalving.toLocaleString();  // Return as a formatted string
+    const halvingInterval = 210000 // Blocks per halving
+    const nextHalvingBlock = Math.ceil(currentBlockHeight / halvingInterval) * halvingInterval // The next halving block number
+    const blocksUntilNextHalving = nextHalvingBlock - currentBlockHeight // The number of blocks left until the next halving
+    return blocksUntilNextHalving.toLocaleString() // Return as a formatted string
+  }
+
+  //Helper function to calculate next retarget ETA
+  function calculateNextRetargetETA(currentBlockHeight: number, minutesBetweenBlocks: number) {
+    const blocksUntilRetarget = 2016 - (currentBlockHeight % 2016)
+    const minutesUntilRetarget = blocksUntilRetarget * minutesBetweenBlocks
+    const retargetDate = new Date(Date.now() + minutesUntilRetarget * 60000)
+    return retargetDate.toUTCString()
+  }
+
+  const getFallbackData = () => {
+    // Return some static fallback data
+    return {
+      bitcoinPrice: "$30,000.00",
+      totalBitcoinsCirculation: "19,000,000",
+      totalBitcoinsProduced: "21,000,000",
+      percentageMined: "90.48%",
+      bitcoinsLeftToMine: "2,000,000",
+      bitcoinsUntilNextHalving: "100,000",
+      marketCap: "$570,000,000,000",
+      bitcoinsPerDay: "450",
+      bitcoinsPerDayAfterHalving: "225",
+      inflationRateAnnual: "0.83%",
+      inflationRateAfterHalving: "0.40%",
+      inflationPerDay: "$67500.00",
+      inflationPerDayAfterHalving: "$33750.00",
+      inflationUntilNextHalving: "$6250000.00",
+      blockReward: "$6250.00",
+      totalBlocks: "780000",
+      blocksUntilHalving: "130000",
+      totalHalvings: "4",
+      blockGenerationTime: "9.75 minutes",
+      blocksPerDay: "144",
+      difficulty: "30000000000000",
+      hashRate: "200.00 EH/s",
+      activatedSoftForks: "bip34,bip66,bip65,csv,segwit,taproot",
+      pendingSoftForks: "",
+      nextRetargetHeight: "883008",
+      blocksUntilRetarget: "1000",
+      nextRetargetETA: "Mon, 27 Nov 2023 16:15:00 GMT",
+    }
   }
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData(retryCount = 0) {
+      setDataState("loading")
       try {
-        const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd")
-        const bitcoinData = await response.json()
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
 
-        const marketDataResponse = await fetch("https://api.blockchain.info/stats")
-        const marketData = await marketDataResponse.json()
+        const [priceResponse, statsResponse] = await Promise.all([
+          fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd", {
+            signal: controller.signal,
+          }),
+          fetch("https://api.blockchain.info/stats", { signal: controller.signal }),
+        ])
 
-        // Calculate the total bitcoins in circulation based on blocks mined
-        const totalBitcoinsCirculation = calculateBitcoinsCirculation(marketData.n_blocks_total)
+        clearTimeout(timeoutId)
 
-        // Calculate the number of blocks left until the next halving
-        const bitcoinsUntilNextHalving = calculateBitcoinsUntilNextHalving(marketData.n_blocks_total)
+        if (!priceResponse.ok) {
+          throw new Error(`Price API error: ${priceResponse.status} ${priceResponse.statusText}`)
+        }
+        if (!statsResponse.ok) {
+          throw new Error(`Stats API error: ${statsResponse.status} ${statsResponse.statusText}`)
+        }
 
-        // Here, I map your fetched data to match the entire stats array
+        const bitcoinData = await priceResponse.json()
+        const marketData = await statsResponse.json()
+
+        const currentPrice = bitcoinData.bitcoin.usd
+        const currentBlockHeight = marketData.n_blocks_total
+        const blocksUntilHalving = 210000 - (currentBlockHeight % 210000)
+        const currentBlockReward = 6.25 // Current block reward in BTC
+        const nextBlockReward = currentBlockReward / 2
+
+        const totalBitcoinsCirculation = calculateBitcoinsCirculation(currentBlockHeight)
+        const bitcoinsUntilNextHalving = blocksUntilHalving * currentBlockReward
+        const marketCap = currentPrice * Number(totalBitcoinsCirculation.replace(/,/g, ""))
+        const inflationPerDay = currentBlockReward * 144 * currentPrice // 144 blocks per day on average
+        const inflationPerDayAfterHalving = nextBlockReward * 144 * currentPrice
+        const inflationUntilNextHalving = bitcoinsUntilNextHalving * currentPrice
+        const blockReward = currentBlockReward * currentPrice
+
         setStatsData({
-          bitcoinPrice: `$${bitcoinData.bitcoin.usd.toLocaleString()}`,
-          totalBitcoinsCirculation, // Use the calculated value
-          totalBitcoinsProduced: "21,000,000", // This is static, as this is the maximum supply of Bitcoin
-          percentageMined: `${((Number(totalBitcoinsCirculation.replace(/,/g, '')) / 21000000) * 100).toFixed(2)}%`, // Adjusted formula
-          bitcoinsLeftToMine: `${(21000000 - Number(totalBitcoinsCirculation.replace(/,/g, ''))).toLocaleString()}`, // Subtract mined from total supply
-          bitcoinsUntilNextHalving, // Use the dynamically calculated value
-          marketCap: `$${(marketData.market_price_usd * marketData.n_blocks_total).toLocaleString()}`,
-          bitcoinsPerDay: "450", // Placeholder value
-          bitcoinsPerDayAfterHalving: "225", // Placeholder value
-          inflationRateAnnual: "0.83%", // Placeholder, needs to be calculated from the market or halving data
-          inflationRateAfterHalving: "0.40%", // Placeholder
-          inflationPerDay: `$${marketData.market_price_usd * 6.25}`, // Placeholder based on market price * block reward
-          inflationPerDayAfterHalving: `$${(marketData.market_price_usd * 3.125).toLocaleString()}`, // Placeholder after halving
-          inflationUntilNextHalving: `$${(marketData.market_price_usd * 3.125 * 526728).toLocaleString()}`, // Placeholder
-          blockReward: `$${(marketData.market_price_usd * 6.25).toLocaleString()}`,
+          bitcoinPrice: `$${bitcoinData.bitcoin.usd.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+          totalBitcoinsCirculation,
+          totalBitcoinsProduced: "21,000,000",
+          percentageMined: `${((Number(totalBitcoinsCirculation.replace(/,/g, "")) / 21000000) * 100).toFixed(2)}%`,
+          bitcoinsLeftToMine: `${(21000000 - Number(totalBitcoinsCirculation.replace(/,/g, ""))).toLocaleString()}`,
+          bitcoinsUntilNextHalving: bitcoinsUntilNextHalving.toLocaleString(undefined, { maximumFractionDigits: 2 }),
+          marketCap: `$${marketCap.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+          bitcoinsPerDay: "450",
+          bitcoinsPerDayAfterHalving: "225",
+          inflationRateAnnual: "0.83%",
+          inflationRateAfterHalving: "0.40%",
+          inflationPerDay: `$${inflationPerDay.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+          inflationPerDayAfterHalving: `$${inflationPerDayAfterHalving.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+          inflationUntilNextHalving: `$${inflationUntilNextHalving.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+          blockReward: `$${blockReward.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
           totalBlocks: marketData.n_blocks_total.toLocaleString(),
-          blocksUntilHalving: "168,553", // Placeholder
-          totalHalvings: "4", // Static as Bitcoin has had 4 halvings
+          blocksUntilHalving: blocksUntilHalving.toLocaleString(),
+          totalHalvings: "4",
           blockGenerationTime: `${marketData.minutes_between_blocks.toFixed(2)} minutes`,
-          blocksPerDay: "144", // Placeholder, needs to be calculated based on block time
+          blocksPerDay: "144",
           difficulty: marketData.difficulty.toLocaleString(),
-          hashRate: `${(marketData.hash_rate / 1e9).toFixed(2)} EH/s`, // Convert to Exahashes
-          activatedSoftForks: "bip34,bip66,bip65,csv,segwit,taproot", // Static
-          pendingSoftForks: "", // Static or needs an API for pending soft forks
-          nextRetargetHeight: "883008", // Placeholder
-          blocksUntilRetarget: "1561", // Placeholder
-          nextRetargetETA: "10 days, 20 hours, 9 minutes", // Placeholder
+          hashRate: `${(marketData.hash_rate / 1e9).toFixed(2)} EH/s`,
+          activatedSoftForks: "bip34,bip66,bip65,csv,segwit,taproot",
+          pendingSoftForks: "",
+          nextRetargetHeight: "883008",
+          blocksUntilRetarget: (2016 - (currentBlockHeight % 2016)).toLocaleString(),
+          nextRetargetETA: calculateNextRetargetETA(currentBlockHeight, marketData.minutes_between_blocks),
         })
+        setDataState("success")
       } catch (error) {
-        console.error("Error fetching Bitcoin data:", error)
+        console.error("Error fetching Bitcoin data:", error);
+        
+        // 使用 instanceof 检查是否为 DOMException
+        if (error instanceof DOMException && error.name === "AbortError") {
+          console.error("Request timed out");
+        } else if (error instanceof Error && error.name === "AbortError") {
+          console.error("Request aborted");
+        }
+      
+        if (retryCount < 3) {
+          console.log(`Retrying... Attempt ${retryCount + 1}`);
+          setTimeout(() => fetchData(retryCount + 1), 2000);
+        } else {
+          setStatsData(null);
+          setDataState("error");
+        }
       }
     }
 
     fetchData()
 
-    // Refresh data every 60 seconds
-    const interval = setInterval(fetchData, 60000)
+    // Refresh data every 5 minutes
+    const interval = setInterval(fetchData, 300000)
     return () => clearInterval(interval)
   }, [])
 
@@ -161,14 +243,39 @@ export default function StatsSection() {
       <h2 className="text-2xl font-bold mb-6 text-gray-900" id="stats">
         {t("bitcoinStats")}
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {stats.map((stat, index) => (
-          <div key={index} className="bg-blue-50 p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-blue-100">
-            <p className="text-sm font-medium text-gray-600 mb-1">{stat.label}</p>
-            <p className="text-xl font-semibold text-gray-900 break-words">{stat.value}</p>
+      {dataState === "loading" && <p>Loading...</p>}
+      {dataState === "error" && (
+        <>
+          <p className="text-red-500 mb-4">
+            Error loading live data. Please try again later or check your internet connection. Showing fallback data:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {Object.entries(getFallbackData()).map(([key, value], index) => (
+              <div
+                key={index}
+                className="bg-blue-50 p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-blue-100"
+              >
+                <p className="text-sm font-medium text-gray-600 mb-1">{t(key)}</p>
+                <p className="text-xl font-semibold text-gray-900 break-words">{value}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
+      {dataState === "success" && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className="bg-blue-50 p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-blue-100"
+            >
+              <p className="text-sm font-medium text-gray-600 mb-1">{stat.label}</p>
+              <p className="text-xl font-semibold text-gray-900 break-words">{stat.value}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   )
 }
+
