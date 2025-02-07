@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect, useMemo } from "react";
 import { calculateTimeLeft } from "../utils/calculateTimeLeft";
 
