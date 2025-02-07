@@ -20,7 +20,7 @@ const Header = ({ lng }: HeaderProps) => {
           />
 
           {/* Language Switcher */}
-          <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+          <div className="md:flex items-center justify-end md:flex-1 lg:w-0">
             <LanguageSwitcher lng={lng} path="/" />
           </div>
         </div>
