@@ -8,7 +8,8 @@ import Footer from './components/Footer'
 import { CountdownTimer } from './components/CountdownTimer'
 // import { InfoSection } from "./components/InfoSection"
 import { BitcoinStats } from "./components/BitcoinStats"
-import MultiLanguageComponent from './components/MultiLanguageComponent'
+import InfoSection from './components/InfoSection'
+import SecondPageComponent from './components/SecondPageComponent'
 
 export default async function Page({ params }: {
   params: Promise<{ lng: string; }>;
@@ -25,6 +26,7 @@ export default async function Page({ params }: {
         <div className="text-center mb-12">
 
         
+
 
 
           <CountdownTimer />
@@ -44,8 +46,8 @@ export default async function Page({ params }: {
           </Link>
         </div>
 
-        
-        <MultiLanguageComponent lng={lng} />
+        <SecondPageComponent lng={lng} />
+        <InfoSection lng={lng} />
         {/* <InfoSection /> */}
         <BitcoinStats />
         

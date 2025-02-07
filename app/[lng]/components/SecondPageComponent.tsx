@@ -1,15 +1,19 @@
-// app/[lng]/components/MultiLanguageComponent.tsx
-'use client';
-
-import { useTranslation } from '../../i18n/client';
-import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslation } from '../../i18n';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import Image from 'next/image';
 
-export default function MultiLanguageComponent({ lng }: { lng: string }) {
-    const { t } = useTranslation(lng);
 
-    return (
-        <div className="p-4 border rounded text-center">
+interface SecondPageProps {
+  lng: string;
+}
+
+export default async function SecondPageComponent({ lng }: SecondPageProps) {
+  const { t } = await useTranslation(lng, 'translation'); // Await translation directly
+
+  return (
+    <>
+<div className="p-4 border rounded text-center">
             <section className="prose mb-12 max-w-7xl mx-auto">
                 <h2 className="text-2xl font-bold text-black mb-4">{t("what_is_block_halving")}</h2>
                 <p className="text-black">{t("block_halving_explanation")}</p>
@@ -95,5 +99,6 @@ export default function MultiLanguageComponent({ lng }: { lng: string }) {
                 </div>
             </section>
         </div>
-    );
+    </>
+  );
 }
