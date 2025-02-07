@@ -1,0 +1,35 @@
+{
+  "sample": "A simple example",
+  "title": "Home",
+  "to-client-page": "To client page",
+  "to-second-page": "To second page",
+  "welcome": "Welcome to Next.js 13/14/15 <1>with the new app directory features</1> and i18next",
+  "blog": {
+    "text": "Check out the corresponding <1>blog post</1> describing this example.",
+    "link": "https://locize.com/blog/next-app-dir-i18n/"
+  },
+  
+    "welcome": "Welcome to Bitcoin Block Reward Halving Countdown",
+    "language": "Language",
+    "about": "About",
+    "contact": "Contact",
+    "what_is_block_halving": "What is a block halving event?",
+    "block_halving_explanation": "As part of Bitcoin's coin issuance, miners are rewarded a certain amount of bitcoins whenever a block is produced (approximately every 10 minutes). When Bitcoin first started, 50 Bitcoins per block were given as a reward to miners. After every 210,000 blocks are mined (approximately every 4 years), the block reward halves and will keep on halving until the block reward per block becomes 0 (approximately by year 2140). As of now, the block reward is 3.125 coins per block and will decrease to 1.5625 coins per block post halving.",
+    "why_was_this_done": "Why was this done?",
+    "reason_for_block_halving": "Bitcoin was designed as a deflationary currency. Like gold, the premise is that over time, the issuance of bitcoins will decrease and thus become scarcer over time. As bitcoins become scarcer and if demand for them increases over time, Bitcoin can be used as a hedge against inflation as the price, guided by price equilibrium is bound to increase. On the flip side, fiat currencies (like the US dollar), inflate over time as its monetary supply increases, leading to a decrease in purchasing power. This is known as monetary debasement by inflation. A simple example would be to compare housing prices decades ago to now and you'll notice that they've increased over time!",
+    "predictable_monetary_supply": "Predictable monetary supply",
+    "benefit_of_predictable_supply": "Since we know Bitcoin's issuance over time, people can rely on programmed/controlled supply. This is helpful to understand what the current inflation rate of Bitcoin is, what the future inflation rate will be at a specific point in time, how many Bitcoins are in circulation and how many remain left to be mined.",
+    "bitcoin_inflation_chart_alt": "Bitcoin Inflation Chart",
+    "who_controls_issuance": "Who controls the issuance of Bitcoin?",
+    "issuance_control_explanation": "The network itself controls the issuance of Bitcoins, derived by consensus through all Bitcoin participants. Ever since Bitcoin was first designed, the following consensus rules have existed: a maximum of 21,000,000 Bitcoins will ever be produced, a target of 10 - minute block intervals, a halving event occurring every 210,000 blocks (approximately every four years), and a block reward starting at 50 and halving continually at each halving event until it reaches 0 (approximately by the year 2140). Any change to these parameters requires all Bitcoin participants to agree by consensus to approve the change.",
+    "past_halving_dates": "Past halving event dates",
+    "ordinal_0": "The first halving event occurred on the {{date}} (UTC)",
+    "ordinal_1": "The second halving event occurred on the {{date}} (UTC)",
+    "ordinal_2": "The third halving event occurred on the {{date}} (UTC)",
+    "ordinal_3": "The fourth halving event occurred on the {{date}} (UTC)",
+    "block_height": "Block Height",
+    "past_halving_price_performance": "Past halving price performance",
+    "price_performance_debate": "It is always a debate on what Bitcoin will do in terms of pricing for a halving event. Some people believe that the halving is already priced in by the market and thus there's no expectation for the price to do anything. Others believe that due to price equilibrium, a halving of supply should cause an increase in price if demand for Bitcoins is equal or greater than what it was before the halving event. Below is a chart showing past price performance of the last four halving events:",
+    "bitcoin_halving_chart_alt": "Bitcoin Halving Chart"
+    }
+  
