@@ -12,9 +12,10 @@ export function CountdownTimer() {
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft(targetDate));
     }, 1000);
-
+  
     return () => clearInterval(timer);
-  }, []);
+  }, [targetDate]); // Add targetDate to the dependency array
+  
 
   return (
     <div className="flex flex-col items-center justify-center space-y-8 p-6 bg-white rounded-lg shadow-lg max-w-4xl mx-auto border border-gray-200">
