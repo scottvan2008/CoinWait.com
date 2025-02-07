@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { calculateTimeLeft } from "../utils/calculateTimeLeft";
 
 export function CountdownTimer() {
-  const targetDate = new Date("2028-04-14T08:59:10Z");
+  const targetDate = useMemo(() => new Date("2028-04-14T08:59:10Z"), []);
+
   const initialTimeLeft = calculateTimeLeft(targetDate);
   const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
 
@@ -12,10 +13,9 @@ export function CountdownTimer() {
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft(targetDate));
     }, 1000);
-  
+
     return () => clearInterval(timer);
-  }, [targetDate]); // Add targetDate to the dependency array
-  
+  }, [targetDate]); // targetDate is now stable
 
   return (
     <div className="flex flex-col items-center justify-center space-y-8 p-6 bg-white rounded-lg shadow-lg max-w-4xl mx-auto border border-gray-200">
