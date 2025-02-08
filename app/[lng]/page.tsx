@@ -16,8 +16,8 @@ export default async function Page({ params }: {
 }) {
   let { lng } = await params
   if (languages.indexOf(lng) < 0) lng = fallbackLng
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  // const { t } = await useTranslation(lng)
+  //// eslint-disable-next-line react-hooks/rules-of-hooks
+  //// const { t } = await useTranslation(lng)
 
   return (
     <>
