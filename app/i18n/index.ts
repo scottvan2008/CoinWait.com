@@ -33,3 +33,11 @@ export async function useTranslation<
     i18n: i18nextInstance
   }
 }
+
+
+
+
+export async function getTranslation(lng: string, ns: string) {
+  const i18nextInstance = await initI18next(lng, ns);
+  return i18nextInstance.getFixedT(lng, ns);
+}
