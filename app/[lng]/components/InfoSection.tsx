@@ -1,15 +1,19 @@
-// app/[lng]/components/MultiLanguageComponent.tsx
-'use client';
-
-import { useTranslation } from '../../i18n/client';
-import Image from 'next/image';
 import Link from 'next/link';
+import { getTranslation } from '../../i18n';
+import Image from 'next/image';
 
-export default function InfoSection({ lng }: { lng: string }) {
-    const { t } = useTranslation(lng);
+interface InfoSectionProps {
+  lng: string;
+}
 
-    return (
-        <div className="p-4 border rounded text-center">
+export default async function InfoSection({ lng }: InfoSectionProps) {
+  const t = await getTranslation(lng, 'translation'); // ✅ Now works in server components!
+
+  return (
+    <>
+
+
+      <div className="p-4 border rounded text-center">
             <section className="prose mb-12 max-w-7xl mx-auto">
                 <h2 className="text-2xl font-bold text-black mb-4">{t("what_is_block_halving")}</h2>
                 <p className="text-black">{t("block_halving_explanation")}</p>
@@ -95,5 +99,6 @@ export default function InfoSection({ lng }: { lng: string }) {
                 </div>
             </section>
         </div>
-    );
+    </>
+  );
 }

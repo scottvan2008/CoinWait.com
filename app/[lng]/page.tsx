@@ -9,7 +9,7 @@ import { CountdownTimer } from './components/CountdownTimer'
 
 import { BitcoinStats } from "./components/BitcoinStats"
 
-import SecondPageComponent from './components/SecondPageComponent'
+import InfoSection from './components/InfoSection'
 
 export default async function Page({ params }: {
   params: Promise<{ lng: string; }>;
@@ -32,7 +32,15 @@ export default async function Page({ params }: {
           <CountdownTimer />
         </div>
 
-        <hr className="my-5 w-11/12 border-t border-gray-300" />
+
+
+        <InfoSection lng={lng} />
+
+        <BitcoinStats />
+        
+
+
+        {/* <hr className="my-5 w-11/12 border-t border-gray-300" />
         <div className="flex space-x-4">
           <Link href={`/${lng}/second-page`}>
             <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
@@ -44,12 +52,10 @@ export default async function Page({ params }: {
               {t('to-client-page')}
             </button>
           </Link>
-        </div>
+        </div> */}
 
-        <SecondPageComponent lng={lng} />
 
-        <BitcoinStats />
-        
+
       </main>
       <Footer />
     </>
