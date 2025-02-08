@@ -6,9 +6,9 @@ import { useTranslation } from '../i18n'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import { CountdownTimer } from './components/CountdownTimer'
-// import { InfoSection } from "./components/InfoSection"
+
 import { BitcoinStats } from "./components/BitcoinStats"
-import InfoSection from './components/InfoSection'
+
 import SecondPageComponent from './components/SecondPageComponent'
 
 export default async function Page({ params }: {
@@ -47,8 +47,7 @@ export default async function Page({ params }: {
         </div>
 
         <SecondPageComponent lng={lng} />
-        <InfoSection lng={lng} />
-        {/* <InfoSection /> */}
+
         <BitcoinStats />
         
       </main>
