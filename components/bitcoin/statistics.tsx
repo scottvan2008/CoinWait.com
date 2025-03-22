@@ -15,7 +15,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Coins, DollarSign, Globe, Pickaxe } from "lucide-react";
 import { db } from "@/lib/firebase";
 import type { BitcoinStats } from "@/types/bitcoin";
-import { formatNumber, formatCurrency, formatDate } from "@/lib/formatters";
+// Import the new formatter
+import {
+    formatNumber,
+    formatCurrency,
+    formatDate,
+    formatLargeNumber,
+} from "@/lib/formatters";
 
 export function BitcoinStatistics() {
     const [stats, setStats] = useState<BitcoinStats | null>(null);
@@ -431,19 +437,10 @@ export function BitcoinStatistics() {
                                             <div className="text-sm text-muted-foreground">
                                                 Network Difficulty
                                             </div>
-                                            <div className="text-xl font-bold text-bitcoin-dark break-words">
-                                                {formatNumber(
-                                                    stats?.difficulty || 0,
-                                                    0
+                                            <div className="text-xl font-bold text-bitcoin-dark">
+                                                {formatLargeNumber(
+                                                    stats?.difficulty || 0
                                                 )}
-                                            </div>
-                                            <div className="text-xs text-muted-foreground mt-1">
-                                                {/* Show full number in scientific notation for context */}
-                                                {stats?.difficulty
-                                                    ? `(${stats.difficulty.toExponential(
-                                                          2
-                                                      )})`
-                                                    : ""}
                                             </div>
                                         </div>
                                     </div>
