@@ -85,6 +85,12 @@
   box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
 }
 
+.dark .bitcoin-card {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 20px rgba(30, 64, 175, 0.2);
+}
+
 .bitcoin-card-dark {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   border: 1px solid rgba(59, 130, 246, 0.2);
@@ -100,6 +106,10 @@
   border-radius: 4px;
   background: rgba(147, 197, 253, 0.3);
   overflow: hidden;
+}
+
+.dark .bitcoin-progress {
+  background: rgba(30, 58, 138, 0.3);
 }
 
 .bitcoin-progress-bar {
@@ -181,12 +191,20 @@
   font-weight: 500;
 }
 
+.dark .bitcoin-countdown-label {
+  color: #94a3b8;
+}
+
 .bitcoin-countdown-label-large {
   color: #64748b;
   text-align: center;
   font-weight: 600;
   font-size: 1rem;
   margin-top: 0.75rem;
+}
+
+.dark .bitcoin-countdown-label-large {
+  color: #94a3b8;
 }
 
 @media (min-width: 768px) {

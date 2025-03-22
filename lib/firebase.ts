@@ -11,9 +11,6 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Log config for debugging
-console.log("Firebase Config:", firebaseConfig);
-
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
