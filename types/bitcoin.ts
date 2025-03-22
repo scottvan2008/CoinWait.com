@@ -4,6 +4,7 @@ export interface BlockHeightData {
   next_halving_height: number
   blocks_remaining: number
   estimated_halving_time: string
+  last_halving_time: string
 }
 
 export interface TimeRemaining {
