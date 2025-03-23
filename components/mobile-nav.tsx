@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, Bitcoin, LineChart } from "lucide-react";
+import { Menu, X, Bitcoin, LineChart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -36,9 +36,13 @@ export function MobileNav() {
                     <span className="sr-only">Toggle menu</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[240px] sm:w-[300px]">
+            <SheetContent
+                side="left"
+                className="w-[240px] sm:w-[300px]"
+                hideCloseButton
+            >
                 <div className="flex flex-col gap-6 py-4">
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                         <Link
                             href="/"
                             className="flex items-center gap-2"
@@ -55,6 +59,14 @@ export function MobileNav() {
                             </div>
                             <span className="font-bold text-xl">CoinWait</span>
                         </Link>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setOpen(false)}
+                        >
+                            <X className="h-5 w-5" />
+                            <span className="sr-only">Close menu</span>
+                        </Button>
                     </div>
                     <nav className="flex flex-col gap-2">
                         {navItems.map((item) => (
