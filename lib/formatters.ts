@@ -16,9 +16,15 @@ export const formatCurrency = (amount: number, decimals = 2) => {
   }).format(amount)
 }
 
-// Format date
+// Format date to YYYY-MM-DD HH:MM:SS
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString)
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`
+}
+
+// Format date to YYYY-MM-DD (short format)
+export const formatShortDate = (dateString: string) => {
+  const date = new Date(dateString)
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
 }
 
