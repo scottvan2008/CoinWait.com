@@ -11,7 +11,11 @@ import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 import Image from "next/image";
 import { db } from "@/lib/firebase";
 import type { CryptoData, MarketData } from "@/types/crypto";
-import { formatCurrency, formatDate } from "@/lib/formatters";
+import {
+    formatCurrency,
+    formatDate,
+    formatCryptoPrice,
+} from "@/lib/formatters";
 import { CoinDetailModal } from "./coin-detail-modal";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -400,7 +404,7 @@ export function CryptoMarketData() {
                                                     isMobile ? "px-1" : "px-4"
                                                 } py-3 whitespace-nowrap text-sm text-right font-medium text-gray-900 dark:text-white`}
                                             >
-                                                {formatCurrency(
+                                                {formatCryptoPrice(
                                                     coin.current_price
                                                 )}
                                             </td>

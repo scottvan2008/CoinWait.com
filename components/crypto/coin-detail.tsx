@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 import Image from "next/image";
 import type { CryptoData } from "@/types/crypto";
-import { formatCurrency } from "@/lib/formatters";
+import { formatCurrency, formatCryptoPrice } from "@/lib/formatters";
 import { CoinDetailModal } from "./coin-detail-modal";
 
 interface CoinDetailProps {
@@ -74,7 +74,7 @@ export function CoinDetail({ coin, compact = false }: CoinDetailProps) {
                             </div>
                             <div className="text-right">
                                 <div className="text-sm font-bold text-bitcoin-dark dark:text-white">
-                                    {formatCurrency(coin.current_price)}
+                                    {formatCryptoPrice(coin.current_price)}
                                 </div>
                                 <div
                                     className={`flex items-center justify-end text-xs ${
@@ -159,7 +159,7 @@ export function CoinDetail({ coin, compact = false }: CoinDetailProps) {
                         </div>
                         <div className="text-right">
                             <div className="text-2xl font-bold text-bitcoin-dark dark:text-white">
-                                {formatCurrency(coin.current_price)}
+                                {formatCryptoPrice(coin.current_price)}
                             </div>
                             <div
                                 className={`flex items-center justify-end text-sm ${
