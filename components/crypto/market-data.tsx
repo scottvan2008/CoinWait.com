@@ -4,13 +4,7 @@ import type React from "react";
 
 import { useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
@@ -253,14 +247,9 @@ export function CryptoMarketData() {
             <Card variant="bitcoin" className="w-full max-w-4xl mx-auto">
                 <CardHeader className="pb-2">
                     <div className="flex items-center justify-between">
-                        <div>
-                            <CardTitle className="text-2xl text-bitcoin-dark dark:text-white">
-                                Cryptocurrency Market
-                            </CardTitle>
-                            <CardDescription className="dark:text-gray-300">
-                                Real-time prices and market data
-                            </CardDescription>
-                        </div>
+                        <CardTitle className="text-2xl text-bitcoin-dark dark:text-white">
+                            Cryptocurrency Market
+                        </CardTitle>
                         <div className="text-xs text-muted-foreground">
                             Last updated:{" "}
                             {formatDate(marketData?.timestamp || "")}
