@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Bitcoin, LineChart } from "lucide-react"
+import { Bitcoin, LineChart, Building } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function Navigation() {
@@ -20,6 +20,12 @@ export function Navigation() {
       href: "/bitcoin",
       icon: <Bitcoin className="h-5 w-5" />,
       active: pathname === "/bitcoin",
+    },
+    {
+      name: "Exchanges",
+      href: "/exchanges",
+      icon: <Building className="h-5 w-5" />,
+      active: pathname === "/exchanges",
     },
   ]
 

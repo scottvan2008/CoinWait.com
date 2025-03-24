@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { doc, getDoc } from "firebase/firestore"
+import { doc, onSnapshot } from "firebase/firestore"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -19,25 +19,25 @@ export function BitcoinStatistics() {
   const isMobile = useIsMobile()
 
   useEffect(() => {
-    async function fetchBitcoinStats() {
-      try {
-        const docRef = doc(db, "bitcoin_statistics", "current_stats")
-        const docSnap = await getDoc(docRef)
-
-        if (docSnap.exists()) {
-          setStats(docSnap.data() as BitcoinStats)
+    const unsubscribe = onSnapshot(
+      doc(db, "bitcoin_statistics", "current_stats"),
+      (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          setStats(docSnapshot.data() as BitcoinStats)
         } else {
           setError("No statistics data found")
         }
-      } catch (err) {
+        setLoading(false)
+      },
+      (err) => {
         console.error("Error fetching statistics:", err)
         setError("Failed to fetch Bitcoin statistics")
-      } finally {
         setLoading(false)
-      }
-    }
+      },
+    )
 
-    fetchBitcoinStats()
+    // Cleanup subscription on unmount
+    return () => unsubscribe()
   }, [])
 
   if (loading) {
@@ -71,9 +71,11 @@ export function BitcoinStatistics() {
   // Update the BitcoinStatistics component to be more compact for the home page
   return (
     <section className="mb-12">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-bitcoin-dark dark:text-white text-center">
-        Bitcoin Statistics
-      </h2>
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-bitcoin-dark dark:text-white text-center md:text-left">
+          Bitcoin Statistics
+        </h2>
+      </div>
       <div className="w-full max-w-4xl mx-auto">
         <Tabs defaultValue="supply" className="w-full">
           <TabsList className="grid grid-cols-4 mb-4 sm:mb-6 bg-bitcoin-background dark:bg-gray-800 text-xs sm:text-sm">

@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { doc, getDoc } from "firebase/firestore"
+import { doc, onSnapshot } from "firebase/firestore"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Bitcoin, Calendar } from "lucide-react"
+import { Calendar } from "lucide-react"
 import { db } from "@/lib/firebase"
 import type { BlockHeightData, TimeRemaining } from "@/types/bitcoin"
 import { formatDate } from "@/lib/formatters"
@@ -33,27 +33,27 @@ export function BitcoinHalvingCountdown() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Fetch block data from Firestore
+  // Subscribe to real-time updates from Firestore
   useEffect(() => {
-    async function fetchBlockHeight() {
-      try {
-        const docRef = doc(db, "bitcoin_block_height", "current_height")
-        const docSnap = await getDoc(docRef)
-
-        if (docSnap.exists()) {
-          setBlockData(docSnap.data() as BlockHeightData)
+    const unsubscribe = onSnapshot(
+      doc(db, "bitcoin_block_height", "current_height"),
+      (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          setBlockData(docSnapshot.data() as BlockHeightData)
         } else {
           setError("No data found")
         }
-      } catch (err) {
+        setLoading(false)
+      },
+      (err) => {
         console.error("Error fetching data:", err)
         setError("Failed to fetch data")
-      } finally {
         setLoading(false)
-      }
-    }
+      },
+    )
 
-    fetchBlockHeight()
+    // Cleanup subscription on unmount
+    return () => unsubscribe()
   }, [])
 
   // Calculate and update time remaining
@@ -127,11 +127,15 @@ export function BitcoinHalvingCountdown() {
     <section className="mb-12 mt-4">
       <Card variant="bitcoin" className="w-full max-w-4xl mx-auto">
         <CardHeader className="pb-2 text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Bitcoin className="h-10 w-10 text-bitcoin" />
-            <CardTitle className="text-2xl md:text-3xl text-bitcoin-dark dark:text-white">
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
+            <CardTitle className="text-2xl md:text-3xl text-bitcoin-dark dark:text-white text-center mb-2 md:mb-0">
               Bitcoin Halving Countdown
             </CardTitle>
+            {blockData && (
+              <div className="text-xs text-muted-foreground text-center md:text-right">
+                Last updated: {formatDate(blockData.timestamp)}
+              </div>
+            )}
           </div>
           <CardDescription className="text-base dark:text-gray-300">
             Time remaining until the next Bitcoin block reward halving
