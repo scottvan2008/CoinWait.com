@@ -23,7 +23,7 @@ export function ExchangeList() {
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [itemsPerPage, setItemsPerPage] = useState(20);
 
     // Sorting state
     const [sortField, setSortField] = useState<SortField>("trust_score_rank");
