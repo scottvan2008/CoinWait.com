@@ -21,6 +21,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 import type { Exchange } from "@/types/exchange";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useEffect } from "react";
 
 interface ExchangeDetailModalProps {
     exchange: Exchange | null;
@@ -34,6 +35,26 @@ export function ExchangeDetailModal({
     onClose,
 }: ExchangeDetailModalProps) {
     const isMobile = useIsMobile();
+
+    useEffect(() => {
+        if (isOpen) {
+            // Push a new state to the history when the modal opens
+            window.history.pushState({ modal: "exchange-detail" }, "");
+
+            // Event handler for the back button
+            const handlePopState = () => {
+                onClose();
+            };
+
+            // Add event listener for the back button
+            window.addEventListener("popstate", handlePopState);
+
+            // Clean up when the component unmounts or modal closes
+            return () => {
+                window.removeEventListener("popstate", handlePopState);
+            };
+        }
+    }, [isOpen, onClose]);
 
     if (!exchange) return null;
 
