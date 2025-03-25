@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Bitcoin, LineChart, Building } from "lucide-react"
+import { Bitcoin, LineChart, Building, AlertCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function Navigation() {
@@ -16,16 +16,22 @@ export function Navigation() {
       active: pathname === "/",
     },
     {
+      name: "Exchanges",
+      href: "/exchanges",
+      icon: <Building className="h-5 w-5" />,
+      active: pathname === "/exchanges",
+    },
+    {
       name: "Bitcoin Halving",
       href: "/bitcoin",
       icon: <Bitcoin className="h-5 w-5" />,
       active: pathname === "/bitcoin",
     },
     {
-      name: "Exchanges",
-      href: "/exchanges",
-      icon: <Building className="h-5 w-5" />,
-      active: pathname === "/exchanges",
+      name: "Fear & Greed",
+      href: "/fear-greed",
+      icon: <AlertCircle className="h-5 w-5" />,
+      active: pathname === "/fear-greed",
     },
   ]
 

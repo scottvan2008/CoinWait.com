@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, X, Bitcoin, LineChart, Building } from "lucide-react"
+import { Menu, X, Bitcoin, LineChart, Building, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
@@ -21,16 +21,22 @@ export function MobileNav() {
       active: pathname === "/",
     },
     {
+      name: "Exchanges",
+      href: "/exchanges",
+      icon: <Building className="h-5 w-5 mr-2" />,
+      active: pathname === "/exchanges",
+    },
+    {
       name: "Bitcoin Halving",
       href: "/bitcoin",
       icon: <Bitcoin className="h-5 w-5 mr-2" />,
       active: pathname === "/bitcoin",
     },
     {
-      name: "Exchanges",
-      href: "/exchanges",
-      icon: <Building className="h-5 w-5 mr-2" />,
-      active: pathname === "/exchanges",
+      name: "Fear & Greed",
+      href: "/fear-greed",
+      icon: <AlertCircle className="h-5 w-5 mr-2" />,
+      active: pathname === "/fear-greed",
     },
   ]
 
