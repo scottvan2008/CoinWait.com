@@ -300,7 +300,7 @@ export function QuarterlyReturnsTable() {
             variant="bitcoin"
             className="w-full max-w-xl mx-auto overflow-hidden"
         >
-            <CardHeader className="pb-2">
+            <CardHeader className="py-2">
                 <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <CardTitle className="text-xl text-bitcoin-dark dark:text-white">
                         Quarterly Returns (%)
