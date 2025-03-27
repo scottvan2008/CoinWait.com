@@ -319,7 +319,7 @@ export function QuarterlyReturnsTable() {
                             <tr className="bg-bitcoin-background dark:bg-gray-800">
                                 <th
                                     className={`${
-                                        isMobile ? "p-1.5 text-xs" : "p-1"
+                                        isMobile ? "p-1.5 text-sm" : "p-1"
                                     } text-center font-medium text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 sticky left-0 bg-bitcoin-background dark:bg-gray-800 z-10 min-w-[40px]`}
                                 >
                                     Year
@@ -328,7 +328,7 @@ export function QuarterlyReturnsTable() {
                                     <th
                                         key={quarter.name}
                                         className={`${
-                                            isMobile ? "p-1.5 text-xs" : "p-1"
+                                            isMobile ? "p-1.5 text-sm" : "p-1"
                                         } text-center font-medium text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 ${
                                             isMobile
                                                 ? "min-w-[50px]"
@@ -342,7 +342,7 @@ export function QuarterlyReturnsTable() {
                                 ))}
                                 <th
                                     className={`${
-                                        isMobile ? "p-1.5 text-xs" : "p-1"
+                                        isMobile ? "p-1.5 text-sm" : "p-1"
                                     } text-center font-medium text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 ${
                                         isMobile
                                             ? "min-w-[40px]"
@@ -375,7 +375,7 @@ export function QuarterlyReturnsTable() {
                                 >
                                     <td
                                         className={`${
-                                            isMobile ? "p-1.5 text-xs" : "p-1"
+                                            isMobile ? "p-1.5 text-sm" : "p-1"
                                         } text-center font-medium text-bitcoin-dark dark:text-white border border-gray-200 dark:border-gray-700 sticky left-0 bg-white dark:bg-gray-900 z-10 hover:bg-gray-50 dark:hover:bg-gray-800/50`}
                                     >
                                         {year}
@@ -390,7 +390,7 @@ export function QuarterlyReturnsTable() {
                                                 key={`${year}-${quarter.name}`}
                                                 className={`${
                                                     isMobile
-                                                        ? "p-1.5 text-xs"
+                                                        ? "p-1.5 text-sm"
                                                         : "p-1"
                                                 } text-center border border-gray-200 dark:border-gray-700 ${getBackgroundClass(
                                                     returnValue
@@ -410,7 +410,7 @@ export function QuarterlyReturnsTable() {
                                     })}
                                     <td
                                         className={`${
-                                            isMobile ? "p-1.5 text-xs" : "p-1"
+                                            isMobile ? "p-1.5 text-sm" : "p-1"
                                         } text-center border border-gray-200 dark:border-gray-700 font-medium ${getBackgroundClass(
                                             yearlyReturns[year]
                                         )}`}
@@ -430,7 +430,7 @@ export function QuarterlyReturnsTable() {
                             <tr className="bg-bitcoin-background/50 dark:bg-gray-800/50 font-medium">
                                 <td
                                     className={`${
-                                        isMobile ? "p-1.5 text-xs" : "p-1"
+                                        isMobile ? "p-1.5 text-sm" : "p-1"
                                     } text-center font-medium text-bitcoin-dark dark:text-white border border-gray-200 dark:border-gray-700 sticky left-0 bg-bitcoin-background/50 dark:bg-gray-800/50 z-10`}
                                 >
                                     {isMobile ? "Avg" : "Average"}
@@ -443,7 +443,7 @@ export function QuarterlyReturnsTable() {
                                             key={`avg-${quarter.name}`}
                                             className={`${
                                                 isMobile
-                                                    ? "p-1.5 text-xs"
+                                                    ? "p-1.5 text-sm"
                                                     : "p-1"
                                             } text-center border border-gray-200 dark:border-gray-700 ${getBackgroundClass(
                                                 avgReturn
@@ -461,7 +461,7 @@ export function QuarterlyReturnsTable() {
                                 })}
                                 <td
                                     className={`${
-                                        isMobile ? "p-1.5 text-xs" : "p-1"
+                                        isMobile ? "p-1.5 text-sm" : "p-1"
                                     } text-center border border-gray-200 dark:border-gray-700 font-medium`}
                                 >
                                     <div className="text-gray-600 dark:text-gray-400">
@@ -484,7 +484,7 @@ export function QuarterlyReturnsTable() {
                                 isMobile ? "h-3 w-3 mr-1" : "h-4 w-4 mr-2"
                             } text-bitcoin`}
                         />
-                        <span className={isMobile ? "text-xs" : ""}>
+                        <span className={isMobile ? "text-sm" : ""}>
                             Quarterly returns show the percentage change in
                             Bitcoin price from the beginning to the end of each
                             quarter.
