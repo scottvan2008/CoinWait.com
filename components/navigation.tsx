@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 export function Navigation() {
   const pathname = usePathname()
 
-  // Update the navItems array to include the new Monthly Returns page
+  // Update the navItems array to include the new Calendar page
   const navItems = [
     {
       name: "Crypto Market",
@@ -33,6 +33,12 @@ export function Navigation() {
       href: "/monthly-returns",
       icon: <Calendar className="h-5 w-5" />,
       active: pathname === "/monthly-returns",
+    },
+    {
+      name: "Calendar",
+      href: "/calendar",
+      icon: <Calendar className="h-5 w-5" />,
+      active: pathname === "/calendar",
     },
     {
       name: "Fear & Greed",

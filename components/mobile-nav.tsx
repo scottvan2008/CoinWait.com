@@ -39,6 +39,12 @@ export function MobileNav() {
       active: pathname === "/monthly-returns",
     },
     {
+      name: "Calendar",
+      href: "/calendar",
+      icon: <Calendar className="h-5 w-5 mr-2" />,
+      active: pathname === "/calendar",
+    },
+    {
       name: "Fear & Greed",
       href: "/fear-greed",
       icon: <AlertCircle className="h-5 w-5 mr-2" />,

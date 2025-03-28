@@ -36,8 +36,10 @@ export function MonthlyReturnsTable() {
   const [
     /* Remove the yearlyReturns state: */
   ] = useState<Record<string, number | null>>({})
+  // Add a new state for average monthly returns
+  const [averageReturns, setAverageReturns] = useState<Record<number, number | null>>({})
 
-  // Update the useEffect to pass yearsData to calculateYearlyReturns
+  // Update the useEffect to calculate average returns
   useEffect(() => {
     async function fetchData() {
       try {
@@ -74,8 +76,9 @@ export function MonthlyReturnsTable() {
           lastUpdated: latestUpdate,
         })
 
-        // Calculate yearly returns using the raw price data
-        /* Remove the setYearlyReturns call in the useEffect: */
+        // Calculate average returns for each month
+        setAverageReturns(calculateAverageReturns(processedData.monthlyReturns))
+
         setLoading(false)
       } catch (err) {
         console.error("Error fetching Bitcoin price data:", err)
@@ -87,11 +90,14 @@ export function MonthlyReturnsTable() {
     fetchData()
   }, [])
 
-  // Process the raw data to calculate monthly returns
+  // Update the processMonthlyReturns function to use the last day of the previous month
   function processMonthlyReturns(yearsData: YearData[]) {
     const monthlyReturns: Record<string, Record<number, number | null>> = {}
 
-    yearsData.forEach((yearData) => {
+    // Sort years in ascending order to ensure we can access previous year's data
+    const sortedYearsData = [...yearsData].sort((a, b) => a.year.localeCompare(b.year))
+
+    sortedYearsData.forEach((yearData, yearIndex) => {
       const { year, prices } = yearData
       monthlyReturns[year] = {}
 
@@ -99,35 +105,103 @@ export function MonthlyReturnsTable() {
       const dates = Object.keys(prices).sort()
 
       // Group prices by month
-      const monthlyPrices: Record<number, number[]> = {}
+      const monthlyPrices: Record<number, { dates: string[]; prices: number[] }> = {}
 
       dates.forEach((date) => {
         const month = Number.parseInt(date.split("-")[1])
         if (!monthlyPrices[month]) {
-          monthlyPrices[month] = []
+          monthlyPrices[month] = { dates: [], prices: [] }
         }
-        monthlyPrices[month].push(prices[date])
+        monthlyPrices[month].dates.push(date)
+        monthlyPrices[month].prices.push(prices[date])
       })
 
       // Calculate monthly returns
       for (let month = 1; month <= 12; month++) {
-        if (!monthlyPrices[month] || monthlyPrices[month].length === 0) {
+        if (!monthlyPrices[month] || monthlyPrices[month].dates.length === 0) {
           monthlyReturns[year][month] = null
           continue
         }
 
-        // Get first and last price of the month
-        const pricesInMonth = monthlyPrices[month]
-        const firstPrice = pricesInMonth[0]
-        const lastPrice = pricesInMonth[pricesInMonth.length - 1]
+        // Get the first date of the current month
+        const firstDateOfMonth = monthlyPrices[month].dates[0]
+
+        // Get the last date of the current month
+        const lastDateOfMonth = monthlyPrices[month].dates[monthlyPrices[month].dates.length - 1]
+        const endPrice = prices[lastDateOfMonth]
+
+        // Find the previous month's last date and price
+        let startPrice: number | null = null
+
+        // If this is January, we need to look at the previous year's December
+        if (month === 1) {
+          if (yearIndex > 0) {
+            const prevYearData = sortedYearsData[yearIndex - 1]
+
+            // Check if December data exists in the previous year
+            if (prevYearData.prices) {
+              const prevYearDates = Object.keys(prevYearData.prices)
+                .filter((date) => date.startsWith(`${Number.parseInt(year) - 1}-12`))
+                .sort()
+
+              if (prevYearDates.length > 0) {
+                // Get the last date from December of the previous year
+                const lastDateOfPrevYear = prevYearDates[prevYearDates.length - 1]
+                startPrice = prevYearData.prices[lastDateOfPrevYear]
+              }
+            }
+          }
+        } else {
+          // For other months, find the last date of the previous month in the same year
+          const prevMonth = month - 1
+          if (monthlyPrices[prevMonth] && monthlyPrices[prevMonth].dates.length > 0) {
+            const lastDateOfPrevMonth = monthlyPrices[prevMonth].dates[monthlyPrices[prevMonth].dates.length - 1]
+            startPrice = prices[lastDateOfPrevMonth]
+          }
+        }
+
+        // If we couldn't find a previous month's price, fall back to the first price of the current month
+        if (startPrice === null) {
+          startPrice = prices[firstDateOfMonth]
+        }
 
         // Calculate percentage change
-        const monthReturn = ((lastPrice - firstPrice) / firstPrice) * 100
+        const monthReturn = ((endPrice - startPrice) / startPrice) * 100
         monthlyReturns[year][month] = monthReturn
       }
     })
 
     return { monthlyReturns }
+  }
+
+  // Add a function to calculate average returns for each month
+  function calculateAverageReturns(monthlyReturns: Record<string, Record<number, number | null>>) {
+    const averages: Record<number, number | null> = {}
+    const totals: Record<number, { sum: number; count: number }> = {}
+
+    // Initialize totals for each month
+    for (let month = 1; month <= 12; month++) {
+      totals[month] = { sum: 0, count: 0 }
+    }
+
+    // Sum up returns for each month
+    Object.values(monthlyReturns).forEach((yearData) => {
+      for (let month = 1; month <= 12; month++) {
+        const returnValue = yearData[month]
+        if (returnValue !== null) {
+          totals[month].sum += returnValue
+          totals[month].count++
+        }
+      }
+    })
+
+    // Calculate averages
+    for (let month = 1; month <= 12; month++) {
+      const { sum, count } = totals[month]
+      averages[month] = count > 0 ? sum / count : null
+    }
+
+    return averages
   }
 
   // Update the calculateYearlyReturns function to use first and last day prices
@@ -186,9 +260,10 @@ export function MonthlyReturnsTable() {
     )
   }
 
+  // Update the table to include the Average row
   return (
     <Card variant="bitcoin" className="w-full mx-auto overflow-hidden">
-      <CardHeader className="pb-2">
+      <CardHeader className="py-2">
         <div className="flex flex-col md:flex-row md:items-center justify-between">
           <CardTitle className="text-xl text-bitcoin-dark dark:text-white">Monthly Returns (%)</CardTitle>
           {data?.lastUpdated && (
@@ -201,7 +276,7 @@ export function MonthlyReturnsTable() {
           <table className="w-full border-collapse border border-gray-200 dark:border-gray-700">
             <thead>
               <tr className="bg-bitcoin-background dark:bg-gray-800">
-                <th className="p-2 text-center font-medium text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 sticky left-0 bg-bitcoin-background dark:bg-gray-800 z-10">
+                <th className="p-2 text-center font-medium text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 sticky left-0 bg-bitcoin-background dark:bg-gray-800 z-1">
                   Year
                 </th>
                 {MONTHS.map((month, index) => (
@@ -218,7 +293,7 @@ export function MonthlyReturnsTable() {
             <tbody>
               {data?.years.map((year) => (
                 <tr key={year} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                  <td className="p-2 text-center font-medium text-bitcoin-dark dark:text-white border border-gray-200 dark:border-gray-700 sticky left-0 bg-white dark:bg-gray-900 z-10 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                  <td className="p-2 text-center font-medium text-bitcoin-dark dark:text-white border border-gray-200 dark:border-gray-700 sticky left-0 bg-white dark:bg-gray-900 z-1 hover:bg-gray-50 dark:hover:bg-gray-800/50">
                     {year}
                   </td>
                   {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => {
@@ -235,6 +310,23 @@ export function MonthlyReturnsTable() {
                   {/* Remove the yearly return data from each row */}
                 </tr>
               ))}
+              {/* Add Average row */}
+              <tr className="bg-bitcoin-background/50 dark:bg-gray-800/50 font-medium">
+                <td className="p-2 text-center font-medium text-bitcoin-dark dark:text-white border border-gray-200 dark:border-gray-700 sticky left-0 bg-bitcoin-background/50 dark:bg-gray-800/50 z-1">
+                  Average
+                </td>
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => {
+                  const avgReturn = averageReturns[month]
+                  return (
+                    <td
+                      key={`avg-${month}`}
+                      className={`p-2 text-center border border-gray-200 dark:border-gray-700 ${getBackgroundClass(avgReturn)}`}
+                    >
+                      <div className={`${getReturnClass(avgReturn)}`}>{formatPercentage(avgReturn)}</div>
+                    </td>
+                  )
+                })}
+              </tr>
             </tbody>
           </table>
         </div>
