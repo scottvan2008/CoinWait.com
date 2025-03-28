@@ -5,7 +5,6 @@ import { collection, getDocs } from "firebase/firestore"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { db } from "@/lib/firebase"
-import { formatDate } from "@/lib/formatters"
 import { Info } from "lucide-react"
 
 interface YearData {
@@ -266,9 +265,6 @@ export function MonthlyReturnsTable() {
       <CardHeader className="py-2">
         <div className="flex flex-col md:flex-row md:items-center justify-between">
           <CardTitle className="text-xl text-bitcoin-dark dark:text-white">Monthly Returns (%)</CardTitle>
-          {data?.lastUpdated && (
-            <div className="text-xs text-muted-foreground">Last updated: {formatDate(data.lastUpdated)}</div>
-          )}
         </div>
       </CardHeader>
       <CardContent className="p-0">

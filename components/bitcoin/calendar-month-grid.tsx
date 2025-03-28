@@ -35,7 +35,7 @@ export function CalendarMonthGrid({ year, month, priceData }: CalendarMonthGridP
         weekDays.push(
           <td
             key={`empty-${row}-${col}`}
-            className="border border-gray-200 dark:border-gray-700 p-0.5 sm:p-1 h-14 sm:h-16 bg-gray-50 dark:bg-gray-800"
+            className="border border-gray-200 dark:border-gray-700 p-0 sm:p-1 h-12 sm:h-16 bg-gray-50 dark:bg-gray-800"
           ></td>,
         )
       } else {
@@ -90,7 +90,7 @@ export function CalendarMonthGrid({ year, month, priceData }: CalendarMonthGridP
   }
 
   return (
-    <div className="overflow-x-auto shadow-sm rounded-lg">
+    <div className="overflow-x-auto shadow-sm rounded-lg w-full">
       <table className="w-full border-collapse">
         <CalendarHeader />
         <tbody>{days}</tbody>

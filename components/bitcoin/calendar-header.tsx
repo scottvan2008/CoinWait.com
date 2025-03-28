@@ -9,7 +9,7 @@ export function CalendarHeader() {
         {weekdays.map((day, index) => (
           <th
             key={day}
-            className="border border-gray-200 dark:border-gray-700 p-1 sm:p-2 bg-bitcoin-background dark:bg-gray-800 text-bitcoin-dark dark:text-white text-center font-medium"
+            className="border border-gray-200 dark:border-gray-700 p-0.5 sm:p-2 bg-bitcoin-background dark:bg-gray-800 text-bitcoin-dark dark:text-white text-center font-medium"
           >
             <span className="hidden sm:inline">{day}</span>
             <span className="sm:hidden">{mobileWeekdays[index]}</span>

@@ -2,13 +2,13 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Bitcoin, LineChart, Building, AlertCircle, Calendar } from "lucide-react"
+import { Bitcoin, LineChart, Building, AlertCircle, Calendar, TrendingUp } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function Navigation() {
   const pathname = usePathname()
 
-  // Update the navItems array to include the new Calendar page
+  // Update the navItems array to include the new Bitcoin Price Model page
   const navItems = [
     {
       name: "Crypto Market",
@@ -33,6 +33,18 @@ export function Navigation() {
       href: "/monthly-returns",
       icon: <Calendar className="h-5 w-5" />,
       active: pathname === "/monthly-returns",
+    },
+    {
+      name: "Halving Analysis",
+      href: "/halving-analysis",
+      icon: <TrendingUp className="h-5 w-5" />,
+      active: pathname === "/halving-analysis",
+    },
+    {
+      name: "Price Model",
+      href: "/bitcoin-price-model",
+      icon: <LineChart className="h-5 w-5" />,
+      active: pathname === "/bitcoin-price-model",
     },
     {
       name: "Calendar",

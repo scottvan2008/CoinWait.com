@@ -8,7 +8,6 @@ import { ChevronLeft, ChevronRight, CalendarIcon, Info } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { db } from "@/lib/firebase"
-import { formatDate } from "@/lib/formatters"
 import { CalendarMonthGrid } from "./calendar-month-grid"
 
 interface YearData {
@@ -132,19 +131,18 @@ export function BitcoinCalendar() {
   }
 
   return (
-    <Card variant="bitcoin" className="w-full mx-auto">
-      <CardHeader className="pb-2">
+    <Card variant="bitcoin" className="w-full mx-auto overflow-hidden">
+      <CardHeader className="pb-1 sm:pb-2 px-2 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between">
           <CardTitle className="text-xl text-bitcoin-dark dark:text-white flex items-center">
             <CalendarIcon className="h-5 w-5 mr-2 text-bitcoin" />
             Bitcoin Price Calendar
           </CardTitle>
-          {lastUpdated && <div className="text-xs text-muted-foreground">Last updated: {formatDate(lastUpdated)}</div>}
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-1 sm:p-6">
         {/* Calendar Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6 gap-2 sm:gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-2 sm:mb-6 gap-2 sm:gap-4">
           <div className="flex items-center space-x-1 sm:space-x-2">
             <Button variant="outline" size="icon" onClick={goToPreviousMonth} className="h-8 w-8 sm:h-10 sm:w-10">
               <ChevronLeft className="h-4 w-4" />
@@ -199,16 +197,20 @@ export function BitcoinCalendar() {
         {/* Calendar Grid */}
         <CalendarMonthGrid year={currentYear} month={currentMonth} priceData={allPriceData} />
 
-        <div className="mt-6 p-4 bg-bitcoin-background/50 dark:bg-gray-800/50 rounded-lg text-sm text-muted-foreground">
+        <div className="mt-4 sm:mt-6 p-2 sm:p-4 bg-bitcoin-background/50 dark:bg-gray-800/50 rounded-lg text-sm text-muted-foreground">
           <div className="flex items-start gap-2">
             <Info className="h-5 w-5 text-bitcoin mt-0.5" />
             <div>
               <p>The calendar displays Bitcoin closing prices for each day. Days with price data show:</p>
               <ul className="list-disc ml-5 mt-2 space-y-1">
-                <li>The Bitcoin closing price in USD (last recorded price of the day)</li>
+                <li>The Bitcoin closing price in USD (last recorded price of the day in UTC time)</li>
                 <li>Price change from the previous day's closing price (green for increase, red for decrease)</li>
                 <li>Empty cells indicate no price data is available for that day</li>
               </ul>
+              <p className="mt-2 text-xs italic">
+                All prices are recorded at 23:59:59 UTC (Coordinated Universal Time), the standard time used in
+                cryptocurrency markets.
+              </p>
             </div>
           </div>
         </div>

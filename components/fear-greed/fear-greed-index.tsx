@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Skeleton } from "@/components/ui/skeleton"
 import type { FearGreedData, FearGreedHistoricalData, FearGreedClassificationInfo } from "@/types/fear-greed"
@@ -212,20 +212,25 @@ export function FearGreedIndex() {
   return (
     <section className="mb-12">
       <Card variant="bitcoin" className="w-full max-w-4xl mx-auto">
-        <CardHeader className="pb-2">
-          <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
-            <CardTitle className="text-2xl md:text-3xl text-bitcoin-dark dark:text-white text-center mb-2 md:mb-0">
+        <CardHeader className="pb-1 sm:pb-2 px-2 sm:px-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-1 sm:mb-2">
+            <CardTitle className="text-2xl md:text-3xl text-bitcoin-dark dark:text-white text-center mb-1 md:mb-0">
               Crypto Fear & Greed Index
             </CardTitle>
-            <div className="text-xs text-muted-foreground text-center md:text-right">
-              Last updated: {currentTimestamp}
-            </div>
+            {fearGreedData?.data && (
+              <div className="text-xs text-muted-foreground text-center md:text-right">
+                Last updated: {currentTimestamp}
+              </div>
+            )}
           </div>
+          <CardDescription className="text-base dark:text-gray-300 text-center">
+            Measuring market sentiment from extreme fear to extreme greed
+          </CardDescription>
         </CardHeader>
 
-        <CardContent className="space-y-6">
+        <CardContent className="p-1 sm:p-6 space-y-4 sm:space-y-6">
           {/* Self-updating image from alternative.me */}
-          <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-bitcoin-background dark:bg-gray-800 rounded-lg">
+          <div className="flex flex-col items-center justify-center p-2 sm:p-6 bg-bitcoin-background dark:bg-gray-800 rounded-lg">
             <Image
               src="https://alternative.me/crypto/fear-and-greed-index.png"
               alt="Latest Crypto Fear & Greed Index"
@@ -241,11 +246,11 @@ export function FearGreedIndex() {
           </div>
 
           {/* Historical Data */}
-          <div className="mt-8">
+          <div className="mt-4 sm:mt-8">
             <h3 className="text-xl font-semibold mb-4 text-bitcoin-dark dark:text-white">Historical Values</h3>
 
             <Tabs defaultValue="week" onValueChange={setTimeFrame}>
-              <TabsList className="grid grid-cols-3 mb-4 bg-bitcoin-background dark:bg-gray-800">
+              <TabsList className="grid grid-cols-3 mb-2 sm:mb-4 bg-bitcoin-background dark:bg-gray-800">
                 <TabsTrigger value="week" className="data-[state=active]:bg-bitcoin data-[state=active]:text-white">
                   7 Days
                 </TabsTrigger>
@@ -257,8 +262,8 @@ export function FearGreedIndex() {
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value={timeFrame} className="mt-4">
-                <div className="bg-white dark:bg-gray-900 px-3 sm:px-4 py-2 sm:py-4 rounded-lg shadow-md border border-bitcoin/20 dark:border-bitcoin/10">
+              <TabsContent value={timeFrame} className="mt-2 sm:mt-4">
+                <div className="bg-white dark:bg-gray-900 px-2 sm:px-4 py-1 sm:py-4 rounded-lg shadow-md border border-bitcoin/20 dark:border-bitcoin/10">
                   <div className="h-[350px] sm:h-[400px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={getChartData()} margin={{ top: 20, right: 10, left: 5, bottom: 20 }}>
@@ -357,7 +362,7 @@ export function FearGreedIndex() {
           </div>
 
           {/* What is the Fear & Greed Index - Modern Redesign */}
-          <div className="mt-12">
+          <div className="mt-6 sm:mt-12">
             <div className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-800">
               <div className="relative">
                 {/* Colorful top bar representing the fear-greed spectrum */}
@@ -369,7 +374,7 @@ export function FearGreedIndex() {
                   <div className="w-1/5 bg-[#3CD856]"></div>
                 </div>
 
-                <div className="p-6 sm:p-8">
+                <div className="p-3 sm:p-6 sm:p-8">
                   <div className="flex items-start gap-4 mb-6">
                     <div className="bg-gradient-to-br from-[#FA5A7D] to-[#3CD856] p-3 rounded-xl shadow-md">
                       <Info className="h-6 w-6 text-white" />

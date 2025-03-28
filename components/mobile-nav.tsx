@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, X, Bitcoin, LineChart, Building, AlertCircle, Calendar } from "lucide-react"
+import { Menu, X, Bitcoin, LineChart, Building, AlertCircle, Calendar, TrendingUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
@@ -37,6 +37,18 @@ export function MobileNav() {
       href: "/monthly-returns",
       icon: <Calendar className="h-5 w-5 mr-2" />,
       active: pathname === "/monthly-returns",
+    },
+    {
+      name: "Halving Analysis",
+      href: "/halving-analysis",
+      icon: <TrendingUp className="h-5 w-5 mr-2" />,
+      active: pathname === "/halving-analysis",
+    },
+    {
+      name: "Price Model",
+      href: "/bitcoin-price-model",
+      icon: <LineChart className="h-5 w-5 mr-2" />,
+      active: pathname === "/bitcoin-price-model",
     },
     {
       name: "Calendar",
