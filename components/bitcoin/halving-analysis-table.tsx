@@ -120,18 +120,18 @@ export function HalvingAnalysisTable() {
             Analysis of Bitcoin's price performance during previous halving cycles
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-4 sm:p-6">
+        <CardContent className="p-1 sm:p-6">
           <div className="overflow-x-auto -mx-2 px-2 sm:mx-0 sm:px-0 flex justify-center">
             <table className="w-full max-w-2xl border-collapse table-fixed sm:table-auto">
               <thead>
                 <tr className="bg-blue-50 dark:bg-blue-900/20">
-                  <th className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-left font-medium text-blue-800 dark:text-blue-300 text-xs sm:text-sm">
+                  <th className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-left font-medium text-blue-800 dark:text-blue-300 text-sm sm:text-sm">
                     BTC
                   </th>
                   {historicalData.map((data) => (
                     <th
                       key={data.event}
-                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center font-medium text-blue-800 dark:text-blue-300 text-xs sm:text-sm"
+                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center font-medium text-blue-800 dark:text-blue-300 text-sm sm:text-sm"
                     >
                       {data.event}
                     </th>
@@ -143,13 +143,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 bg-blue-50/80 dark:bg-blue-900/30 font-medium">
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-blue-600 dark:text-blue-400" />
-                      <span className="text-xs sm:text-sm">Halving Date</span>
+                      <span className="text-sm sm:text-sm">Halving Date</span>
                     </div>
                   </td>
                   {historicalData.map((data) => (
                     <td
                       key={`${data.event}-date`}
-                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-xs sm:text-sm"
+                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-sm sm:text-sm"
                     >
                       {data.halvingDate}
                     </td>
@@ -159,13 +159,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 bg-blue-50/80 dark:bg-blue-900/30 font-medium">
                     <div className="flex items-center">
                       <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-blue-600 dark:text-blue-400" />
-                      <span className="text-xs sm:text-sm">Price at Halving</span>
+                      <span className="text-sm sm:text-sm">Price at Halving</span>
                     </div>
                   </td>
                   {historicalData.map((data) => (
                     <td
                       key={`${data.event}-price`}
-                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-xs sm:text-sm"
+                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-sm sm:text-sm"
                     >
                       {formatCurrency(data.priceAtHalving)}
                     </td>
@@ -175,13 +175,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 bg-blue-50/80 dark:bg-blue-900/30 font-medium">
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-green-500" />
-                      <span className="text-xs sm:text-sm">ATH Date After Halving</span>
+                      <span className="text-sm sm:text-sm">ATH Date After Halving</span>
                     </div>
                   </td>
                   {historicalData.map((data) => (
                     <td
                       key={`${data.event}-ath-date`}
-                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-xs sm:text-sm"
+                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-sm sm:text-sm"
                     >
                       {data.athDateAfterHalving}
                     </td>
@@ -191,13 +191,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 bg-blue-50/80 dark:bg-blue-900/30 font-medium">
                     <div className="flex items-center">
                       <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-green-500" />
-                      <span className="text-xs sm:text-sm">ATH Price After Halving</span>
+                      <span className="text-sm sm:text-sm">ATH Price After Halving</span>
                     </div>
                   </td>
                   {historicalData.map((data) => (
                     <td
                       key={`${data.event}-ath-price`}
-                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-green-600 dark:text-green-400 font-semibold text-xs sm:text-sm"
+                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-green-600 dark:text-green-400 font-semibold text-sm sm:text-sm"
                     >
                       {formatCurrency(data.athPriceAfterHalving)}
                     </td>
@@ -207,13 +207,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 bg-blue-50/80 dark:bg-blue-900/30 font-medium">
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-blue-600 dark:text-blue-400" />
-                      <span className="text-xs sm:text-sm">Days from Halving to ATH</span>
+                      <span className="text-sm sm:text-sm">Days from Halving to ATH</span>
                     </div>
                   </td>
                   {historicalData.map((data) => (
                     <td
                       key={`${data.event}-days-to-ath`}
-                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center font-medium text-xs sm:text-sm"
+                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center font-medium text-sm sm:text-sm"
                     >
                       {data.daysFromHalvingToAth}
                     </td>
@@ -223,13 +223,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 bg-blue-50/80 dark:bg-blue-900/30 font-medium">
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-red-500" />
-                      <span className="text-xs sm:text-sm">Lowest Point Date After ATH</span>
+                      <span className="text-sm sm:text-sm">Lowest Point Date After ATH</span>
                     </div>
                   </td>
                   {historicalData.map((data) => (
                     <td
                       key={`${data.event}-lowest-date`}
-                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-xs sm:text-sm"
+                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-sm sm:text-sm"
                     >
                       {data.lowestTimeAfterAth}
                     </td>
@@ -239,13 +239,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 bg-blue-50/80 dark:bg-blue-900/30 font-medium">
                     <div className="flex items-center">
                       <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-red-500" />
-                      <span className="text-xs sm:text-sm">Lowest Price After ATH</span>
+                      <span className="text-sm sm:text-sm">Lowest Price After ATH</span>
                     </div>
                   </td>
                   {historicalData.map((data) => (
                     <td
                       key={`${data.event}-lowest-price`}
-                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-xs sm:text-sm"
+                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-sm sm:text-sm"
                     >
                       {formatCurrency(data.lowestPriceAfterAth)}
                     </td>
@@ -255,13 +255,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 bg-blue-50/80 dark:bg-blue-900/30 font-medium">
                     <div className="flex items-center">
                       <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-red-500" />
-                      <span className="text-xs sm:text-sm">Drawdown from ATH</span>
+                      <span className="text-sm sm:text-sm">Drawdown from ATH</span>
                     </div>
                   </td>
                   {historicalData.map((data) => (
                     <td
                       key={`${data.event}-drawdown`}
-                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-red-600 dark:text-red-400 font-medium text-xs sm:text-sm"
+                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center text-red-600 dark:text-red-400 font-medium text-sm sm:text-sm"
                     >
                       {data.drawdownFromAth}%
                     </td>
@@ -271,13 +271,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 bg-blue-50/80 dark:bg-blue-900/30 font-medium">
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-blue-600 dark:text-blue-400" />
-                      <span className="text-xs sm:text-sm">Days from ATH to Lowest</span>
+                      <span className="text-sm sm:text-sm">Days from ATH to Lowest</span>
                     </div>
                   </td>
                   {historicalData.map((data) => (
                     <td
                       key={`${data.event}-days-to-lowest`}
-                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center font-medium text-xs sm:text-sm"
+                      className="border border-blue-100 dark:border-blue-800/50 p-1 sm:p-2 text-center font-medium text-sm sm:text-sm"
                     >
                       {data.daysFromAthToLowest}
                     </td>
@@ -305,14 +305,14 @@ export function HalvingAnalysisTable() {
             AI model predictions for the current halving cycle (2024-2028)
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-4 sm:p-6">
+        <CardContent className="p-1 sm:p-6">
           <div className="mb-4 p-2 sm:p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-100 dark:border-amber-800/30 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6">
-            <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
+            <div className="flex items-center gap-1 sm:gap-2 text-sm sm:text-sm">
               <Calendar className="h-4 w-4 text-amber-600 dark:text-amber-400" />
               <span className="text-amber-800 dark:text-amber-300 font-medium">4th Halving Date:</span>
               <span className="text-amber-700 dark:text-amber-400">{fourthHalvingData.halvingDate}</span>
             </div>
-            <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
+            <div className="flex items-center gap-1 sm:gap-2 text-sm sm:text-sm">
               <DollarSign className="h-4 w-4 text-amber-600 dark:text-amber-400" />
               <span className="text-amber-800 dark:text-amber-300 font-medium">Price at Halving:</span>
               <span className="text-amber-700 dark:text-amber-400">
@@ -325,13 +325,13 @@ export function HalvingAnalysisTable() {
             <table className="w-full max-w-2xl border-collapse table-fixed sm:table-auto">
               <thead>
                 <tr className="bg-amber-50 dark:bg-amber-900/20">
-                  <th className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-left font-medium text-amber-800 dark:text-amber-300 text-xs sm:text-sm">
+                  <th className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-left font-medium text-amber-800 dark:text-amber-300 text-sm sm:text-sm">
                     AI Models
                   </th>
                   {aiPredictions.map((prediction) => (
                     <th
                       key={prediction.model}
-                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center font-medium text-amber-800 dark:text-amber-300 text-xs sm:text-sm"
+                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center font-medium text-amber-800 dark:text-amber-300 text-sm sm:text-sm"
                     >
                       {prediction.model}
                     </th>
@@ -343,13 +343,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 bg-amber-50/80 dark:bg-amber-900/30 font-medium">
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-green-500" />
-                      <span className="text-xs sm:text-sm">Predicted ATH Date</span>
+                      <span className="text-sm sm:text-sm">Predicted ATH Date</span>
                     </div>
                   </td>
                   {aiPredictions.map((prediction) => (
                     <td
                       key={`${prediction.model}-ath-date`}
-                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center text-xs sm:text-sm"
+                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center text-sm sm:text-sm"
                     >
                       {prediction.athDateAfterHalving}
                     </td>
@@ -359,13 +359,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 bg-amber-50/80 dark:bg-amber-900/30 font-medium">
                     <div className="flex items-center">
                       <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-green-500" />
-                      <span className="text-xs sm:text-sm">Predicted ATH Price</span>
+                      <span className="text-sm sm:text-sm">Predicted ATH Price</span>
                     </div>
                   </td>
                   {aiPredictions.map((prediction) => (
                     <td
                       key={`${prediction.model}-ath-price`}
-                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center text-green-600 dark:text-green-400 font-semibold text-xs sm:text-sm"
+                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center text-green-600 dark:text-green-400 font-semibold text-sm sm:text-sm"
                     >
                       {formatCurrency(prediction.athPriceAfterHalving)}
                     </td>
@@ -375,13 +375,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 bg-amber-50/80 dark:bg-amber-900/30 font-medium">
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-amber-600 dark:text-amber-400" />
-                      <span className="text-xs sm:text-sm">Days from Halving to ATH</span>
+                      <span className="text-sm sm:text-sm">Days from Halving to ATH</span>
                     </div>
                   </td>
                   {aiPredictions.map((prediction) => (
                     <td
                       key={`${prediction.model}-days-to-ath`}
-                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center font-medium text-xs sm:text-sm"
+                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center font-medium text-sm sm:text-sm"
                     >
                       {prediction.daysFromHalvingToAth}
                     </td>
@@ -391,13 +391,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 bg-amber-50/80 dark:bg-amber-900/30 font-medium">
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-red-500" />
-                      <span className="text-xs sm:text-sm">Predicted Lowest Point Date</span>
+                      <span className="text-sm sm:text-sm">Predicted Lowest Point Date</span>
                     </div>
                   </td>
                   {aiPredictions.map((prediction) => (
                     <td
                       key={`${prediction.model}-lowest-date`}
-                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center text-xs sm:text-sm"
+                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center text-sm sm:text-sm"
                     >
                       {prediction.lowestTimeAfterAth}
                     </td>
@@ -407,13 +407,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 bg-amber-50/80 dark:bg-amber-900/30 font-medium">
                     <div className="flex items-center">
                       <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-red-500" />
-                      <span className="text-xs sm:text-sm">Predicted Lowest Price</span>
+                      <span className="text-sm sm:text-sm">Predicted Lowest Price</span>
                     </div>
                   </td>
                   {aiPredictions.map((prediction) => (
                     <td
                       key={`${prediction.model}-lowest-price`}
-                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center text-xs sm:text-sm"
+                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center text-sm sm:text-sm"
                     >
                       {formatCurrency(prediction.lowestPriceAfterAth)}
                     </td>
@@ -423,13 +423,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 bg-amber-50/80 dark:bg-amber-900/30 font-medium">
                     <div className="flex items-center">
                       <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-red-500" />
-                      <span className="text-xs sm:text-sm">Predicted Drawdown from ATH</span>
+                      <span className="text-sm sm:text-sm">Predicted Drawdown from ATH</span>
                     </div>
                   </td>
                   {aiPredictions.map((prediction) => (
                     <td
                       key={`${prediction.model}-drawdown`}
-                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center text-red-600 dark:text-red-400 font-medium text-xs sm:text-sm"
+                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center text-red-600 dark:text-red-400 font-medium text-sm sm:text-sm"
                     >
                       {prediction.drawdownFromAth}%
                     </td>
@@ -439,13 +439,13 @@ export function HalvingAnalysisTable() {
                   <td className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 bg-amber-50/80 dark:bg-amber-900/30 font-medium">
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 flex-shrink-0 text-amber-600 dark:text-amber-400" />
-                      <span className="text-xs sm:text-sm">Days from ATH to Lowest</span>
+                      <span className="text-sm sm:text-sm">Days from ATH to Lowest</span>
                     </div>
                   </td>
                   {aiPredictions.map((prediction) => (
                     <td
                       key={`${prediction.model}-days-to-lowest`}
-                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center font-medium text-xs sm:text-sm"
+                      className="border border-amber-100 dark:border-amber-800/50 p-1 sm:p-2 text-center font-medium text-sm sm:text-sm"
                     >
                       {prediction.daysFromAthToLowest}
                     </td>
@@ -458,7 +458,7 @@ export function HalvingAnalysisTable() {
       </Card>
 
       {/* Explanation Section */}
-      <div className="p-6 bg-gradient-to-r from-blue-50/80 to-amber-50/80 dark:from-blue-950/30 dark:to-amber-950/30 rounded-xl shadow-md border border-blue-100/50 dark:border-blue-900/20 text-sm text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+      <div className="p-3 sm:p-6 bg-gradient-to-r from-blue-50/80 to-amber-50/80 dark:from-blue-950/30 dark:to-amber-950/30 rounded-xl shadow-md border border-blue-100/50 dark:border-blue-900/20 text-sm text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
         <div className="flex items-start gap-3">
           <div className="p-2 bg-gradient-to-r from-blue-100 to-amber-100 dark:from-blue-900/30 dark:to-amber-900/30 rounded-full shadow-sm">
             <Info className="h-5 w-5 text-blue-600 dark:text-blue-400" />
