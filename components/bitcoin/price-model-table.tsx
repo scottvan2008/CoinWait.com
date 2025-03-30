@@ -31,7 +31,7 @@ interface PriceModelTableProps {
   data: {
     date: string
     daysSinceBirth: number
-    predictedPrice: number
+    modelPrice: number
     actualPrice?: number
   }[]
   isFutureYear?: boolean
@@ -69,7 +69,7 @@ export function PriceModelTable({ data, isFutureYear = false }: PriceModelTableP
 
     paginatedData.forEach((item) => {
       if (item.actualPrice) {
-        const diff = ((item.actualPrice - item.predictedPrice) / item.predictedPrice) * 100
+        const diff = ((item.actualPrice - item.modelPrice) / item.modelPrice) * 100
         totalDifference += diff
         diffCount++
 
@@ -105,9 +105,9 @@ export function PriceModelTable({ data, isFutureYear = false }: PriceModelTableP
   }, [])
 
   // Calculate price difference percentage
-  const calculateDifference = (actual: number | undefined, predicted: number): number | null => {
-    if (actual === undefined || predicted === 0) return null
-    return ((actual - predicted) / predicted) * 100
+  const calculateDifference = (actual: number | undefined, modelPrice: number): number | null => {
+    if (actual === undefined || modelPrice === 0) return null
+    return ((actual - modelPrice) / modelPrice) * 100
   }
 
   // Get CSS class for difference
@@ -231,8 +231,8 @@ export function PriceModelTable({ data, isFutureYear = false }: PriceModelTableP
               </svg>
             </div>
             <div>
-              <strong className="font-medium">Future Prediction:</strong> This is a future year showing only predicted
-              prices based on the mathematical model. No actual price data is available.
+              <strong className="font-medium">Future Prediction:</strong> This is a future year showing only model
+              prices based on the mathematical formula. No actual price data is available.
             </div>
           </div>
         </div>
@@ -326,32 +326,32 @@ export function PriceModelTable({ data, isFutureYear = false }: PriceModelTableP
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-gradient-to-r from-bitcoin-background to-bitcoin-background/70 dark:from-gray-800 dark:to-gray-800/90">
-                <th className="border-b border-gray-200 dark:border-gray-700 p-2 text-left font-medium text-bitcoin-dark dark:text-white">
-                  <div className="flex items-center gap-1.5">
+                <th className="border-b border-gray-200 dark:border-gray-700 p-2 text-center font-medium text-bitcoin-dark dark:text-white">
+                  <div className="flex items-center justify-center gap-1.5">
                     <Calendar className="h-4 w-4 text-bitcoin" />
                     <span>Date</span>
                   </div>
                 </th>
-                <th className="border-b border-gray-200 dark:border-gray-700 p-2 text-right font-medium text-bitcoin-dark dark:text-white">
-                  <div className="flex items-center justify-end gap-1.5">
+                <th className="border-b border-gray-200 dark:border-gray-700 p-2 text-center font-medium text-bitcoin-dark dark:text-white">
+                  <div className="flex items-center justify-center gap-1.5">
                     <Clock className="h-4 w-4 text-bitcoin" />
-                    <span>Days Since Birth</span>
+                    <span>Age(days)</span>
                   </div>
                 </th>
-                <th className="border-b border-gray-200 dark:border-gray-700 p-2 text-right font-medium text-bitcoin-dark dark:text-white">
-                  <div className="flex items-center justify-end gap-1.5">
+                <th className="border-b border-gray-200 dark:border-gray-700 p-2 text-center font-medium text-bitcoin-dark dark:text-white">
+                  <div className="flex items-center justify-center gap-1.5">
                     <DollarSign className="h-4 w-4 text-bitcoin" />
-                    <span>Predicted Price</span>
+                    <span>Model Price</span>
                   </div>
                 </th>
-                <th className="border-b border-gray-200 dark:border-gray-700 p-2 text-right font-medium text-bitcoin-dark dark:text-white">
-                  <div className="flex items-center justify-end gap-1.5">
+                <th className="border-b border-gray-200 dark:border-gray-700 p-2 text-center font-medium text-bitcoin-dark dark:text-white">
+                  <div className="flex items-center justify-center gap-1.5">
                     <DollarSign className="h-4 w-4 text-bitcoin" />
                     <span>Actual Price</span>
                   </div>
                 </th>
-                <th className="border-b border-gray-200 dark:border-gray-700 p-2 text-right font-medium text-bitcoin-dark dark:text-white">
-                  <div className="flex items-center justify-end gap-1.5">
+                <th className="border-b border-gray-200 dark:border-gray-700 p-2 text-center font-medium text-bitcoin-dark dark:text-white">
+                  <div className="flex items-center justify-center gap-1.5">
                     <PercentIcon className="h-4 w-4 text-bitcoin" />
                     <span>Difference</span>
                   </div>
@@ -360,7 +360,7 @@ export function PriceModelTable({ data, isFutureYear = false }: PriceModelTableP
             </thead>
             <tbody>
               {paginatedData.map((item, index) => {
-                const difference = calculateDifference(item.actualPrice, item.predictedPrice)
+                const difference = calculateDifference(item.actualPrice, item.modelPrice)
                 const isEven = index % 2 === 0
                 const rowClass = isEven ? "bg-white dark:bg-gray-900" : "bg-gray-50/50 dark:bg-gray-800/30"
 
@@ -369,20 +369,20 @@ export function PriceModelTable({ data, isFutureYear = false }: PriceModelTableP
                     key={item.date}
                     className={`${rowClass} hover:bg-bitcoin-background/20 dark:hover:bg-bitcoin/5 transition-colors`}
                   >
-                    <td className="border-b border-gray-100 dark:border-gray-800 p-2 text-left">
+                    <td className="border-b border-gray-100 dark:border-gray-800 p-2 text-center">
                       <span className="font-medium text-gray-700 dark:text-gray-300">{formatDate(item.date)}</span>
                     </td>
-                    <td className="border-b border-gray-100 dark:border-gray-800 p-2 text-right">
+                    <td className="border-b border-gray-100 dark:border-gray-800 p-2 text-center">
                       <span className="font-mono text-gray-600 dark:text-gray-400">
                         {item.daysSinceBirth.toLocaleString()}
                       </span>
                     </td>
-                    <td className="border-b border-gray-100 dark:border-gray-800 p-2 text-right">
+                    <td className="border-b border-gray-100 dark:border-gray-800 p-2 text-center">
                       <span className="font-mono font-medium text-bitcoin-dark dark:text-white">
-                        {formatCurrency(item.predictedPrice, item.predictedPrice > 1000 ? 0 : 2)}
+                        {formatCurrency(item.modelPrice, item.modelPrice > 1000 ? 0 : 2)}
                       </span>
                     </td>
-                    <td className="border-b border-gray-100 dark:border-gray-800 p-2 text-right">
+                    <td className="border-b border-gray-100 dark:border-gray-800 p-2 text-center">
                       {item.actualPrice !== undefined ? (
                         <span className="font-mono font-medium text-bitcoin-dark dark:text-white">
                           {formatCurrency(item.actualPrice, item.actualPrice > 1000 ? 0 : 2)}
@@ -392,10 +392,10 @@ export function PriceModelTable({ data, isFutureYear = false }: PriceModelTableP
                       )}
                     </td>
                     <td
-                      className={`border-b border-gray-100 dark:border-gray-800 p-2 text-right ${getDifferenceBackground(difference)}`}
+                      className={`border-b border-gray-100 dark:border-gray-800 p-2 text-center ${getDifferenceBackground(difference)}`}
                     >
                       {difference !== null ? (
-                        <div className={`flex items-center justify-end gap-1 ${getDifferenceClass(difference)}`}>
+                        <div className={`flex items-center justify-center gap-1 ${getDifferenceClass(difference)}`}>
                           {getTrendIcon(difference)}
                           <span className="font-mono">
                             {difference > 0 ? "+" : ""}

@@ -108,7 +108,10 @@ export function HalvingAnalysisTable() {
   return (
     <div className="space-y-8">
       {/* Historical Data Section */}
-      <Card className="w-full overflow-hidden border-blue-100 dark:border-blue-900/30 shadow-md hover:shadow-lg transition-shadow">
+      <Card
+        className="w-full overflow-hidden border-blue-100 dark:border-blue-900/30 shadow-md hover:shadow-lg transition-shadow"
+        variant="bitcoin"
+      >
         <CardHeader className="pb-2 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 border-b border-blue-100 dark:border-blue-900/30">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-full">
@@ -293,7 +296,10 @@ export function HalvingAnalysisTable() {
       <div className="my-8"></div>
 
       {/* AI Predictions Section */}
-      <Card className="w-full overflow-hidden border-amber-100 dark:border-amber-900/30 shadow-md hover:shadow-lg transition-shadow">
+      <Card
+        className="w-full overflow-hidden border-amber-100 dark:border-amber-900/30 shadow-md hover:shadow-lg transition-shadow"
+        variant="bitcoin"
+      >
         <CardHeader className="pb-2 bg-gradient-to-r from-amber-50 to-amber-100 dark:from-amber-950/30 dark:to-amber-900/30 border-b border-amber-100 dark:border-amber-900/30">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-amber-100 dark:bg-amber-900/50 rounded-full">
@@ -458,7 +464,7 @@ export function HalvingAnalysisTable() {
       </Card>
 
       {/* Explanation Section */}
-      <div className="p-3 sm:p-6 bg-gradient-to-r from-blue-50/80 to-amber-50/80 dark:from-blue-950/30 dark:to-amber-950/30 rounded-xl shadow-md border border-blue-100/50 dark:border-blue-900/20 text-sm text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+      <div className="p-3 sm:p-6 bg-gradient-to-r from-bitcoin-background to-blue-50 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow-md border border-bitcoin/20 dark:border-bitcoin/10 text-sm text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
         <div className="flex items-start gap-3">
           <div className="p-2 bg-gradient-to-r from-blue-100 to-amber-100 dark:from-blue-900/30 dark:to-amber-900/30 rounded-full shadow-sm">
             <Info className="h-5 w-5 text-blue-600 dark:text-blue-400" />

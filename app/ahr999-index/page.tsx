@@ -1,15 +1,15 @@
 import { Suspense } from "react"
-import { BitcoinPriceModel } from "@/components/bitcoin/bitcoin-price-model"
+import { AHR999Index } from "@/components/bitcoin/ahr999-index"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 
 export const metadata = {
-  title: "CoinWait - Bitcoin Price Model",
-  description: "Compare actual Bitcoin prices with the mathematical growth model based on days since genesis block",
+  title: "CoinWait - AHR999 Index",
+  description: "Track the AHR999 Index to identify optimal Bitcoin entry and exit points",
 }
 
 // Loading fallback component
-function ModelSkeleton() {
+function IndexSkeleton() {
   return (
     <Card className="w-full mx-auto">
       <CardHeader>
@@ -22,19 +22,19 @@ function ModelSkeleton() {
   )
 }
 
-export default function BitcoinPriceModelPage() {
+export default function AHR999IndexPage() {
   return (
     <main className="flex min-h-screen flex-col items-center p-2 sm:p-4 pb-24 md:p-8 md:pt-6 md:pb-16">
       <div className="w-full max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold mb-4 text-bitcoin-dark dark:text-white">Bitcoin Price Model</h1>
+          <h1 className="text-2xl md:text-3xl font-bold mb-4 text-bitcoin-dark dark:text-white">AHR999 Index</h1>
           <p className="text-muted-foreground max-w-3xl mx-auto">
-            This model compares actual Bitcoin prices with a mathematical growth model based on the number of days since
-            the genesis block (January 3, 2009). The formula was developed by ahr999, a well-known Bitcoin analyst.
+            A Bitcoin valuation and investment timing tool designed to identify optimal entry and exit points in the
+            market.
           </p>
         </div>
-        <Suspense fallback={<ModelSkeleton />}>
-          <BitcoinPriceModel />
+        <Suspense fallback={<IndexSkeleton />}>
+          <AHR999Index />
         </Suspense>
       </div>
     </main>

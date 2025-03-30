@@ -4,11 +4,12 @@ import { useState, useEffect } from "react"
 import { collection, getDocs } from "firebase/firestore"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { ChevronLeft, ChevronRight, CalendarIcon, Info } from "lucide-react"
+import { ChevronLeft, ChevronRight, CalendarIcon, Info, LineChart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { db } from "@/lib/firebase"
 import { CalendarMonthGrid } from "./calendar-month-grid"
+import { PriceChart } from "./price-chart"
 
 interface YearData {
   year: string
@@ -196,6 +197,15 @@ export function BitcoinCalendar() {
 
         {/* Calendar Grid */}
         <CalendarMonthGrid year={currentYear} month={currentMonth} priceData={allPriceData} />
+
+        {/* Price Chart */}
+        <div className="mt-6 mb-4">
+          <h3 className="text-sm font-medium mb-2 text-bitcoin-dark dark:text-white flex items-center">
+            <LineChart className="h-4 w-4 mr-2 text-bitcoin" />
+            Bitcoin Price Chart - {getMonthName(currentMonth)} {currentYear}
+          </h3>
+          <PriceChart year={currentYear} month={currentMonth} priceData={allPriceData} />
+        </div>
 
         <div className="mt-4 sm:mt-6 p-2 sm:p-4 bg-bitcoin-background/50 dark:bg-gray-800/50 rounded-lg text-sm text-muted-foreground">
           <div className="flex items-start gap-2">

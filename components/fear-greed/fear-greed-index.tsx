@@ -363,7 +363,7 @@ export function FearGreedIndex() {
 
           {/* What is the Fear & Greed Index - Modern Redesign */}
           <div className="mt-6 sm:mt-12">
-            <div className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-800">
+            <div className="bg-gradient-to-r from-bitcoin-background to-blue-50 dark:from-gray-900 dark:to-gray-800 rounded-xl overflow-hidden shadow-lg border border-bitcoin/20 dark:border-bitcoin/10">
               <div className="relative">
                 {/* Colorful top bar representing the fear-greed spectrum */}
                 <div className="h-2 w-full flex">

@@ -44,7 +44,9 @@ export function CalendarDay({ day, price, priceChange, isToday = false }: Calend
 
   // Format price with or without decimals based on screen size
   const formattedPrice =
-    price !== undefined ? formatCurrency(price, price > 1000 || isMobile ? 0 : 2).replace("$", "") : undefined
+    price !== undefined
+      ? formatCurrency(price, price > 10000 ? 0 : price > 1000 || isMobile ? 1 : 2).replace("$", "")
+      : undefined
 
   return (
     <td className={`border border-gray-200 dark:border-gray-700 p-0 sm:p-1 h-12 sm:h-16 align-top ${todayClass}`}>

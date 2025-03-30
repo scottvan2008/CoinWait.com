@@ -18,12 +18,12 @@ interface YearData {
 interface PriceModelData {
   date: string
   daysSinceBirth: number
-  predictedPrice: number
+  modelPrice: number
   actualPrice?: number
 }
 
 // Bitcoin's birthday - Genesis block - defined outside component to avoid recreation
-const BITCOIN_BIRTHDAY = new Date("2009-01-04T00:00:00Z")
+const BITCOIN_BIRTHDAY = new Date("2009-01-03T00:00:00Z")
 
 // Calculate days since Bitcoin's birthday - moved outside component
 const calculateDaysSinceBirth = (dateString: string): number => {
@@ -32,9 +32,9 @@ const calculateDaysSinceBirth = (dateString: string): number => {
   return Math.floor(diffTime / (1000 * 60 * 60 * 24))
 }
 
-// Calculate predicted price using the formula: 10^(5.84*LOG(Days of birth)-17.01)
+// Calculate model price using the formula: 10^(5.84*LOG(Days of birth)-17.01)
 // Moved outside component to avoid recreation
-const calculatePredictedPrice = (daysSinceBirth: number): number => {
+const calculateModelPrice = (daysSinceBirth: number): number => {
   return Math.pow(10, 5.84 * Math.log10(daysSinceBirth) - 17.01)
 }
 
@@ -132,13 +132,13 @@ export function BitcoinPriceModel() {
     // Map all dates to data objects - this is now properly memoized
     return allDates.map((date) => {
       const daysSinceBirth = calculateDaysSinceBirth(date)
-      const predictedPrice = calculatePredictedPrice(daysSinceBirth)
+      const modelPrice = calculateModelPrice(daysSinceBirth)
       const actualPrice = yearPrices[date] // This will be undefined if no data exists
 
       return {
         date,
         daysSinceBirth,
-        predictedPrice,
+        modelPrice,
         actualPrice,
       }
     })
@@ -205,9 +205,8 @@ export function BitcoinPriceModel() {
           <p>
             <strong>About ahr999's model:</strong> This logarithmic growth model suggests that Bitcoin's price follows a
             predictable pattern as the network matures. Positive differences indicate that Bitcoin is trading above the
-            model's prediction (potentially overvalued), while negative differences suggest it may be undervalued
-            according to the model. For future years, the model provides price predictions based on the mathematical
-            formula.
+            model's price (potentially overvalued), while negative differences suggest it may be undervalued according
+            to the model. For future years, the model provides price projections based on the mathematical formula.
           </p>
           {lastUpdated && <p className="mt-2 text-xs">Last updated: {formatDate(lastUpdated)}</p>}
         </div>
