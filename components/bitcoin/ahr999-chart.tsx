@@ -76,7 +76,7 @@ export function AHR999Chart({ data, selectedYear = "all" }: AHR999ChartProps) {
     return null
   }
 
-  // Calculate domain for price axis
+  // Calculate domain for price axis with less padding
   const priceDomain = useMemo(() => {
     if (data.length === 0) return [0, 100000]
 
@@ -84,8 +84,9 @@ export function AHR999Chart({ data, selectedYear = "all" }: AHR999ChartProps) {
     const avgPrices = data.map((d) => d.avg_200_day_cost)
     const allPrices = [...prices, ...avgPrices]
 
-    const min = Math.min(...allPrices) * 0.8
-    const max = Math.max(...allPrices) * 1.2
+    // Use 5% padding instead of 20% to keep the chart closer to actual data range
+    const min = Math.min(...allPrices) * 0.95
+    const max = Math.max(...allPrices) * 1.05
 
     return [min, max]
   }, [data])
@@ -109,13 +110,37 @@ export function AHR999Chart({ data, selectedYear = "all" }: AHR999ChartProps) {
 
   // Calculate maximum AHR999 value for Y-axis scaling
   const calculateMaxAhr999Value = () => {
-    if (data.length === 0) return 4
+    if (data.length === 0) return 3
 
     const maxValue = Math.max(...data.map((item) => item.ahr999))
     // Add 20% padding above the maximum value
     const paddedMax = Math.ceil(maxValue * 1.2)
-    // Ensure we always show at least up to 4 for context
-    return Math.max(4, paddedMax)
+    // Ensure we always show at least up to 3 for context
+    return Math.max(3, paddedMax)
+  }
+
+  // Generate dynamic ticks for AHR999 axis
+  const generateAhr999Ticks = (maxValue: number) => {
+    // Always include 0, 1, 2, 3 as reference points
+    const baseTicks = [0, 1, 2, 3]
+
+    // If max value is 3 or less, just return the base ticks
+    if (maxValue <= 3) return baseTicks
+
+    // For values above 3, add additional ticks
+    const additionalTicks = []
+    const tickStep = maxValue > 10 ? 2 : 1 // Use larger steps for very high values
+
+    for (let i = 4; i <= maxValue; i += tickStep) {
+      additionalTicks.push(i)
+    }
+
+    // Make sure the max value is included as a tick
+    if (additionalTicks.length > 0 && additionalTicks[additionalTicks.length - 1] < maxValue) {
+      additionalTicks.push(maxValue)
+    }
+
+    return [...baseTicks, ...additionalTicks]
   }
 
   if (data.length === 0) {
@@ -128,13 +153,7 @@ export function AHR999Chart({ data, selectedYear = "all" }: AHR999ChartProps) {
 
   return (
     <div className="h-[450px] w-full">
-      {selectedYear !== "all" && (
-        <div className="text-sm text-center text-muted-foreground mb-2">
-          Showing data for {selectedYear} {data.length > 0 ? `(${data.length} data points)` : ""}
-        </div>
-      )}
-
-      <ResponsiveContainer width="100%" height={selectedYear !== "all" ? "75%" : "80%"}>
+      <ResponsiveContainer width="100%" height="85%">
         <LineChart
           data={data}
           margin={{
@@ -158,7 +177,7 @@ export function AHR999Chart({ data, selectedYear = "all" }: AHR999ChartProps) {
             domain={[0, calculateMaxAhr999Value()]}
             tick={{ fontSize: isMobile ? 10 : 12 }}
             tickMargin={isMobile ? 4 : 8}
-            tickCount={isMobile ? 5 : 6}
+            ticks={generateAhr999Ticks(calculateMaxAhr999Value())}
             width={isMobile ? 25 : 40}
           />
           <YAxis

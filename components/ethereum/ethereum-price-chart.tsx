@@ -5,13 +5,13 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { formatCurrency } from "@/lib/formatters"
 import { useIsMobile } from "@/hooks/use-mobile"
 
-interface PriceChartProps {
+interface EthereumPriceChartProps {
   year: number
   month: number
   priceData: Record<string, number>
 }
 
-export function PriceChart({ year, month, priceData }: PriceChartProps) {
+export function EthereumPriceChart({ year, month, priceData }: EthereumPriceChartProps) {
   const [chartData, setChartData] = useState<Array<{ date: string; day: number; price: number | null }>>([])
   const [averagePrice, setAveragePrice] = useState<number | null>(null)
   const isMobile = useIsMobile()

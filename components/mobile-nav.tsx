@@ -18,6 +18,7 @@ import {
   ChevronRight,
   Home,
 } from "lucide-react"
+import { EthereumIcon } from "@/components/icons/ethereum-icon"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
@@ -49,21 +50,27 @@ export function MobileNav() {
       icon: <Building className="h-5 w-5 mr-2" />,
       active: pathname === "/exchanges",
     },
+  ]
+
+  // Bitcoin dropdown items
+  const bitcoinItems = [
     {
-      name: "Bitcoin Halving",
+      name: "Halving",
       href: "/bitcoin",
       icon: <Bitcoin className="h-5 w-5 mr-2" />,
       active: pathname === "/bitcoin",
     },
-  ]
-
-  // Bitcoin Analysis dropdown items
-  const bitcoinAnalysisItems = [
     {
       name: "Performance",
       href: "/monthly-returns",
       icon: <Calendar className="h-5 w-5 mr-2" />,
       active: pathname === "/monthly-returns",
+    },
+    {
+      name: "Calendar",
+      href: "/calendar",
+      icon: <Calendar className="h-5 w-5 mr-2" />,
+      active: pathname === "/calendar",
     },
     {
       name: "Halving Analysis",
@@ -85,14 +92,24 @@ export function MobileNav() {
     },
   ]
 
-  // Tools dropdown items
-  const toolsItems = [
+  // Ethereum dropdown items
+  const ethereumItems = [
+    {
+      name: "Performance",
+      href: "/ethereum",
+      icon: <LineChart className="h-5 w-5 mr-2" />,
+      active: pathname === "/ethereum",
+    },
     {
       name: "Calendar",
-      href: "/calendar",
+      href: "/ethereum-calendar",
       icon: <Calendar className="h-5 w-5 mr-2" />,
-      active: pathname === "/calendar",
+      active: pathname === "/ethereum-calendar",
     },
+  ]
+
+  // Tools dropdown items
+  const toolsItems = [
     {
       name: "Fear & Greed",
       href: "/fear-greed",
@@ -102,7 +119,8 @@ export function MobileNav() {
   ]
 
   // Check if any item in a dropdown is active
-  const isAnalysisActive = bitcoinAnalysisItems.some((item) => item.active)
+  const isBitcoinActive = bitcoinItems.some((item) => item.active)
+  const isEthereumActive = ethereumItems.some((item) => item.active)
   const isToolsActive = toolsItems.some((item) => item.active)
 
   return (
@@ -146,31 +164,75 @@ export function MobileNav() {
               </Link>
             ))}
 
-            {/* Bitcoin Analysis Section */}
+            {/* Bitcoin Section */}
             <div className="mt-2">
               <button
-                onClick={() => toggleSection("analysis")}
+                onClick={() => toggleSection("bitcoin")}
                 className={cn(
                   "flex items-center justify-between w-full px-3 py-2 text-base font-medium rounded-md transition-colors",
-                  isAnalysisActive
+                  isBitcoinActive
                     ? "bg-bitcoin text-white"
                     : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-200 dark:hover:bg-bitcoin/20",
                 )}
               >
                 <div className="flex items-center">
-                  <BarChart3 className="h-5 w-5 mr-2" />
-                  Analysis
+                  <Bitcoin className="h-5 w-5 mr-2" />
+                  BTC
                 </div>
-                {expandedSection === "analysis" ? (
+                {expandedSection === "bitcoin" ? (
                   <ChevronDown className="h-5 w-5" />
                 ) : (
                   <ChevronRight className="h-5 w-5" />
                 )}
               </button>
 
-              {expandedSection === "analysis" && (
+              {expandedSection === "bitcoin" && (
                 <div className="ml-4 mt-1 space-y-1">
-                  {bitcoinAnalysisItems.map((item) => (
+                  {bitcoinItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                        item.active
+                          ? "bg-bitcoin/20 text-bitcoin dark:text-bitcoin-light"
+                          : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-300 dark:hover:bg-bitcoin/10",
+                      )}
+                    >
+                      {item.icon}
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Ethereum Section */}
+            <div className="mt-2">
+              <button
+                onClick={() => toggleSection("ethereum")}
+                className={cn(
+                  "flex items-center justify-between w-full px-3 py-2 text-base font-medium rounded-md transition-colors",
+                  isEthereumActive
+                    ? "bg-bitcoin text-white"
+                    : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-200 dark:hover:bg-bitcoin/20",
+                )}
+              >
+                <div className="flex items-center">
+                  <EthereumIcon className="h-5 w-5 mr-2" />
+                  ETH
+                </div>
+                {expandedSection === "ethereum" ? (
+                  <ChevronDown className="h-5 w-5" />
+                ) : (
+                  <ChevronRight className="h-5 w-5" />
+                )}
+              </button>
+
+              {expandedSection === "ethereum" && (
+                <div className="ml-4 mt-1 space-y-1">
+                  {ethereumItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
@@ -191,48 +253,50 @@ export function MobileNav() {
             </div>
 
             {/* Tools Section */}
-            <div className="mt-2">
-              <button
-                onClick={() => toggleSection("tools")}
-                className={cn(
-                  "flex items-center justify-between w-full px-3 py-2 text-base font-medium rounded-md transition-colors",
-                  isToolsActive
-                    ? "bg-bitcoin text-white"
-                    : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-200 dark:hover:bg-bitcoin/20",
-                )}
-              >
-                <div className="flex items-center">
-                  <LineChart className="h-5 w-5 mr-2" />
-                  Tools
-                </div>
-                {expandedSection === "tools" ? (
-                  <ChevronDown className="h-5 w-5" />
-                ) : (
-                  <ChevronRight className="h-5 w-5" />
-                )}
-              </button>
+            {toolsItems.length > 0 && (
+              <div className="mt-2">
+                <button
+                  onClick={() => toggleSection("tools")}
+                  className={cn(
+                    "flex items-center justify-between w-full px-3 py-2 text-base font-medium rounded-md transition-colors",
+                    isToolsActive
+                      ? "bg-bitcoin text-white"
+                      : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-200 dark:hover:bg-bitcoin/20",
+                  )}
+                >
+                  <div className="flex items-center">
+                    <LineChart className="h-5 w-5 mr-2" />
+                    Tools
+                  </div>
+                  {expandedSection === "tools" ? (
+                    <ChevronDown className="h-5 w-5" />
+                  ) : (
+                    <ChevronRight className="h-5 w-5" />
+                  )}
+                </button>
 
-              {expandedSection === "tools" && (
-                <div className="ml-4 mt-1 space-y-1">
-                  {toolsItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className={cn(
-                        "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                        item.active
-                          ? "bg-bitcoin/20 text-bitcoin dark:text-bitcoin-light"
-                          : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-300 dark:hover:bg-bitcoin/10",
-                      )}
-                    >
-                      {item.icon}
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+                {expandedSection === "tools" && (
+                  <div className="ml-4 mt-1 space-y-1">
+                    {toolsItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                          item.active
+                            ? "bg-bitcoin/20 text-bitcoin dark:text-bitcoin-light"
+                            : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-300 dark:hover:bg-bitcoin/10",
+                        )}
+                      >
+                        {item.icon}
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </nav>
         </div>
       </SheetContent>

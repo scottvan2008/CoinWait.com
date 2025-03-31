@@ -13,10 +13,12 @@ import {
   Home,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useState } from "react"
+import { EthereumIcon } from "@/components/icons/ethereum-icon"
 
 export function Navigation() {
   const pathname = usePathname()
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
   // Main navigation items
   const mainNavItems = [
@@ -32,21 +34,27 @@ export function Navigation() {
       icon: <Building className="h-5 w-5" />,
       active: pathname === "/exchanges",
     },
-    {
-      name: "Bitcoin Halving",
-      href: "/bitcoin",
-      icon: <Bitcoin className="h-5 w-5" />,
-      active: pathname === "/bitcoin",
-    },
   ]
 
-  // Bitcoin Analysis dropdown items
-  const bitcoinAnalysisItems = [
+  // Bitcoin dropdown items
+  const bitcoinItems = [
+    {
+      name: "Halving",
+      href: "/bitcoin",
+      icon: <Bitcoin className="h-4 w-4" />,
+      active: pathname === "/bitcoin",
+    },
     {
       name: "Performance",
       href: "/monthly-returns",
       icon: <Calendar className="h-4 w-4" />,
       active: pathname === "/monthly-returns",
+    },
+    {
+      name: "Calendar",
+      href: "/calendar",
+      icon: <Calendar className="h-4 w-4" />,
+      active: pathname === "/calendar",
     },
     {
       name: "Halving Analysis",
@@ -68,14 +76,24 @@ export function Navigation() {
     },
   ]
 
-  // Tools dropdown items
-  const toolsItems = [
+  // Ethereum dropdown items
+  const ethereumItems = [
+    {
+      name: "Performance",
+      href: "/ethereum",
+      icon: <LineChart className="h-4 w-4" />,
+      active: pathname === "/ethereum",
+    },
     {
       name: "Calendar",
-      href: "/calendar",
+      href: "/ethereum-calendar",
       icon: <Calendar className="h-4 w-4" />,
-      active: pathname === "/calendar",
+      active: pathname === "/ethereum-calendar",
     },
+  ]
+
+  // Tools dropdown items
+  const toolsItems = [
     {
       name: "Fear & Greed",
       href: "/fear-greed",
@@ -85,7 +103,8 @@ export function Navigation() {
   ]
 
   // Check if any item in a dropdown is active
-  const isAnalysisActive = bitcoinAnalysisItems.some((item) => item.active)
+  const isBitcoinActive = bitcoinItems.some((item) => item.active)
+  const isEthereumActive = ethereumItems.some((item) => item.active)
   const isToolsActive = toolsItems.some((item) => item.active)
 
   return (
@@ -106,47 +125,99 @@ export function Navigation() {
         </Link>
       ))}
 
-      {/* Bitcoin Analysis Dropdown */}
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button
-            className={cn(
-              "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
-              isAnalysisActive
-                ? "bg-bitcoin text-white"
-                : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-200 dark:hover:bg-bitcoin/20",
-            )}
-          >
-            <BarChart3 className="h-5 w-5" />
-            <span className="ml-2">Analysis</span>
-            <ChevronDown className="ml-1 h-4 w-4" />
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
-          {bitcoinAnalysisItems.map((item) => (
-            <DropdownMenuItem key={item.href} asChild>
-              <Link
-                href={item.href}
-                className={cn(
-                  "flex w-full items-center px-2 py-1.5",
-                  item.active && "bg-bitcoin/10 dark:bg-bitcoin/20",
-                )}
-              >
-                {item.icon}
-                <span className="ml-2">{item.name}</span>
-              </Link>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {/* Bitcoin Dropdown */}
+      <div
+        className="relative"
+        onMouseEnter={() => setActiveDropdown("bitcoin")}
+        onMouseLeave={() => setActiveDropdown(null)}
+      >
+        <button
+          className={cn(
+            "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
+            isBitcoinActive || activeDropdown === "bitcoin"
+              ? "bg-bitcoin text-white"
+              : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-200 dark:hover:bg-bitcoin/20",
+          )}
+        >
+          <Bitcoin className="h-5 w-5" />
+          <span className="ml-2">BTC</span>
+          <ChevronDown className="ml-1 h-4 w-4" />
+        </button>
+        {activeDropdown === "bitcoin" && (
+          <div className="absolute right-0 w-56 rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900 z-50">
+            <div className="py-1">
+              {bitcoinItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex w-full items-center px-4 py-2 text-sm",
+                    item.active
+                      ? "bg-bitcoin/10 dark:bg-bitcoin/20 text-bitcoin-dark dark:text-white"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800",
+                  )}
+                >
+                  {item.icon}
+                  <span className="ml-2">{item.name}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Ethereum Dropdown */}
+      <div
+        className="relative"
+        onMouseEnter={() => setActiveDropdown("ethereum")}
+        onMouseLeave={() => setActiveDropdown(null)}
+      >
+        <button
+          className={cn(
+            "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
+            isEthereumActive || activeDropdown === "ethereum"
+              ? "bg-bitcoin text-white"
+              : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-200 dark:hover:bg-bitcoin/20",
+          )}
+        >
+          <EthereumIcon className="h-5 w-5" />
+          <span className="ml-2">ETH</span>
+          <ChevronDown className="ml-1 h-4 w-4" />
+        </button>
+        {activeDropdown === "ethereum" && (
+          <div className="absolute right-0 w-56 rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900 z-50">
+            <div className="py-1">
+              {ethereumItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex w-full items-center px-4 py-2 text-sm",
+                    item.active
+                      ? "bg-bitcoin/10 dark:bg-bitcoin/20 text-bitcoin-dark dark:text-white"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800",
+                  )}
+                >
+                  {item.icon}
+                  <span className="ml-2">{item.name}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Tools Dropdown */}
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+      {toolsItems.length > 0 && (
+        <div
+          className="relative"
+          onMouseEnter={() => setActiveDropdown("tools")}
+          onMouseLeave={() => setActiveDropdown(null)}
+        >
           <button
             className={cn(
               "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
-              isToolsActive
+              isToolsActive || activeDropdown === "tools"
                 ? "bg-bitcoin text-white"
                 : "text-gray-700 hover:bg-bitcoin/10 dark:text-gray-200 dark:hover:bg-bitcoin/20",
             )}
@@ -155,24 +226,29 @@ export function Navigation() {
             <span className="ml-2">Tools</span>
             <ChevronDown className="ml-1 h-4 w-4" />
           </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
-          {toolsItems.map((item) => (
-            <DropdownMenuItem key={item.href} asChild>
-              <Link
-                href={item.href}
-                className={cn(
-                  "flex w-full items-center px-2 py-1.5",
-                  item.active && "bg-bitcoin/10 dark:bg-bitcoin/20",
-                )}
-              >
-                {item.icon}
-                <span className="ml-2">{item.name}</span>
-              </Link>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+          {activeDropdown === "tools" && (
+            <div className="absolute right-0 w-56 rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900 z-50">
+              <div className="py-1">
+                {toolsItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "flex w-full items-center px-4 py-2 text-sm",
+                      item.active
+                        ? "bg-bitcoin/10 dark:bg-bitcoin/20 text-bitcoin-dark dark:text-white"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800",
+                    )}
+                  >
+                    {item.icon}
+                    <span className="ml-2">{item.name}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </nav>
   )
 }

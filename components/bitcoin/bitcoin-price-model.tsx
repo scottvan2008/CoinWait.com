@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { db } from "@/lib/firebase"
 import { PriceModelTable } from "./price-model-table"
+import { PriceModelChart } from "./price-model-chart"
 import { formatDate } from "@/lib/formatters"
 
 interface YearData {
@@ -198,18 +199,31 @@ export function BitcoinPriceModel() {
             </p>
           </div>
         ) : (
-          <PriceModelTable data={yearData} isFutureYear={isFutureYear} />
-        )}
+          <div>
+            {/* Chart Section */}
+            <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-medium mb-4 text-bitcoin-dark dark:text-white">Price Model Chart</h3>
+              <PriceModelChart data={yearData} isFutureYear={isFutureYear} />
+            </div>
 
-        <div className="px-4 py-3 bg-bitcoin-background/30 dark:bg-gray-800/30 text-xs text-muted-foreground border-t border-gray-200 dark:border-gray-700">
-          <p>
-            <strong>About ahr999's model:</strong> This logarithmic growth model suggests that Bitcoin's price follows a
-            predictable pattern as the network matures. Positive differences indicate that Bitcoin is trading above the
-            model's price (potentially overvalued), while negative differences suggest it may be undervalued according
-            to the model. For future years, the model provides price projections based on the mathematical formula.
-          </p>
-          {lastUpdated && <p className="mt-2 text-xs">Last updated: {formatDate(lastUpdated)}</p>}
-        </div>
+            {/* Table Section */}
+            <div className="p-4">
+              <h3 className="text-lg font-medium mb-4 text-bitcoin-dark dark:text-white">Price Model Data</h3>
+              <PriceModelTable data={yearData} isFutureYear={isFutureYear} />
+            </div>
+
+            <div className="px-4 py-3 bg-bitcoin-background/30 dark:bg-gray-800/30 text-xs text-muted-foreground border-t border-gray-200 dark:border-gray-700">
+              <p>
+                <strong>About ahr999's model:</strong> This logarithmic growth model suggests that Bitcoin's price
+                follows a predictable pattern as the network matures. Positive differences indicate that Bitcoin is
+                trading above the model's price (potentially overvalued), while negative differences suggest it may be
+                undervalued according to the model. For future years, the model provides price projections based on the
+                mathematical formula.
+              </p>
+              {lastUpdated && <p className="mt-2 text-xs">Last updated: {formatDate(lastUpdated)}</p>}
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   )
