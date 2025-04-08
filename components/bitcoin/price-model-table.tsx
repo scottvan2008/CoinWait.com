@@ -189,21 +189,6 @@ export function PriceModelTable({
         return date.toISOString().split("T")[0];
     };
 
-    // Add a new function to format date for display based on screen size
-    const formatDate = (dateString: string): string => {
-        const date = new Date(dateString);
-
-        // For mobile, show only MM-DD format
-        if (isMobile) {
-            const month = String(date.getMonth() + 1).padStart(2, "0");
-            const day = String(date.getDate()).padStart(2, "0");
-            return `${month}-${day}`;
-        }
-
-        // For desktop, show full YYYY-MM-DD format
-        return dateString;
-    };
-
     // Memoize pagination items
     const paginationItems = useMemo(() => {
         const items = [];
@@ -491,7 +476,7 @@ export function PriceModelTable({
                                     >
                                         <td className="border-b border-gray-100 dark:border-gray-800 p-2 text-center">
                                             <span className="font-medium text-gray-700 dark:text-gray-300">
-                                                {formatDate(item.date)}
+                                                {item.date}
                                             </span>
                                         </td>
                                         <td className="border-b border-gray-100 dark:border-gray-800 p-2 text-center">
