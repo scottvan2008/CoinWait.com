@@ -1,26 +1,25 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false)
+    const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    // Function to check if the screen width is mobile sized
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768) // Consider screens smaller than 768px as mobile
-    }
+    useEffect(() => {
+        // Function to check if the screen width is mobile sized
+        const checkIsMobile = () => {
+            setIsMobile(window.innerWidth < 768); // Consider screens smaller than 768px as mobile
+        };
 
-    // Check on mount
-    checkIsMobile()
+        // Check on mount
+        checkIsMobile();
 
-    // Add event listener for window resize
-    window.addEventListener("resize", checkIsMobile)
+        // Add event listener for window resize
+        window.addEventListener("resize", checkIsMobile);
 
-    // Cleanup
-    return () => window.removeEventListener("resize", checkIsMobile)
-  }, [])
+        // Cleanup
+        return () => window.removeEventListener("resize", checkIsMobile);
+    }, []);
 
-  return isMobile
+    return isMobile;
 }
-
